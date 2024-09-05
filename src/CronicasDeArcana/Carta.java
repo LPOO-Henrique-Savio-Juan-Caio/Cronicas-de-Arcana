@@ -1,6 +1,6 @@
 package CronicasDeArcana;
 
-public abstract class Carta {
+public  class Carta {
     private String nome;
     private double custoMana;
 
