@@ -1,6 +1,7 @@
 package CronicasDeArcana;
 
-public  class Carta {
+
+public abstract  class Carta {
     private String nome;
     private double custoMana;
 
@@ -24,4 +25,13 @@ public  class Carta {
     public void setMana(double alterarMana, double mana){
         alterarMana(alterarMana, mana);
     }
+
+    public String getNome(){
+        return this.nome;
+    }
+
+    //função pra selecionar a carta atraves do nome
+    
+    
+
 }
