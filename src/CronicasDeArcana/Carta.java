@@ -4,8 +4,10 @@ package CronicasDeArcana;
 public abstract  class Carta {
     private String nome;
     private double custoMana;
+    private String tipoCarta;
 
-    public Carta(String nome, double custoMana){
+    public Carta(String nome, double custoMana, String tipoCarta){  
+        this.tipoCarta = tipoCarta;
         this.nome = nome;
         this.custoMana = custoMana;
     }
