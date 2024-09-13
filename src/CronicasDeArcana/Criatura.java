@@ -5,8 +5,8 @@ public class Criatura extends Carta {
     private String habilidade;
     private double resistencia;
 
-    public Criatura (String nome, double custoMana, double poder, String habilidade, double resistencia){
-        super(nome, custoMana);
+    public Criatura (String nome, double custoMana,String tipoCarta, double poder, String habilidade, double resistencia){
+        super(nome, custoMana, tipoCarta);
         this.poder = poder;
         this.habilidade = habilidade;
         this.resistencia = resistencia;
