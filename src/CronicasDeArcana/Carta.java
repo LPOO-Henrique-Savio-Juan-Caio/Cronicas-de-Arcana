@@ -1,5 +1,6 @@
 package CronicasDeArcana;
 
+import java.util.List;
 
 public abstract  class Carta {
     private String nome;
@@ -31,9 +32,16 @@ public abstract  class Carta {
     public String getNome(){
         return this.nome;
     }
-
-    //função pra selecionar a carta atraves do nome
     
-    
+    public Carta reviverCarta(String nomeCarta, List<Cemiterio> cemiterio, List<Carta> cartas) {
+    	for(Cemiterio cartasCemiterio : cemiterio) {
+    		Carta carta = cartasCemiterio.selecionarCartas(cartas, nomeCarta);
+			if(carta != null) {
+				return carta;
+			}
+    	}
+		return null;
 
+    }
 }
+				   
