@@ -12,16 +12,23 @@ public class Jogador {
 
 
     //a questao aqui é que mao e cemiterio mudarao durante todo o jogo, ou seja, teremos que criar funções para mudar os objetos dessas classes.
-    public Jogador(String nome, double vida, double mana, Mao mao, Cemiterio cemiterio, List<Carta> arrayCartas, String[] cartasDeck, String[] cartasCemiterio, String[] cartasMao){
+    public Jogador(String nome, double vida, double mana,  List<Carta> arrayCartas,  String[] nomecartasDeck){
         this.nome = nome;
         this.vida = vida;
         this.mana = mana;
-        this.deck = new Deck(cartasDeck, arrayCartas);
-        this.mao = new Mao(arrayCartas, cartasCemiterio);
-        this.cemiterio = new Cemiterio(arrayCartas, cartasMao);
+        this.deck = new Deck(nomecartasDeck, arrayCartas);
+        this.mao = new Mao(nomecartasDeck, arrayCartas);
+        this.cemiterio = new Cemiterio();
 
 
     }
+
+    public String imprimirMao() {
+        return mao.toString();
+    }
+
+    //vamos tirar vida e mana do construtor, ja que todos terao a msm quantidade
+    
 
 
 

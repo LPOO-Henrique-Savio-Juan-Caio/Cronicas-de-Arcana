@@ -5,34 +5,19 @@ public class Cemiterio {
 
     private Carta[] cartas;
 
-    //deduzindo que 3 cartas ficam no cemiterio
-    public Cemiterio(List<Carta> ListaCartas, String[] nomeCartas){
-        cartas = new Carta[3];
+    //vou estipular um construtor default, ja que o cemiterio começara sem cartas
+    public Cemiterio(){
 
-        for (int i = 0; i < 5; i++) {
-            if(selecionarCartas(ListaCartas, nomeCartas[i]) != null){
-                cartas[i] = selecionarCartas(ListaCartas, nomeCartas[i]);
-            }
-            else{
-                System.out.println("Carta não encontrada.");
-            }
+
         }
 
-
-
+    //vou criar uma função para addcartas que podera ser usada em uma interface
+    private void addCartas(Carta cartaExemplo){
+        this.cartas[cartas.length] = cartaExemplo;
     }
 
-    //percebe-se que essa função esta se repetindo, vamos dar um jeito depois de so usar ela uma vez para nao ficar repetitivo
-    public Carta selecionarCartas(List<Carta> cartas, String nomeCarta){
 
-        for (Carta carta : cartas){
-            if(carta.getNome().equalsIgnoreCase(nomeCarta)){
-                return carta; //retorna a carta caso encontre o nome no array de cartas
-            }
-        }
 
-        return null;
-
-    }
+    
     
 }
