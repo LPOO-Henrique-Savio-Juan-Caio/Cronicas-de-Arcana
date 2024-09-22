@@ -7,8 +7,17 @@ public abstract  class Carta {
     private String nome;
     private double custoMana;
     private String tipoCarta;
+    private double poder;
 
-    public Carta(String nome, double custoMana, String tipoCarta){  
+    //construtor de Criatura
+    public Carta(String nome, double custoMana, String tipoCarta, double poder){
+        this.tipoCarta = tipoCarta;
+        this.nome = nome;
+        this.custoMana = custoMana;
+        this.poder = poder;
+    }
+    //construtor de Feitiço/Encantamento
+    public Carta(String nome, double custoMana, String tipoCarta){
         this.tipoCarta = tipoCarta;
         this.nome = nome;
         this.custoMana = custoMana;
@@ -30,11 +39,17 @@ public abstract  class Carta {
         alterarMana(alterarMana, mana);
     }
 
+    public double getCustoMana(){
+       return this.custoMana;
+    }
+
     public String getNome(){
         return this.nome;
     }
     
-   
+    public double getPoder(){
+        return this.poder;
+    }
 
     
 }

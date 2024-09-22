@@ -1,4 +1,5 @@
 package CronicasDeArcana;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Jogador {
@@ -24,13 +25,35 @@ public class Jogador {
     }
 
     public String imprimirMao() {
-        return mao.toString();
+        return mao.imprimirMao();
     }
 
     //vamos tirar vida e mana do construtor, ja que todos terao a msm quantidade
-    
 
+    public String getNome(){
+        return this.nome;
+    }
 
+    public void setVida(double vida){
+        this.vida = vida;
+    }
+    public double getVida(){
+        return this.vida;
+    }
 
+    public void setMana(double mana){
+        this.mana = mana;
+    }
+    public double getMana(){
+        return this.mana;
+    }
 
+    public Carta selecionarCarta(String nomeCarta){
+        for (Carta carta : mao.getCartasMao()) {
+            if (carta.getNome().equalsIgnoreCase(nomeCarta)) {
+                return carta; // Retorna a carta caso encontre o nome no array de cartas
+            }
+        }
+        return null;
+    }
 }
