@@ -5,25 +5,34 @@ import java.util.Random;
 
 public class Mao {
 
-    private Carta[] cartasMao;
+    private ArrayList<Carta> cartasMao = new ArrayList<>(5);
+    ArrayList<String> mao = new ArrayList<>();
 
     public Mao(String[] nomesCartas, List<Carta> arrayCartas) {
-        cartasMao = new Carta[5];
-        Carta[] deckExemplo = new Carta[5];
+        Carta[] deckExemplo = new Carta[40];
         gerarCartas(nomesCartas, arrayCartas, deckExemplo);
 
         Random random = new Random();
-        int indiceAleatorio = random.nextInt(deckExemplo.length);
+        int indiceAleatorio1 = random.nextInt(deckExemplo.length);
+        int indiceAnterior = indiceAleatorio1;
+
+        /*for (int i = 0; i < 5; i++) {
+            cartasMao.add(null); // Adiciona valores nulos para preencher os 5 slots
+        }*/
 
         for (int i = 0; i < 5; i++) {
-            cartasMao[i] = deckExemplo[indiceAleatorio];
-            indiceAleatorio = random.nextInt(deckExemplo.length);
+            cartasMao.add(deckExemplo[indiceAleatorio1]);
+            indiceAleatorio1 = random.nextInt(deckExemplo.length);
+            if(indiceAleatorio1 == indiceAnterior){
+                indiceAleatorio1 = indiceAleatorio1 + 1;
+            }
+            indiceAnterior = indiceAleatorio1;
         }
     }
 
     // Transforma o array de nome de cartas em um array da classe Carta
     private void gerarCartas(String[] nomesCartas, List<Carta> arrayCartas, Carta[] deckExemplo) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 40; i++) {
             if (selecionarCarta(arrayCartas, nomesCartas[i]) != null) {
                 deckExemplo[i] = selecionarCarta(arrayCartas, nomesCartas[i]);
             } else {
@@ -40,17 +49,27 @@ public class Mao {
         }
         return null;
     }
-    
+
     public String imprimirMao(){
-        ArrayList<String> mao = new ArrayList<>();
-        for(Carta carta : cartasMao){
-            mao.add(carta.getNome());
+        String mao = "";
+        for(Carta carta : this.cartasMao){
+          mao = mao + carta.getNome() + ", ";
         }
-        return String.join(", ", mao);
+        return mao;
     }
 
-    public Carta[] getCartasMao(){
-        return cartasMao;
+    public ArrayList<Carta> getCartasMao(){
+        return this.cartasMao;
+    }
+
+    public void removerCarta(Carta carta){
+        this.cartasMao.remove(carta);
+
+    }
+
+    public void adicionarCarta(Carta carta){
+        cartasMao.add(carta);
+
     }
    // @Override
    /* public String toString() {

@@ -56,4 +56,29 @@ public class Jogador {
         }
         return null;
     }
+
+    public Carta selecionarCarta(List<Carta> cartas, String nomeCarta) {
+        for (Carta carta : cartas) {
+            if (carta.getNome().equalsIgnoreCase(nomeCarta)) {
+                return carta; // Retorna a carta caso encontre o nome no array de cartas
+            }
+        }
+        return null;
+    }
+
+    public void alterarVida(Carta carta){
+        this.setVida(this.getVida() - carta.getPoder());
+    }
+
+    public void alterarMana(Carta carta){
+        this.setMana(this.getMana() - carta.getCustoMana());
+    }
+
+    public void removerCarta(Carta carta){
+        this.mao.removerCarta(carta);
+    }
+
+    public void adicionarCarta(Carta carta){
+        this.mao.adicionarCarta(carta);
+    }
 }

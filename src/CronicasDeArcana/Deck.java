@@ -10,9 +10,9 @@ public class Deck {
 
     //a ideia é criar um array com o nome de todas as cartas, eles serao percorridos um a um até que ache a carta em algum dos objetos que criaremos de cada tipo
     public Deck(String[] nomesCartas, List<Carta> arrayCartas){
-        cartas = new Carta[30];
+        cartas = new Carta[40];
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 40; i++) {
             if(selecionarCartas(arrayCartas, nomesCartas[i]) != null){
                 cartas[i] = selecionarCartas(arrayCartas, nomesCartas[i]);
             }
@@ -37,9 +37,8 @@ public class Deck {
 
     }
 
-
-    @Override
-    public String toString(){
+   // @Override
+   /* public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Deck:\n");
         for (Carta carta : cartas) {
@@ -50,7 +49,5 @@ public class Deck {
             }
         }
         return sb.toString();
-    }
-    
-
+    }*/
 }
