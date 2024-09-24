@@ -94,8 +94,8 @@ public class Teste {
      };
 
 
-     Jogador jogador1 = new Jogador("juan", 100, 20, arrayCartas, nomeDeck1);
-     Jogador jogador2 = new Jogador("henrique", 100, 20, arrayCartas, nomeDeck2);
+     Jogador jogador1 = new Jogador("juan", 20, 20, arrayCartas, nomeDeck1);
+     Jogador jogador2 = new Jogador("henrique", 20, 20, arrayCartas, nomeDeck2);
 
 
      Scanner scanner = new Scanner(System.in);
@@ -212,10 +212,10 @@ public class Teste {
       int opcao1 = scanner.nextInt();
       scanner.nextLine();
       if (opcao1 == 1) {
-       jogador1.setVida(10);
+       jogador1.setVida(20);
        jogador1.setMana(20);
 
-       jogador2.setVida(10);
+       jogador2.setVida(20);
        jogador2.setMana(20);
       }else if(opcao1 == 2){
        break;
