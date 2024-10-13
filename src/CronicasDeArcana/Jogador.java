@@ -13,10 +13,14 @@ public class Jogador {
 
 
     //a questao aqui é que mao e cemiterio mudarao durante todo o jogo, ou seja, teremos que criar funções para mudar os objetos dessas classes.
-    public Jogador(String nome, double vida, double mana,  List<Carta> arrayCartas,  String[] nomecartasDeck){
+    public Jogador(String nome, List<Carta> arrayCartas,  String[] nomecartasDeck){
+        //alteração que eu(juan) fiz:
+        //vida e mana nao precisam ser passados no construtor ja que eles terao uma vida e mana padrao
+
+
         this.nome = nome;
-        this.vida = vida;
-        this.mana = mana;
+        this.vida = 20;
+        this.mana = 20;
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas);
         this.cemiterio = new Cemiterio();
