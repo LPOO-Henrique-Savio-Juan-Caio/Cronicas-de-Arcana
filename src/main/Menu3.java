@@ -1,9 +1,9 @@
 package main;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class Menu3 {
     private JPanel panel1;
@@ -34,8 +34,11 @@ public class Menu3 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deckJogador2 = deckPadrao.getDeckPadrao1();
-                GameGui game = new GameGui(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2);
-//                game.gameStart();
+
+
+                Game game = new Game(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2, frame);
+                //depois disso vamos inicializar a tela do jogo
+                // que vai receber (nome1, nome2, deckescolhido1, deckescolhido2, arraydecartas)
                 frame.dispose();
                 System.out.println(game.toString());
 
@@ -45,8 +48,9 @@ public class Menu3 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deckJogador2 = deckPadrao.getDeckPadrao2();
-                GameGui game = new GameGui(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2);
-//                game.gameStart();
+                Game game = new Game(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2, frame);
+                //depois disso vamos inicializar a tela do jogo
+                // que vai receber (nome1, nome2, deckescolhido1, deckescolhido2, arraydecartas)
                 frame.dispose();
                 System.out.println(game.toString());
 

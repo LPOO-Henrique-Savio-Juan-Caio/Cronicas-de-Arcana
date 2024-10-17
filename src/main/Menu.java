@@ -50,4 +50,6 @@ public class Menu {
         frame.pack();  // Ajusta o tamanho da janela para caber nos componentes
         frame.setVisible(true);  // Torna a janela visível
     }
+
 }
+
