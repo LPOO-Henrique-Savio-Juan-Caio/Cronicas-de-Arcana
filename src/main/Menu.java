@@ -11,6 +11,7 @@ public class Menu {
     private JButton continuarButton;
 
     public Menu() {
+
         continuarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -21,6 +22,10 @@ public class Menu {
                 Menu2 menu2 = new Menu2(jogador1Nome, jogador2Nome);
             }
         });
+    }
+
+    public JPanel getPanel1() {
+        return panel1;
     }
 
     private void createUIComponents() {
