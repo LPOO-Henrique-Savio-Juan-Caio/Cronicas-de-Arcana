@@ -34,8 +34,8 @@ public class Menu3 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deckJogador2 = deckPadrao.getDeckPadrao1();
-                Game game = new Game(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2, frame);
-                game.gameStart();
+                GameGui game = new GameGui(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2);
+//                game.gameStart();
                 frame.dispose();
                 System.out.println(game.toString());
 
@@ -45,8 +45,8 @@ public class Menu3 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deckJogador2 = deckPadrao.getDeckPadrao2();
-                Game game = new Game(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2, frame);
-                game.gameStart();
+                GameGui game = new GameGui(jogador1, jogador2, cartasjogo.getArrayCartas(), deckJogador1, deckJogador2);
+//                game.gameStart();
                 frame.dispose();
                 System.out.println(game.toString());
 
