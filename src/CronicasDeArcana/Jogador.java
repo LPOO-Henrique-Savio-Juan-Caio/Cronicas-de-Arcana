@@ -1,5 +1,4 @@
 package CronicasDeArcana;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Jogador {
@@ -26,6 +25,10 @@ public class Jogador {
         this.cemiterio = new Cemiterio();
 
 
+    }
+
+    public Mao getMao() {
+        return mao;
     }
 
     public String imprimirMao() {

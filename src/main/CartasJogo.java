@@ -2,7 +2,6 @@ package main;
 
 import CronicasDeArcana.Carta;
 import CronicasDeArcana.Criatura;
-
 import java.util.ArrayList;
 import java.util.List;
 
