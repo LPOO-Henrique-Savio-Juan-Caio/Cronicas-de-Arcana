@@ -1,167 +1,177 @@
+
 package main;
 
+import CronicasDeArcana.Carta;
 import CronicasDeArcana.Jogador;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
+// oq falta: 
+// trocar as cartas da mao
+// quando a mana for mt pequena mudar o turno
+
 public class Game {
-    //aqui onde faremos toda logica do jogo
-    //outra class vai receber o gui
-
-    //como primeira parte do jogo, vamos instanciar jogador1, jogador2
-    //esses jogadores vao receber nome e seu deck
-    //obviamente pretendo criar um meno que recebera essas informações
-
-
 
     private Jogador jogador1;
     private Jogador jogador2;
-    private String nome1;
-    private String nome2;
-    private String[] deckjogador1;
-    private String[] deckjogador2;
+    private boolean isTurnoJogador1 = true;
+    private boolean manaInsuficiente = true;
 
-    CartasJogo cartasjogo = new CartasJogo();
-
-    //componentes gui
     private JFrame frame;
     private JPanel panel1;
+    private JLabel playerInfo1, playerInfo2;
+    private JPanel player1CardsPanel, player2CardsPanel;
 
-
-
-
-
-
-    //construtor para instanciar essas classes
-    //obviamente esse construtor sera preenchido no menu do jogo
-    public Game(String nome1, String nome2, String[] deckJogador1, String[] deckJogador2, JFrame frame ) {
+    public Game(String nome1, String nome2, String[] deckJogador1, String[] deckJogador2, JFrame frame) {
         this.frame = frame;
 
-        this.nome1 = nome1;
-        this.nome2 = nome2;
-        this.deckjogador1 = deckJogador1;
-        this.deckjogador2 = deckJogador2;
+        jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas(), deckJogador1);
+        jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);
 
-         
+        initUI();
+        gameStart();
+    }
 
-
-        //instanciando os jogadores
-        jogador1 = new Jogador(nome1, cartasjogo.getArrayCartas(), deckJogador1);
-        jogador2 = new Jogador(nome2, cartasjogo.getArrayCartas(), deckJogador2);
-        
-
-
-        //container da tela
+    private void initUI() {
         panel1 = new JPanel(new BorderLayout());
         panel1.setBackground(Color.BLACK);
 
-        //obs: aqui estamos usando o layout: BorderLayout() - organiza os componentes de acordo com norte, sul, leste e oeste
-
-        // painel para info dos jogadores
         JPanel playerInfoPanel = new JPanel(new BorderLayout());
         playerInfoPanel.setBackground(Color.BLACK);
 
-        // info do jogador1 - esquerda:
-        //posição, estilização e composição do panel:
+        playerInfo1 = new JLabel(createPlayerInfo(jogador1));
+        setupPlayerLabel(playerInfo1);
         JPanel player1Panel = new JPanel();
-        player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
         player1Panel.setBackground(Color.BLACK);
-        JLabel playerInfo1 = new JLabel("<html>" + nome1 + "<br>Vida: " + jogador1.getVida() + "<br>Mana: " + jogador1.getMana() + "</html>");
-        playerInfo1.setFont(new Font("Arial", Font.BOLD, 14));
-        playerInfo1.setForeground(Color.WHITE);
         player1Panel.add(playerInfo1);
 
-        // info do jogador2 - direita:
-        //posição, estilização e composição do panel:
+        playerInfo2 = new JLabel(createPlayerInfo(jogador2));
+        setupPlayerLabel(playerInfo2);
         JPanel player2Panel = new JPanel();
-        player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
         player2Panel.setBackground(Color.BLACK);
-        JLabel playerInfo2 = new JLabel("<html>" + nome2 + "<br>Vida: " + jogador2.getVida() + "<br>Mana: " + jogador2.getMana() + "</html>");
-        playerInfo2.setFont(new Font("Arial", Font.BOLD, 14));
-        playerInfo2.setForeground(Color.WHITE);
         player2Panel.add(playerInfo2);
 
-        //add componente
         playerInfoPanel.add(player1Panel, BorderLayout.WEST);
         playerInfoPanel.add(player2Panel, BorderLayout.EAST);
-
-        // add componente ao principal
         panel1.add(playerInfoPanel, BorderLayout.NORTH);
 
-       // cartas na mao do jogador1 - esquerda (container)
-        JPanel player1CardsPanel = new JPanel();
-        player1CardsPanel.setLayout(new BoxLayout(player1CardsPanel, BoxLayout.Y_AXIS));
-        player1CardsPanel.setBackground(Color.BLACK);
-        player1CardsPanel.setPreferredSize(new Dimension(80, 280)); // Tamanho ajustado para acomodar o espaçamento
+        player1CardsPanel = createPlayerCardsPanel(jogador1, jogador2);
+        player2CardsPanel = createPlayerCardsPanel(jogador2, jogador1);
 
-        //carta por carta a ser colocada no container
-        //obs: ainda n sei como vou atribuir uma carta da mao aos botoes, talves tenha q tirar o for e criar individualmente
-        for (int i = 0; i < 5; i++) {
-            JButton cardButton = new JButton("Carta " + (i + 1));
-            cardButton.setPreferredSize(new Dimension(80, 40)); // 80 de largura e 40 de altura
-            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centraliza os botões no painel
-            player1CardsPanel.add(cardButton);
-            player1CardsPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento vertical de 10px
-        }
-
-        // cartas na mao do jogador2 - direita(container)
-        JPanel player2CardsPanel = new JPanel();
-        player2CardsPanel.setLayout(new BoxLayout(player2CardsPanel, BoxLayout.Y_AXIS));
-        player2CardsPanel.setBackground(Color.BLACK);
-        player2CardsPanel.setPreferredSize(new Dimension(80, 280)); // Tamanho ajustado para acomodar o espaçamento
-
-        //carta por carta a ser colocada no container
-        //obs: ainda n sei como vou atribuir uma carta da mao aos botoes, talves tenha q tirar o for e criar individualmente
-        for (int i = 0; i < 5; i++) {
-            JButton cardButton = new JButton("Carta " + (i + 1));
-            cardButton.setPreferredSize(new Dimension(80, 40)); // 80 de largura e 40 de altura
-            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centraliza os botões no painel
-            player2CardsPanel.add(cardButton);
-            player2CardsPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento vertical de 10px
-        }
-
-        // add container de carta ao container principal
         panel1.add(player1CardsPanel, BorderLayout.WEST);
         panel1.add(player2CardsPanel, BorderLayout.EAST);
-
-
-        
-        
-        
-
     }
 
+    private JPanel createPlayerCardsPanel(Jogador jogador, Jogador jogadorRival) {
+        JPanel playerCardsPanel = new JPanel();
+        playerCardsPanel.setLayout(new BoxLayout(playerCardsPanel, BoxLayout.Y_AXIS));
+        playerCardsPanel.setBackground(Color.BLACK);
 
-    //na intenção de testar se as informações estavam sendo recebidas
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Game Info:\n");
-        sb.append("Jogador 1: ").append(nome1).append("\n");
-        sb.append("Deck Jogador 1: ").append(deckjogador1 != null ? String.join(", ", deckjogador1) : "N/A").append("\n");
-        sb.append("Jogador 2: ").append(nome2).append("\n");
-        sb.append("Deck Jogador 2: ").append(deckjogador2 != null ? String.join(", ", deckjogador2) : "N/A").append("\n");
-        return sb.toString();
+        for (Carta carta : jogador.getMao().getCartasMao()) {
+            JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
+            cardButton.setPreferredSize(new Dimension(80, 40));
+            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cardButton.addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jogarCarta(jogador, carta, jogadorRival);
+                }
+            });
+            playerCardsPanel.add(cardButton);
+            playerCardsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        }
+        return playerCardsPanel;
     }
 
-
-
-    //tela
-    //por enquanto vou fazer um main aqui:
-    public void gameStart(){
-
-        //teste das infos
-        
-        // Use a instância atual (this) em vez de criar uma nova instância de Game
-        JFrame frame = new JFrame("Menu");
-        frame.setContentPane(this.panel1); 
-        frame.setMinimumSize(new Dimension(800,474));// Adiciona o painel da classe Menu
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Configura para fechar ao clicar no 'X'
-        frame.pack();  // Ajusta o tamanho da janela para caber nos componentes
-        frame.setVisible(true);  // Torna a janela visível
-        
-
+    private void setupPlayerLabel(JLabel label) {
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        label.setForeground(Color.WHITE);
     }
 
+    private String createPlayerInfo(Jogador jogador) {
+        return "<html>" + jogador.getNome() + "<br>Vida: " + jogador.getVida() + "<br>Mana: " + jogador.getMana() + "</html>";
+    }
+
+    private void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
+        if (isTurnoJogador1 && jogador.equals(jogador1) || !isTurnoJogador1 && jogador.equals(jogador2)) {
+
+            if (jogador.getMana() >= carta.getCustoMana()) {
+                jogador.alterarMana(carta);
+                jogadorRival.alterarVida(carta);
+
+                atualizarPainelJogadores();
+                passarTurno();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Mana insuficiente!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
+        }
+    }
+        
+
+          
+
+    private void atualizarPainelJogadores() {
+        playerInfo1.setText(createPlayerInfo(jogador1));
+        playerInfo2.setText(createPlayerInfo(jogador2));
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void passarTurno() {
+        isTurnoJogador1 = !isTurnoJogador1;
     
+        // Checa as condições de vitória:
+        if (jogador1.getVida() <= 0) {
+            JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome()); 
+            frame.dispose(); 
+            return;
+        } else if (jogador2.getVida() <= 0) {
+            JOptionPane.showMessageDialog(frame, "Vitória de " + jogador1.getNome()); 
+            frame.dispose(); 
+            return;
+        }
+    
+        // Verifica mana no início do turno:
+        Jogador jogadorAtual = isTurnoJogador1 ? jogador1 : jogador2;
+        Jogador proximoJogador = isTurnoJogador1 ? jogador2 : jogador1;
+        if (verificarMana(jogadorAtual) && verificarMana(proximoJogador)) {
+            JOptionPane.showMessageDialog(frame, "Mana insuficiente para ambos, EMPATE");
+            frame.dispose();  // Chama recursivamente para passar para o próximo turno
+        } 
+        else if (verificarMana(jogadorAtual)) { 
+            JOptionPane.showMessageDialog(frame, "Mana insuficiente para " + jogadorAtual.getNome() + ". Pulando turno...");
+            passarTurno();
+        }
+        else {
+            JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
+        }
+    }
+
+    private boolean  verificarMana(Jogador jogador) {
+        manaInsuficiente = true; // Supõe que a mana é insuficiente inicialmente
+    
+        for (Carta carta : jogador.getMao().getCartasMao()) {
+            if (jogador.getMana() >= carta.getCustoMana()) {
+                manaInsuficiente = false; // Suficiente para pelo menos uma carta
+                return manaInsuficiente; // Interrompe o loop, já que encontramos uma carta jogável
+            }
+
+        
+        }
+
+        return manaInsuficiente;
+    }
+
+    public void gameStart() {
+        frame.setContentPane(this.panel1);
+        frame.setMinimumSize(new Dimension(800, 474));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 }

@@ -18,8 +18,8 @@ public class Jogador {
 
 
         this.nome = nome;
-        this.vida = 20;
-        this.mana = 20;
+        this.vida = 100;
+        this.mana = 15;
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas);
         this.cemiterio = new Cemiterio();
