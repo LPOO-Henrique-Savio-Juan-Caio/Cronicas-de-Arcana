@@ -1,6 +1,7 @@
 
 package main;
 
+import CronicasDeArcana.CampodeBatalha;
 import CronicasDeArcana.Carta;
 import CronicasDeArcana.Jogador;
 import java.awt.*;
@@ -9,8 +10,13 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 // oq falta: 
-// trocar as cartas da mao
-// quando a mana for mt pequena mudar o turno
+// implantar uma logica de trocar as cartas da mao
+// usar o campo de batalha, uma vez q as cartas sao usadas vao para o campo de batalha e podem sofrer dano
+//quando a vida de uma carta acabar ela vai para o cemiterio, e entra a proxima carta do deck na mao
+
+// 1 - cartas indo pro campo de batalha ao serem escolhidas ( mudando posição na tela)
+// 2 - cartas dando dano nas cartas do campo de batalha do outro jogador
+// 3 - cartas "morrendo e indo pro cemiterio"
 
 public class Game {
 
@@ -23,12 +29,18 @@ public class Game {
     private JPanel panel1;
     private JLabel playerInfo1, playerInfo2;
     private JPanel player1CardsPanel, player2CardsPanel;
+    private CampodeBatalha campoBatalha;
 
     public Game(String nome1, String nome2, String[] deckJogador1, String[] deckJogador2, JFrame frame) {
         this.frame = frame;
 
         jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas(), deckJogador1);
         jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);
+
+
+        //instanciando o campo de batalha
+        campoBatalha = new CampodeBatalha();
+
 
         initUI();
         gameStart();
@@ -71,7 +83,7 @@ public class Game {
 
         for (Carta carta : jogador.getMao().getCartasMao()) {
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
-            cardButton.setPreferredSize(new Dimension(80, 40));
+            cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardButton.addActionListener(new ActionListener() {
                 
@@ -95,13 +107,20 @@ public class Game {
         return "<html>" + jogador.getNome() + "<br>Vida: " + jogador.getVida() + "<br>Mana: " + jogador.getMana() + "</html>";
     }
 
+    //obs: apenas cartas na mao podem ser jogadas, depois que forem jogadas vao para o campo de batalha e entao sao apenas usadas
     private void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
         if (isTurnoJogador1 && jogador.equals(jogador1) || !isTurnoJogador1 && jogador.equals(jogador2)) {
 
             if (jogador.getMana() >= carta.getCustoMana()) {
-                jogador.alterarMana(carta);
-                jogadorRival.alterarVida(carta);
 
+                
+                usarCarta(jogador, carta, jogadorRival);
+                //para isso preciso deixar deck como lista
+                //depois que as cartas sao jogadas adcionam ela ao campo de batalha
+                campoBatalha.adicionarCartaAoCampo(carta);
+                //depois remove ela da mao - adciona outra no lugar
+                jogador.getMao().removerCarta(carta);
+                //porem ainda n esta atualizando as cartas da mao
                 atualizarPainelJogadores();
                 passarTurno();
             } else {
@@ -135,7 +154,7 @@ public class Game {
             frame.dispose(); 
             return;
         }
-    
+
         // Verifica mana no início do turno:
         Jogador jogadorAtual = isTurnoJogador1 ? jogador1 : jogador2;
         Jogador proximoJogador = isTurnoJogador1 ? jogador2 : jogador1;
@@ -151,6 +170,19 @@ public class Game {
             JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
         }
     }
+
+    //Por enquanto como ainda temos apenas criaturas, a carta tira vida e gasta mana
+    public void usarCarta(Jogador jogador, Carta carta, Jogador jogadorRival){
+        jogador.alterarMana(carta);
+        jogadorRival.alterarVida(carta);
+
+    }
+
+    public void SendCampodeBatalha(Carta carta){
+            
+
+    }
+
 
     private boolean  verificarMana(Jogador jogador) {
         manaInsuficiente = true; // Supõe que a mana é insuficiente inicialmente

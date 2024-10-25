@@ -37,6 +37,12 @@ public class Deck {
 
     }
 
+    public Carta[] getCartas() {
+        return cartas;
+    }
+
+    
+
    // @Override
    /* public String toString(){
         StringBuilder sb = new StringBuilder();
