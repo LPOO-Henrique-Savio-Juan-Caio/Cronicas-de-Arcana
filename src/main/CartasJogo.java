@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CartasJogo {
     //essa classe vai armazenar todas as cartas do jogo
-    private List<Carta> arrayCartas;
+    private ArrayList<Carta> arrayCartas;
 
 
     public CartasJogo() {
@@ -59,7 +59,7 @@ public class CartasJogo {
         arrayCartas.add(new Criatura("Guardião do Trovão", 6, "Elementar", 9.5, "Escudo Elétrico", 8.5));
     }
 
-    public List<Carta> getArrayCartas() {
+    public ArrayList<Carta> getArrayCartas() {
         return arrayCartas;
     }
 }

@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Main {
     public static String jogador1;
@@ -20,14 +21,13 @@ public class Main {
         DeckPadrao deckpadrao = new DeckPadrao();
         jogador1 = "juan";
         jogador2 = "caio";
-        String[] deckJogador1;
-        String[] deckJogador2;
+        ArrayList<String> deckJogador1;
+        ArrayList<String> deckJogador2;
         deckJogador1 = deckpadrao.getDeckPadrao1();
         deckJogador2 = deckpadrao.getDeckPadrao2();
 
         Game game = new Game(jogador1, jogador2, deckJogador1, deckJogador2, frame);
         game.gameStart();
-
 
     }
 }

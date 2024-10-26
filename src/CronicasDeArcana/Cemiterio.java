@@ -1,23 +1,20 @@
 package CronicasDeArcana;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public class Cemiterio {
 
-    private Carta[] cartas;
+    private ArrayList<Carta> cemiterio;
 
-    //vou estipular um construtor default, ja que o cemiterio começara sem cartas
     public Cemiterio(){
-
-
+        this.cemiterio = new ArrayList<>();
         }
 
-    //vou criar uma função para addcartas que podera ser usada em uma interface
-    private void addCartas(Carta cartaExemplo){
-        this.cartas[cartas.length] = cartaExemplo;
+    public void adicionarCarta(Carta carta){
+        this.cemiterio.add(carta);
     }
 
-
-
-    
-    
+    public void removerCarta(Carta carta){
+        this.cemiterio.remove(carta);
+    }
 }

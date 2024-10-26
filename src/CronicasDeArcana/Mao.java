@@ -5,43 +5,63 @@ import java.util.Random;
 
 public class Mao {
 
-    private ArrayList<Carta> cartasMao = new ArrayList<>(5);
+    private ArrayList<Carta> cartasMao;
     ArrayList<String> mao = new ArrayList<>();
 
-    public Mao(String[] nomesCartas, List<Carta> arrayCartas) {
-        Carta[] deckExemplo = new Carta[40];
-        gerarCartas(nomesCartas, arrayCartas, deckExemplo);
+    public Mao(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas) {
+        ArrayList<Carta> deckExemplo = new ArrayList<>(40);
+        cartasMao = new ArrayList<>(5);
+        deckExemplo = gerarCartas(nomesCartas, arrayCartas);
 
         Random random = new Random();
-        int indiceAleatorio1 = random.nextInt(deckExemplo.length);
-        int indiceAnterior = indiceAleatorio1;
+        int indiceAleatorio1 = random.nextInt(39);
+        int[] indicesAnteriores = new int[5];
 
         /*for (int i = 0; i < 5; i++) {
             cartasMao.add(null); // Adiciona valores nulos para preencher os 5 slots
         }*/
 
         for (int i = 0; i < 5; i++) {
-            cartasMao.add(deckExemplo[indiceAleatorio1]);
-            indiceAleatorio1 = random.nextInt(deckExemplo.length);
-            if(indiceAleatorio1 == indiceAnterior){
-                indiceAleatorio1 = indiceAleatorio1 + 1;
+            cartasMao.add(deckExemplo.get(indiceAleatorio1));
+            indiceAleatorio1 = random.nextInt(deckExemplo.size());
+            indicesAnteriores[i] = indiceAleatorio1;
+            for(int j = 0; j < 5; j++){
+                if(indiceAleatorio1 == indicesAnteriores[j]){
+                    indiceAleatorio1 = indiceAleatorio1 + 1;
+                }
             }
-            indiceAnterior = indiceAleatorio1;
         }
     }
 
     // Transforma o array de nome de cartas em um array da classe Carta
-    private void gerarCartas(String[] nomesCartas, List<Carta> arrayCartas, Carta[] deckExemplo) {
+    /*private void gerarCartas(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas, ArrayList<Carta> deckExemplo) {
+        deckExemplo = new ArrayList<>(40);
         for (int i = 0; i < 40; i++) {
-            if (selecionarCarta(arrayCartas, nomesCartas[i]) != null) {
-                deckExemplo[i] = selecionarCarta(arrayCartas, nomesCartas[i]);
+            if (selecionarCarta(arrayCartas, nomesCartas.get(i)) != null) {
+                deckExemplo.add(selecionarCarta(arrayCartas, nomesCartas.get(i)));
             } else {
-                System.out.println("Carta não encontrada: " + nomesCartas[i]);
+                System.out.println("Carta não encontrada: " + nomesCartas.get(i));
             }
         }
+    }*/
+
+    public ArrayList<Carta> gerarCartas(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas) {
+        ArrayList<Carta> cartasConvertidas = new ArrayList<>();
+        Carta carta;
+        for (String nome : nomesCartas) {
+            carta = selecionarCarta(arrayCartas, nome);
+            if (carta != null) {
+                cartasConvertidas.add(carta); // Adiciona a carta correspondente se encontrada
+            } else {
+                System.out.println("Carta não encontrada: " + nome); // Exibe mensagem se não houver correspondência
+            }
+        }
+
+        return cartasConvertidas;
     }
 
-    public Carta selecionarCarta(List<Carta> cartas, String nomeCarta) {
+
+    public Carta selecionarCarta(ArrayList<Carta> cartas, String nomeCarta) {
         for (Carta carta : cartas) {
             if (carta.getNome().equalsIgnoreCase(nomeCarta)) {
                 return carta; // Retorna a carta caso encontre o nome no array de cartas
@@ -53,7 +73,7 @@ public class Mao {
     public String imprimirMao(){
         String mao = "";
         for(Carta carta : this.cartasMao){
-          mao = mao + carta.getNome() + ", ";
+            mao = mao + carta.getNome() + ", ";
         }
         return mao;
     }
@@ -71,7 +91,7 @@ public class Mao {
         cartasMao.add(carta);
 
     }
-   // @Override
+    // @Override
    /* public String toString() {
         StringBuilder sb = new StringBuilder("Cartas na mão:\n");
         for (Carta carta : cartasMao) {

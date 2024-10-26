@@ -1,5 +1,8 @@
 package CronicasDeArcana;
+
+import java.util.ArrayList;
 import java.util.List;
+import main.DeckPadrao;
 
 public class Jogador {
 
@@ -12,10 +15,11 @@ public class Jogador {
 
 
     //a questao aqui é que mao e cemiterio mudarao durante todo o jogo, ou seja, teremos que criar funções para mudar os objetos dessas classes.
-    public Jogador(String nome, List<Carta> arrayCartas,  String[] nomecartasDeck){
+    public Jogador(String nome, ArrayList<Carta> arrayCartas){
         //alteração que eu(juan) fiz:
         //vida e mana nao precisam ser passados no construtor ja que eles terao uma vida e mana padrao
-
+        DeckPadrao deckPadrao = new DeckPadrao();
+        ArrayList<String> nomecartasDeck = deckPadrao.getDeckPadrao1();
 
         this.nome = nome;
         this.vida = 100;

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Menu2 {
 
@@ -14,7 +15,7 @@ public class Menu2 {
     DeckPadrao deckPadrao = new DeckPadrao();
 
 
-    private String[] deckJogador1;
+    private ArrayList<String> deckJogador1 = new ArrayList<>();
     private String Jogador1;
     private String Jogador2;
 

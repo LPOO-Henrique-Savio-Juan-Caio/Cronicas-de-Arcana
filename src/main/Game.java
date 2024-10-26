@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.ArrayList;
 
 // oq falta: 
 // implantar uma logica de trocar as cartas da mao
@@ -31,11 +32,11 @@ public class Game {
     private JPanel player1CardsPanel, player2CardsPanel;
     private CampodeBatalha campoBatalha;
 
-    public Game(String nome1, String nome2, String[] deckJogador1, String[] deckJogador2, JFrame frame) {
+    public Game(String nome1, String nome2, ArrayList<String> deckJogador1, ArrayList<String> deckJogador2, JFrame frame) {
         this.frame = frame;
 
-        jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas(), deckJogador1);
-        jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);
+        jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas());
+        jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas());
 
 
         //instanciando o campo de batalha

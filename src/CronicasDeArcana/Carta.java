@@ -1,14 +1,14 @@
 package CronicasDeArcana;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract  class Carta {
     private String nome;
     private double custoMana;
     private String tipoCarta;
     private double poder;
 
+    //Construtor default
+    public Carta(){
+    }
     //construtor de Criatura
     public Carta(String nome, double custoMana, String tipoCarta, double poder){
         this.tipoCarta = tipoCarta;
@@ -46,11 +46,11 @@ public abstract  class Carta {
     public String getNome(){
         return this.nome;
     }
-    
+
     public double getPoder(){
         return this.poder;
     }
 
-    
+
 }
-				   
+

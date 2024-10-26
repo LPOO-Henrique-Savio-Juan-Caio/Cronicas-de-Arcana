@@ -4,6 +4,7 @@ package main;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Menu3 {
@@ -21,8 +22,8 @@ public class Menu3 {
     private String jogador2;
 
 
-    private String[] deckJogador1;
-    private String[] deckJogador2;
+    private ArrayList<String> deckJogador1;
+    private ArrayList<String> deckJogador2;
 
     //variaveis do GUI
     private JLabel titulomenu3;
@@ -33,7 +34,7 @@ public class Menu3 {
     
 
 
-    public Menu3(String jogador1, String jogador2, String[] deckJogador1, JFrame frame) {
+    public Menu3(String jogador1, String jogador2, ArrayList<String> deckJogador1, JFrame frame) {
         this.frame = frame;
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
