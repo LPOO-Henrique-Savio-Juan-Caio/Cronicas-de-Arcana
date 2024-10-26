@@ -29,15 +29,14 @@ public class Deck {
     }
 
     public Carta selecionarCartas(ArrayList<Carta> cartas, String nomeCarta) {
-        Carta carta1 = cartas.get(0);
         for (Carta carta : cartas) {
             if (carta.getNome().equalsIgnoreCase(nomeCarta)) {
-                carta1 = carta; //retorna a carta caso encontre o nome no array de cartas
-            } else {
-                return null;
+                return carta; // Retorna a carta se encontrar o nome no array
             }
-        } return carta1;
+        }
+        return null; // Retorna null apenas se o loop terminar sem encontrar a carta
     }
+    
 
     public ArrayList<Carta> getCartas() {
         return cartas;
@@ -45,8 +44,8 @@ public class Deck {
 
     
 
-   // @Override
-   /* public String toString(){
+   @Override
+   public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Deck:\n");
         for (Carta carta : cartas) {
@@ -57,5 +56,5 @@ public class Deck {
             }
         }
         return sb.toString();
-    }*/
+    }
 }

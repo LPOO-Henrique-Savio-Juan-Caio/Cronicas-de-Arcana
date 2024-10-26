@@ -15,6 +15,9 @@ import java.util.ArrayList;
 // usar o campo de batalha, uma vez q as cartas sao usadas vao para o campo de batalha e podem sofrer dano
 //quando a vida de uma carta acabar ela vai para o cemiterio, e entra a proxima carta do deck na mao
 
+//0.1 = removerCarta alem de remover adciona a proxima do deck
+
+
 // 1 - cartas indo pro campo de batalha ao serem escolhidas ( mudando posição na tela)
 // 2 - cartas dando dano nas cartas do campo de batalha do outro jogador
 // 3 - cartas "morrendo e indo pro cemiterio"
@@ -35,8 +38,8 @@ public class Game {
     public Game(String nome1, String nome2, ArrayList<String> deckJogador1, ArrayList<String> deckJogador2, JFrame frame) {
         this.frame = frame;
 
-        jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas());
-        jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas());
+        jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas(), deckJogador1);
+        jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);
 
 
         //instanciando o campo de batalha
@@ -110,18 +113,37 @@ public class Game {
 
     //obs: apenas cartas na mao podem ser jogadas, depois que forem jogadas vao para o campo de batalha e entao sao apenas usadas
     private void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
-        if (isTurnoJogador1 && jogador.equals(jogador1) || !isTurnoJogador1 && jogador.equals(jogador2)) {
-
+        if ((isTurnoJogador1 && jogador.equals(jogador1)) || (!isTurnoJogador1 && jogador.equals(jogador2))) {
             if (jogador.getMana() >= carta.getCustoMana()) {
-
                 
+                //usa carta e remove da mao: a ideia é adicionar ela no campo de batalha depois de remover da mao
                 usarCarta(jogador, carta, jogadorRival);
-                //para isso preciso deixar deck como lista
-                //depois que as cartas sao jogadas adcionam ela ao campo de batalha
                 campoBatalha.adicionarCartaAoCampo(carta);
-                //depois remove ela da mao - adciona outra no lugar
-                jogador.getMao().removerCarta(carta);
-                //porem ainda n esta atualizando as cartas da mao
+                jogador.getMao().removerCarta(carta); // remove carta da mao e adciona outra de deck no lugar
+                //envia a carta pro campo de batalha
+                SendCampodeBatalha(carta);
+    
+                
+                // pega o painel do jogador q jogou
+                JPanel playerPanel = jogador.equals(jogador1) ? player1CardsPanel : player2CardsPanel;
+                //remove tudo
+                playerPanel.removeAll();
+                
+                //e constroi novamente com a carta atualizada
+                for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
+                    JButton cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
+                    cardButton.setPreferredSize(new Dimension(100, 60));
+                    cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+                    cardButton.addActionListener(e -> jogarCarta(jogador, cartaAtual, jogadorRival));
+    
+                    playerPanel.add(cardButton);
+                    playerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+                }
+    
+                // Atualiza a interface gráfica
+                playerPanel.revalidate();
+                playerPanel.repaint();
                 atualizarPainelJogadores();
                 passarTurno();
             } else {
@@ -131,6 +153,16 @@ public class Game {
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
     }
+
+    //enviar uma carta ao campo de batalha apos ela ser "jogada"
+    public void SendCampodeBatalha(Carta carta){
+        campoBatalha.adicionarCartaAoCampo(carta);
+        //depois disso construir um for para criar as cartas de campo de batalha
+
+
+    }
+    
+    
         
 
           
@@ -179,10 +211,6 @@ public class Game {
 
     }
 
-    public void SendCampodeBatalha(Carta carta){
-            
-
-    }
 
 
     private boolean  verificarMana(Jogador jogador) {
@@ -200,11 +228,17 @@ public class Game {
         return manaInsuficiente;
     }
 
+ 
+
+
     public void gameStart() {
         frame.setContentPane(this.panel1);
         frame.setMinimumSize(new Dimension(800, 474));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        // System.out.println(jogador1.toString());
+        // System.out.println(jogador2.toString());
     }
 }

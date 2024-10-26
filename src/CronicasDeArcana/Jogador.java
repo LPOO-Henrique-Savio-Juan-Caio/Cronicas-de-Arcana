@@ -15,17 +15,18 @@ public class Jogador {
 
 
     //a questao aqui é que mao e cemiterio mudarao durante todo o jogo, ou seja, teremos que criar funções para mudar os objetos dessas classes.
-    public Jogador(String nome, ArrayList<Carta> arrayCartas){
+    public Jogador(String nome, ArrayList<Carta> arrayCartas, ArrayList<String> nomecartasDeck ){
         //alteração que eu(juan) fiz:
         //vida e mana nao precisam ser passados no construtor ja que eles terao uma vida e mana padrao
+        //isso aq eh nd ver
         DeckPadrao deckPadrao = new DeckPadrao();
-        ArrayList<String> nomecartasDeck = deckPadrao.getDeckPadrao1();
-
+        
+        
         this.nome = nome;
         this.vida = 100;
         this.mana = 15;
         this.deck = new Deck(nomecartasDeck, arrayCartas);
-        this.mao = new Mao(nomecartasDeck, arrayCartas);
+        this.mao = new Mao(nomecartasDeck, arrayCartas, this.deck );
         this.cemiterio = new Cemiterio();
 
 
@@ -57,6 +58,9 @@ public class Jogador {
     }
     public double getMana(){
         return this.mana;
+    }
+    public Deck getDeck() {
+        return deck;
     }
 
     public Carta selecionarCarta(String nomeCarta){
@@ -92,4 +96,12 @@ public class Jogador {
     public void adicionarCarta(Carta carta){
         this.mao.adicionarCarta(carta);
     }
+
+    @Override
+public String toString() {
+    return "Jogador: " + nome + "\n" +
+           "Vida: " + vida + ", Mana: " + mana + "\n" +
+           "Mão: " + mao + "\n" +
+           "Deck: " + deck;
+}
 }
