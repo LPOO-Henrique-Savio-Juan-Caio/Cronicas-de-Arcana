@@ -21,4 +21,11 @@ public class CampodeBatalha {
     public List<Carta> getCartasnoCampo() {
         return CartasnoCampo;
     }
+
+    // essa função recebe determinada carta e da dano em todas as cartas do campo
+     public void danoCampoBatalha(Carta cartaInimiga) {
+        for (Carta carta : CartasnoCampo) {
+            carta.receberDano(cartaInimiga.getPoder());
+        }
+    }
 }

@@ -10,4 +10,18 @@ public class Criatura extends Carta {
         this.habilidade = habilidade;
         this.resistencia = resistencia;
     }
+
+    //implementação do metodo abstrato
+    @Override
+    public void receberDano(double dano) {
+        this.resistencia -= dano;
+        if (this.resistencia < 0) {
+            this.resistencia = 0; // Evitar resistência negativa
+        }
+    }
+    
+    @Override
+    public double getResistencia() {
+        return resistencia;
+    }
 }

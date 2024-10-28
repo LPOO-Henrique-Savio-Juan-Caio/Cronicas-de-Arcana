@@ -7,4 +7,15 @@ public class Encantamento extends Carta {
         super(nome, custoMana, tipoCarta);
         this.efeito = efeito;
     }
+
+    @Override
+    public void receberDano(double dano) {
+        // encantamento não tem resistência, então o método está vazio
+    }
+
+    //isso aqui é muita gambiarra
+    @Override
+    public double getResistencia() {
+        return 0;
+    }
 }

@@ -23,13 +23,10 @@ public abstract  class Carta {
         this.custoMana = custoMana;
     }
 
-    private void alterarVida(double resistencia, double alterarVida){
+    public void alterarVida(double resistencia, double alterarVida){
         resistencia += alterarVida;
     }
 
-    public void setDano(double resistencia, double alterarVida){
-        alterarVida(resistencia, alterarVida);
-    }
 
     private void alterarMana(double alterarMana, double mana){
         mana += alterarMana;
@@ -50,6 +47,11 @@ public abstract  class Carta {
     public double getPoder(){
         return this.poder;
     }
+
+    //metodo abstrato
+    public abstract void receberDano(double dano);
+
+    public abstract double getResistencia();
 
 
 }

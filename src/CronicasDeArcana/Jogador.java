@@ -12,6 +12,7 @@ public class Jogador {
     private Deck deck;
     private Mao mao;
     private Cemiterio cemiterio;
+    private CampodeBatalha CampoBatalha;
 
 
     //a questao aqui é que mao e cemiterio mudarao durante todo o jogo, ou seja, teremos que criar funções para mudar os objetos dessas classes.
@@ -28,8 +29,13 @@ public class Jogador {
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas, this.deck );
         this.cemiterio = new Cemiterio();
+        this.CampoBatalha = new CampodeBatalha();
 
 
+    }
+
+    public CampodeBatalha getCampoBatalha() {
+        return CampoBatalha;
     }
 
     public Mao getMao() {
