@@ -25,13 +25,17 @@ public class Jogador {
         
         this.nome = nome;
         this.vida = 100;
-        this.mana = 15;
+        this.mana = 100;
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas, this.deck );
         this.cemiterio = new Cemiterio();
         this.CampoBatalha = new CampodeBatalha();
 
 
+    }
+
+    public Cemiterio getCemiterio() {
+        return cemiterio;
     }
 
     public CampodeBatalha getCampoBatalha() {

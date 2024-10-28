@@ -17,6 +17,10 @@ public class CampodeBatalha {
         CartasnoCampo.add(carta);
     }
 
+    public void removerCarta(Carta carta) {
+        CartasnoCampo.remove(carta);
+    }
+
     // (Opcional) Getter para acessar as cartas no campo
     public List<Carta> getCartasnoCampo() {
         return CartasnoCampo;
@@ -27,5 +31,16 @@ public class CampodeBatalha {
         for (Carta carta : CartasnoCampo) {
             carta.receberDano(cartaInimiga.getPoder());
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Cartas no Campo:\n");
+        for (Carta carta : CartasnoCampo) {
+            sb.append("Nome: ").append(carta.getNome())
+              .append(", Resistência: ").append(carta.getResistencia())
+              .append("\n");
+        }
+        return sb.toString();
     }
 }
