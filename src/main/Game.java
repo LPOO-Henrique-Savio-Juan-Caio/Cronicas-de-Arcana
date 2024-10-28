@@ -1,7 +1,6 @@
 
 package main;
 
-import CronicasDeArcana.CampodeBatalha;
 import CronicasDeArcana.Carta;
 import CronicasDeArcana.Jogador;
 import java.awt.*;
@@ -151,7 +150,7 @@ public class Game {
                 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //usar carta nao é suficiente aqui, tenho que criar um analogo a jogarcarta
+                    //função usada para dar dano tanto no jogador como nas cartas que estao no campo
                     usarCartaNoCampoBatalha(jogador, carta, jogadorRival);
                 }
             });
@@ -167,43 +166,46 @@ public class Game {
 
     }
 
-    //função para ser usada toda vez que uma carta for jogador (atualizar o gui)
+    //função para atualizar o campo de batalha 
     private void atualizarCampoBatalhaPanel(Jogador jogador, JPanel campoBatalhaPanel, Jogador jogadorRival) {
-        // Remove todas as cartas do painel
+        
+        //remove as cartas do panel
         campoBatalhaPanel.removeAll();
     
-        // Cria uma lista temporária para armazenar cartas a serem removidas
+        //lista para armazenar cartas com vida <= 0
         List<Carta> cartasParaRemover = new ArrayList<>();
 
 
-        // Itera sobre as cartas no campo de batalha
+        //itera sobre as cartas no campo de batalha
         for (Carta carta : jogador.getCampoBatalha().getCartasnoCampo()) {
+            //verifica se as cartas estao vivas
             if (carta.getResistencia() > 0) {
-                // Cria o botão da carta com suas informações
+                //cria gui da carta
                 JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
                 cardButton.setPreferredSize(new Dimension(100, 60));
                 cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     
-                // Adiciona a ação de usar a carta no campo de batalha
+                //ação da carta
                 cardButton.addActionListener(e -> usarCartaNoCampoBatalha(jogador, carta, jogadorRival));
     
-                // Adiciona o botão ao painel
+                
                 campoBatalhaPanel.add(cardButton);
                 campoBatalhaPanel.add(Box.createRigidArea(new Dimension(0, 30)));
     
-            } else {
-                // Adiciona a carta ao cemitério e marca para remoção
+            } else {//caso n esteja viva
+                
+                //adciona ao cemiterio e coloca na lista pra remover
                 jogador.getCemiterio().adicionarCarta(carta);
                 cartasParaRemover.add(carta); // Marca para remoção depois
             }
         }
     
-        // Remove as cartas com resistência <= 0 fora do loop
+        //remove cartas da lista
         for (Carta carta : cartasParaRemover) {
             jogador.getCampoBatalha().removerCarta(carta);
         }
     
-        // Atualiza a interface uma vez ao final
+        
         campoBatalhaPanel.revalidate();
         campoBatalhaPanel.repaint();
     }
@@ -211,23 +213,29 @@ public class Game {
 
     //função de ação das cartas do campo de batalha
     public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogadorRival) {
-        //verificação de turno, mudança de turno e etc(falta)
+
+        //verificação de turno
         if(isTurnoJogador1 && jogador.equals(jogador1) ||(!isTurnoJogador1 && jogador.equals(jogador2)) ){
             //dano no jogador rival
             jogadorRival.alterarVida(carta);
             //dano nas cartas do campo de batalha do rival
             jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
 
-            // Atualiza o painel de campo de batalha
+            //painel do jogador
             JPanel campoBatalhaPanel = jogador.equals(jogador1) ? player1CampoBatalhaPanel : player2CampoBatalhaPanel;
+            
+            //painel do jogador rival
             JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? player1CampoBatalhaPanel : player2CampoBatalhaPanel;
-            //provavel erro: qnd eu uso uma carta, o campo de batalha que deve ser atualizado
-            //é o do outro jogador
-            //atualiza painel do jogador que sofreu dano
+           
+            //atualiza painel do jogador que sofreu dano e do que atacou
             atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
             atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
+
+            //verificação do funcionamento enquanto n temos gui para vida das cartas
+            System.out.println(jogador.getCampoBatalha().toString());
             System.out.println(jogadorRival.getCampoBatalha().toString());
-            atualizarPainelJogadores(); // Atualiza as informações dos jogadores
+
+            atualizarPainelJogadores(); 
             passarTurno();
             
         }
@@ -250,30 +258,40 @@ public class Game {
         return "<html>" + jogador.getNome() + "<br>Vida: " + jogador.getVida() + "<br>Mana: " + jogador.getMana() + "</html>";
     }
 
-    //obs: apenas cartas na mao podem ser jogadas, depois que forem jogadas vao para o campo de batalha e entao sao apenas usadas
+    //ação das cartas que estao na mao
     private void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
         if ((isTurnoJogador1 && jogador.equals(jogador1)) || (!isTurnoJogador1 && jogador.equals(jogador2))) {
             if (jogador.getMana() >= carta.getCustoMana()) {
                 
-                //usa carta e remove da mao: a ideia é adicionar ela no campo de batalha depois de remover da mao
+                //usa carta, adciona ao campo de batalha e remove da mao
                 usarCarta(jogador, carta, jogadorRival);
                 jogador.getCampoBatalha().adicionarCartaAoCampo(carta);
-                jogador.getMao().removerCarta(carta); // remove carta da mao e adciona outra de deck no lugar
+                jogador.getMao().removerCarta(carta); 
 
-                //atualiza o campo do jogador que jogou
+                //painel de ambos os jogadores
                 JPanel campoBatalhaPanel = jogador.equals(jogador1) ? player1CampoBatalhaPanel : player2CampoBatalhaPanel;
+                
+                
                 JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? player1CampoBatalhaPanel : player2CampoBatalhaPanel;
                 //atualiza painel do jogador que sofreu dano
                 atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
                 //atualiza painel do proprio jogador
                 atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
-                System.out.println(jogadorRival.getCampoBatalha().toString());
                 
+                //verificar funcionamento
+                // System.out.println(jogadorRival.getCampoBatalha().toString());
+                // System.out.println(jogador.getCampoBatalha().toString());
+                
+
+                //obs:podemos adcionar o trecho abaixo em outra função como fiz para campo de batalha (organizar)
+
                 // pega o painel do jogador q jogou
                 JPanel playerPanel = jogador.equals(jogador1) ? player1MaoPanel : player2MaoPanel;
                 //remove tudo
                 playerPanel.removeAll();
                 
+                
+
                 //e constroi novamente com a carta atualizada
                 for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
                     JButton cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
@@ -286,7 +304,7 @@ public class Game {
                     playerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
                 }
     
-                // Atualiza a interface gráfica
+                //atualiza o gui e passa o turno
                 playerPanel.revalidate();
                 playerPanel.repaint();
                 atualizarPainelJogadores();
@@ -323,7 +341,7 @@ public class Game {
             return;
         }
     
-        // Verificação de empate ou mana insuficiente
+        // verificação de mana suficiente (falta verificar se ainda existem cartas no campo de batalha)
         if (verificarMana(jogadorAtual) &&
             verificarMana(proximoJogador)) {
             JOptionPane.showMessageDialog(frame, "Mana insuficiente para ambos. EMPATE!");
@@ -333,7 +351,7 @@ public class Game {
     
         if (verificarMana(jogadorAtual)) {
             JOptionPane.showMessageDialog(frame, "Mana insuficiente para " + jogadorAtual.getNome() + ". Pulando turno...");
-            passarTurno(); // Recursão para passar o turno automaticamente
+            passarTurno(); //recursao
         } else {
             JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
         }
