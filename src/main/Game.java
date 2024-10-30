@@ -17,6 +17,13 @@ import javax.swing.*;
 //obs2.1: o dano das cartas nas cartas do campo rival sera 100% do dado?
 //obs3: a mana aumenta por round!
 
+//PROGRESSAO: a estrutura da progressao esta toda criada na classe "Progressao", todo começo de jogo
+//é chamada a função addJogador para ambos os jogadores, mas o jogador so é adcionado se por acaso ele ainda
+//nao estiver na lista.
+//quando decretado o vencedor eh chamada a função addVitoria para o jogador vencedor
+//pretendo criar uma tela onde mostre os jogadores e sua respectivas vitorias em uma especia de ranking
+//questao: onde progressao deve ser instanciado para que os dados nao reiniciem ate que a janela seja fechada.
+
 //estamos aqui: 
 //4 - gui do cemiterio
 //5 - funcionamento de encantamento(continua com efeito em X rounds)

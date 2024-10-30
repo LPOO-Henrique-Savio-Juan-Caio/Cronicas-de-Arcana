@@ -224,3 +224,13 @@
 //     }
 //    }
 //}
+
+// import main.*;
+
+// public class Teste{
+//     public static void main(String[] args) {
+//         Progressao progressao = new Progressao();
+//         progressao.addJogador("Juan");
+//         System.out.println(progressao.getVitoriaJogador("Juan"));
+//     }
+// }
