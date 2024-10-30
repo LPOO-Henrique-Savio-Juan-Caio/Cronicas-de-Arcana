@@ -25,7 +25,7 @@ public class Jogador {
         
         this.nome = nome;
         this.vida = 100;
-        this.mana = 100;
+        this.mana = 20;
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas, this.deck );
         this.cemiterio = new Cemiterio();
@@ -65,6 +65,9 @@ public class Jogador {
 
     public void setMana(double mana){
         this.mana = mana;
+    }
+    public void addMana(double manaAdd){
+        this.mana = this.mana + manaAdd;
     }
     public double getMana(){
         return this.mana;

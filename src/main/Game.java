@@ -10,17 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-// oq fiz hj: 
-//0 - cada jogador precisa ter seu "campodebatalha"
-//1 - criar GUI para cartas no campo de batalha
-//2.1 - cartas no campo de batalha n gastam mana para atacar
-//2 - criar logica de dano nas cartas que estao no campo de batalha
-//2.1 - cartas no campo de batalha tb levam dano
-//3 - cartas serem mandados pro cemiterio apos "morrerem"
 
-
-//obs: mana insuficiente nao é suficiente para acabar o jogo nem para passar vez, as cartas no campo tb precisam estar vazias
-//obs: problmea na atualização do gui, painel do jogador so eh atualizado dps q ele ataca
+//questoes sobre a logica do jogo:
+//obs: as cartas jogadas na mao dao dano nas cartas que ja estao no campo de batalha?
+//obs2: as cartas (que estao no campo) darao dano em todas as cartas que estao no campo do rival?
+//obs2.1: o dano das cartas nas cartas do campo rival sera 100% do dado?
+//obs3: a mana aumenta por round!
 
 //estamos aqui: 
 //4 - gui do cemiterio
@@ -155,6 +150,8 @@ public class Game {
                 }
             });
 
+            
+
             playerCampoBatalhaPanel.add(cardButton);
             playerCampoBatalhaPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -166,7 +163,6 @@ public class Game {
 
     }
 
-    //função para atualizar o campo de batalha 
     private void atualizarCampoBatalhaPanel(Jogador jogador, JPanel campoBatalhaPanel, Jogador jogadorRival) {
         
         //remove as cartas do panel
@@ -181,12 +177,25 @@ public class Game {
             //verifica se as cartas estao vivas
             if (carta.getResistencia() > 0) {
                 //cria gui da carta
+                JPanel cartaPanel = new JPanel();
+                cartaPanel.setLayout(new BoxLayout(cartaPanel, BoxLayout.Y_AXIS));
+                cartaPanel.setBackground(Color.DARK_GRAY);
+
                 JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
                 cardButton.setPreferredSize(new Dimension(100, 60));
                 cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
-                //ação da carta
                 cardButton.addActionListener(e -> usarCartaNoCampoBatalha(jogador, carta, jogadorRival));
+                
+                //barra de progresso da vida (em desenvolvimento)
+                // JProgressBar barraVida = new JProgressBar(0, (int) carta.getResistencia()); // vida máxima da carta
+                // barraVida.setValue((int) carta.getResistencia()); // vida atual da carta
+                // barraVida.setPreferredSize(new Dimension(100, 2));
+                // barraVida.setForeground(Color.RED);//estipular uma condicional aqui
+                // barraVida.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+                // cartaPanel.add(cardButton);
+                // cartaPanel.add(barraVida);
+                
     
                 
                 campoBatalhaPanel.add(cardButton);
@@ -329,6 +338,16 @@ public class Game {
         isTurnoJogador1 = !isTurnoJogador1;
         Jogador jogadorAtual = isTurnoJogador1 ? jogador1 : jogador2;
         Jogador proximoJogador = isTurnoJogador1 ? jogador2 : jogador1;
+
+        //mana regenerando todo round
+        if(isTurnoJogador1){
+            jogadorAtual.addMana(4);
+            proximoJogador.addMana(4);
+            atualizarPainelJogadores();
+            JOptionPane.showMessageDialog(frame, "+4 de mana para ambos os jogadores");
+            
+
+        }
     
         // Condições de vitória
         if (jogador1.getVida() <= 0) {
@@ -342,14 +361,15 @@ public class Game {
         }
     
         // verificação de mana suficiente (falta verificar se ainda existem cartas no campo de batalha)
-        if (verificarMana(jogadorAtual) &&
-            verificarMana(proximoJogador)) {
+        if ((verificarMana(jogadorAtual) && verificarMana(proximoJogador)) && 
+        (CampoVazio(jogadorAtual) && CampoVazio(proximoJogador))) {
             JOptionPane.showMessageDialog(frame, "Mana insuficiente para ambos. EMPATE!");
             frame.dispose();
             return;
         }
     
-        if (verificarMana(jogadorAtual)) {
+        if (verificarMana(jogadorAtual) && 
+        CampoVazio(jogadorAtual)) {
             JOptionPane.showMessageDialog(frame, "Mana insuficiente para " + jogadorAtual.getNome() + ". Pulando turno...");
             passarTurno(); //recursao
         } else {
