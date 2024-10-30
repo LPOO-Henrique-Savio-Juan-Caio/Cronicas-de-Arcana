@@ -22,7 +22,7 @@ import javax.swing.*;
 //nao estiver na lista.
 //quando decretado o vencedor eh chamada a função addVitoria para o jogador vencedor
 //pretendo criar uma tela onde mostre os jogadores e sua respectivas vitorias em uma especia de ranking
-//questao: onde progressao deve ser instanciado para que os dados nao reiniciem ate que a janela seja fechada.
+//obs: progressao é instanciada de uma maneira interessante (ainda nao testei), mas aparentemente pode ser instanciada em qlqr classe
 
 //estamos aqui: 
 //4 - gui do cemiterio
@@ -42,6 +42,9 @@ public class Game {
     private JPanel player1MaoPanel, player2MaoPanel;
     private JPanel player1CampoBatalhaPanel, player2CampoBatalhaPanel;
 
+    //instanciando progressao sem reiniciar os dados
+    Progressao progressao = Progressao.getInstancia();
+
     public Game(String nome1, String nome2, ArrayList<String> deckJogador1, ArrayList<String> deckJogador2, JFrame frame) {
         this.frame = frame;
 
@@ -49,9 +52,10 @@ public class Game {
         jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);
 
 
-        //instanciando o campo de batalha
         
-
+        //add jogador a lista (caso ja n esteja)
+        progressao.addJogador(nome1);
+        progressao.addJogador(nome2);
 
         initUI();
         gameStart();
@@ -359,10 +363,12 @@ public class Game {
         // Condições de vitória
         if (jogador1.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome());
+            progressao.addVitoria(jogador1.getNome());
             frame.dispose();
             return;
         } else if (jogador2.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador1.getNome());
+            progressao.addVitoria(jogador2.getNome());
             frame.dispose();
             return;
         }
