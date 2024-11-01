@@ -25,8 +25,8 @@ import javax.swing.*;
 //obs: progressao é instanciada de uma maneira interessante (ainda nao testei), mas aparentemente pode ser instanciada em qlqr classe
 
 //estamos aqui: 
-//4 - gui do cemiterio
-//5 - funcionamento de encantamento(continua com efeito em X rounds)
+
+//5 - funcionamento de encantamento(continua com efeito em X rounds) e feitiço(de boinha) - ambos nao vao para o campo de batalha
 //6 - mostrar vida das cartas que estao no campo de batalha
 
 public class Game {
@@ -41,6 +41,7 @@ public class Game {
     private JLabel playerInfo1, playerInfo2;
     private JPanel player1MaoPanel, player2MaoPanel;
     private JPanel player1CampoBatalhaPanel, player2CampoBatalhaPanel;
+    private JPanel player1Cemiterio, player2Cemiterio;
 
     //instanciando progressao sem reiniciar os dados
     Progressao progressao = Progressao.getInstancia();
@@ -90,9 +91,32 @@ public class Game {
         // Painéis de mão dos jogadores (lados)
         player1MaoPanel = createMaoPanel(jogador1, jogador2);
         player1MaoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
+
     
         player2MaoPanel = createMaoPanel(jogador2, jogador1);
         player2MaoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
+
+        //gui cemiterio
+        player1Cemiterio = createCemiterioPanel(jogador1);
+        player2Cemiterio = createCemiterioPanel(jogador2);
+
+        // Painel vertical para o Jogador 1 (contém mão e cemitério)
+        JPanel player1SidePanel = new JPanel();
+        player1SidePanel.setLayout(new BoxLayout(player1SidePanel, BoxLayout.Y_AXIS));
+        player1SidePanel.setBackground(Color.BLACK);
+        player1SidePanel.add(player1MaoPanel);
+        player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaço entre mão e cemitério
+        player1SidePanel.add(player1Cemiterio);
+        player1SidePanel.setPreferredSize(new Dimension(200, 300));
+
+        // Painel vertical para o Jogador 2 (contém mão e cemitério)
+        JPanel player2SidePanel = new JPanel();
+        player2SidePanel.setLayout(new BoxLayout(player2SidePanel, BoxLayout.Y_AXIS));
+        player2SidePanel.setBackground(Color.BLACK);
+        player2SidePanel.add(player2MaoPanel);
+        player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaço entre mão e cemitério
+        player2SidePanel.add(player2Cemiterio);
+        player2SidePanel.setPreferredSize(new Dimension(200, 400));
     
         // Painéis do campo de batalha dos jogadores
         player1CampoBatalhaPanel = createCampoBatalhaPanel(jogador1, jogador2);
@@ -109,11 +133,68 @@ public class Game {
         // Adicionando os campos de batalha dos jogadores no painel central
         centralBattlePanel.add(player1CampoBatalhaPanel, BorderLayout.WEST);
         centralBattlePanel.add(player2CampoBatalhaPanel, BorderLayout.EAST);
-    
+
+        
         // Posicionando os painéis de mão e campo de batalha
-        panel1.add(player1MaoPanel, BorderLayout.WEST);
-        panel1.add(player2MaoPanel, BorderLayout.EAST);
+        panel1.add(player1SidePanel, BorderLayout.WEST);
+        panel1.add(player2SidePanel, BorderLayout.EAST);
         panel1.add(centralBattlePanel, BorderLayout.CENTER);
+    }
+
+    //função gui do cemiterio: a priore um botao que abre uma pagina com todas as cartas
+    private JPanel createCemiterioPanel(Jogador jogador){
+
+        JPanel playerCemiterioPanel = new JPanel();
+        playerCemiterioPanel.setLayout(new BoxLayout(playerCemiterioPanel, BoxLayout.Y_AXIS));
+        playerCemiterioPanel.setBackground(Color.BLACK);
+
+        //botao que "abre" uma page com o cemiterio de cada jogador
+        JButton cardButton = new JButton( "Cemiterio " + jogador.getNome());
+            cardButton.setPreferredSize(new Dimension(100, 60));
+            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cardButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+            cardButton.addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    // jdialog para exibir as cartas
+                    JDialog cemiterioDialog = new JDialog();
+                    cemiterioDialog.setTitle("Cemitério de " + jogador.getNome());
+                    cemiterioDialog.setSize(300, 400); // Ajuste o tamanho conforme necessário
+                    cemiterioDialog.setLocationRelativeTo(null); // Centraliza na tela
+                    
+                    
+                    JPanel cemiterioPanel = new JPanel();
+                    cemiterioPanel.setLayout(new BoxLayout(cemiterioPanel, BoxLayout.Y_AXIS));
+                    cemiterioPanel.setBackground(Color.DARK_GRAY);
+                    //for que itera sobre as cartas
+                    for (Carta carta : jogador.getCemiterio().getCartasCemiterio()){
+
+                        JButton cartaButton = new JButton(carta.getNome());
+                        cartaButton.setPreferredSize(new Dimension(150, 40));
+                        cartaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        cartaButton.addActionListener(ev -> {
+                            // informações da carta
+                            JOptionPane.showMessageDialog(cemiterioDialog, 
+                                "Detalhes da Carta: \n" + carta.toString(), 
+                                "Detalhes da Carta", 
+                                JOptionPane.INFORMATION_MESSAGE);
+                        });
+                        cemiterioPanel.add(cartaButton);
+                        cemiterioPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Espaço entre cartas
+
+                    }
+
+                    // adciona o dialog ao panel do cemiterio
+                    cemiterioDialog.add(new JScrollPane(cemiterioPanel));
+                    cemiterioDialog.setVisible(true);
+                    
+                }
+            });
+            playerCemiterioPanel.add(cardButton);
+            return playerCemiterioPanel;
+
     }
     
 

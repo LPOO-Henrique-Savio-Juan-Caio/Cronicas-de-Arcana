@@ -10,6 +10,10 @@ public class Cemiterio {
         this.cemiterio = new ArrayList<>();
         }
 
+    public ArrayList<Carta> getCartasCemiterio() {
+        return cemiterio;
+    }
+
     public void adicionarCarta(Carta carta){
         this.cemiterio.add(carta);
     }
