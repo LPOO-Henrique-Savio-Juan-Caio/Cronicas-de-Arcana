@@ -101,7 +101,7 @@ public class Menu3 {
                     //instancia e inicia o jogo
                     Game game = new Game(jogador1, jogador2, deckJogador1, deckJogador2, frame);
                     game.gameStart();
-                    frame.dispose();
+                    //game é instanciado com o proprio frame ent n precisamos fechar
                 
             }
         });
@@ -115,7 +115,8 @@ public class Menu3 {
                //instacia e inicia o jogo
                 Game game = new Game(jogador1, jogador2, deckJogador1, deckJogador2, frame);
                 game.gameStart();
-                frame.dispose();
+                //game é instanciado com o proprio frame ent n precisamos fechar
+            
                 
                     
                 
