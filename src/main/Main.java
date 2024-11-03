@@ -5,9 +5,6 @@ import javax.swing.*;
 public class Main {
     public static String jogador1;
     public static String jogador2;
-    
-
-    
 
     public static void main(String[] args) {
         //nesse caso precisei criar a janela aqui pra ter controle sobre a hora dela fechar e etc

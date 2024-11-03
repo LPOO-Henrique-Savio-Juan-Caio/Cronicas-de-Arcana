@@ -1,8 +1,9 @@
-package CronicasDeArcana;
+package entidades.zonas;
 
+import entidades.carta.Carta;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements AcoesZonas{
 
     private ArrayList<Carta> cartas;
 
@@ -12,7 +13,7 @@ public class Deck {
     public Deck(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas){
         this.cartas = new ArrayList<>();
         for (int i = 0; i < 40; i++) {
-            Carta cartaSelecionada = selecionarCartas(arrayCartas, nomesCartas.get(i));
+            Carta cartaSelecionada = selecionarCarta(arrayCartas, nomesCartas.get(i));
             if (cartaSelecionada != null) {
                 cartas.add(cartaSelecionada);
             } else {
@@ -28,7 +29,7 @@ public class Deck {
         this.cartas.remove(carta);
     }
 
-    public Carta selecionarCartas(ArrayList<Carta> cartas, String nomeCarta) {
+    public Carta selecionarCarta(ArrayList<Carta> cartas, String nomeCarta) {
         for (Carta carta : cartas) {
             if (carta.getNome().equalsIgnoreCase(nomeCarta)) {
                 return carta; // Retorna a carta se encontrar o nome no array

@@ -1,9 +1,8 @@
 package main;
 
-import CronicasDeArcana.Carta;
-import CronicasDeArcana.Criatura;
+import entidades.carta.Carta;
+import entidades.carta.Criatura;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CartasJogo {
     //essa classe vai armazenar todas as cartas do jogo

@@ -1,8 +1,10 @@
-package CronicasDeArcana;
+package entidades.zonas;
+import entidades.carta.Carta;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Mao {
+public class Mao implements AcoesZonas{
 
     private ArrayList<Carta> cartasMao;
     private Deck deck;

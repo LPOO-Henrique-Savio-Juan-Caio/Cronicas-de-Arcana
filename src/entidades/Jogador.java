@@ -1,8 +1,13 @@
-package CronicasDeArcana;
+package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import entidades.carta.*;
+import entidades.zonas.*;
 import main.DeckPadrao;
+
+import static Enum.Valores.*;
 
 public class Jogador {
 
@@ -24,8 +29,8 @@ public class Jogador {
         
         
         this.nome = nome;
-        this.vida = 100;
-        this.mana = 20;
+        this.vida = VIDA.getValor();
+        this.mana = MANA.getValor();
         this.deck = new Deck(nomecartasDeck, arrayCartas);
         this.mao = new Mao(nomecartasDeck, arrayCartas, this.deck );
         this.cemiterio = new Cemiterio();

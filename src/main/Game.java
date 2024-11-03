@@ -1,8 +1,9 @@
 
 package main;
 
-import CronicasDeArcana.Carta;
-import CronicasDeArcana.Jogador;
+import entidades.*;
+import entidades.carta.Carta;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

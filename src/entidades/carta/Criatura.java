@@ -1,4 +1,4 @@
-package CronicasDeArcana;
+package entidades.carta;
 
 public class Criatura extends Carta {
     private double poder;

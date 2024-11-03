@@ -1,16 +1,16 @@
-package CronicasDeArcana;
+package entidades.carta;
 
-public class Feitico extends Carta {
+public class Encantamento extends Carta {
     private String efeito;
-
-    public Feitico (String nome, double custoMana, String tipoCarta, String efeito){
+    
+    public Encantamento (String nome, double custoMana, String tipoCarta, String efeito){
         super(nome, custoMana, tipoCarta);
         this.efeito = efeito;
     }
 
     @Override
     public void receberDano(double dano) {
-        // Feitiço não tem resistência, então o método está vazio
+        // encantamento não tem resistência, então o método está vazio
     }
 
     //isso aqui é muita gambiarra
@@ -18,5 +18,4 @@ public class Feitico extends Carta {
     public double getResistencia() {
         return 0;
     }
-    
 }

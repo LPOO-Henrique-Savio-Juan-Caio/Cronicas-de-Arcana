@@ -1,8 +1,10 @@
-package CronicasDeArcana;
+package entidades.zonas;
+
+import entidades.carta.Carta;
 
 import java.util.ArrayList;
 
-public class Cemiterio {
+public class Cemiterio implements AcoesZonas{
 
     private ArrayList<Carta> cemiterio;
 
@@ -12,6 +14,10 @@ public class Cemiterio {
 
     public ArrayList<Carta> getCartasCemiterio() {
         return cemiterio;
+    }
+
+    public Carta selecionarCarta(ArrayList<Carta> arrayCartas, String nomeCarta) {
+        return null;
     }
 
     public void adicionarCarta(Carta carta){

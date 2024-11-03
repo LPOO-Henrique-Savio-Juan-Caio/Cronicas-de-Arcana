@@ -1,4 +1,4 @@
-package CronicasDeArcana;
+package entidades.carta;
 
 public abstract  class Carta {
     private String nome;

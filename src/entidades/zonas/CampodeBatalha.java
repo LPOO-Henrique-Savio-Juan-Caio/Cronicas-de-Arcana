@@ -1,4 +1,6 @@
-package CronicasDeArcana;
+package entidades.zonas;
+
+import entidades.carta.Carta;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package CronicasDeArcana;
+package entidades;
 
 import javax.swing.*;
 
