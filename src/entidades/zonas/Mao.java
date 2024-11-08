@@ -80,12 +80,4 @@ public class Mao implements AcoesZonas{
         cartasMao.add(carta);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Cartas na mão:\n");
-        for (Carta carta : cartasMao) {
-            sb.append(carta.toString()).append("\n");
-        }
-        return sb.toString();
-    }
 }

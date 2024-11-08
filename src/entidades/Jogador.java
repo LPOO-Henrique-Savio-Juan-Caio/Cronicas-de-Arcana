@@ -115,11 +115,4 @@ public class Jogador {
         this.mao.adicionarCarta(carta);
     }
 
-    @Override
-public String toString() {
-    return "Jogador: " + nome + "\n" +
-           "Vida: " + vida + ", Mana: " + mana + "\n" +
-           "Mão: " + mao + "\n" +
-           "Deck: " + deck;
-}
 }

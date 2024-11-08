@@ -43,19 +43,4 @@ public class Deck implements AcoesZonas{
         return cartas;
     }
 
-    
-
-   @Override
-   public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Deck:\n");
-        for (Carta carta : cartas) {
-            if (carta != null) {
-                sb.append(carta.getNome()).append("\n");
-            } else {
-                sb.append("Carta não encontrada.\n");
-            }
-        }
-        return sb.toString();
-    }
 }

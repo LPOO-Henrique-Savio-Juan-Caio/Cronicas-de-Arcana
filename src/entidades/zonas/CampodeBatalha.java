@@ -34,15 +34,4 @@ public class CampodeBatalha {
             carta.receberDano(cartaInimiga.getPoder());
         }
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Cartas no Campo:\n");
-        for (Carta carta : CartasnoCampo) {
-            sb.append("Nome: ").append(carta.getNome())
-              .append(", Resistência: ").append(carta.getResistencia())
-              .append("\n");
-        }
-        return sb.toString();
-    }
 }
