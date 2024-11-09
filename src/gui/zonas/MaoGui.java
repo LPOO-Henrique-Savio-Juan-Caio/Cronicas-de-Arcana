@@ -49,5 +49,31 @@ public class MaoGui {
         }
         return playerMaoPanel;
     }
+    
+    public void atualizarPanelMao(Jogador jogador) {
+        // Obtém o painel de mão do jogador
+        JPanel playerPanel = jogador.equals(jogador1) ? game.getplayer1MaoPanel() : game.getplayer2MaoPanel();
+        
+        // Remove todas as cartas do painel
+        playerPanel.removeAll();
+    
+        // Reconstrói o painel com as cartas atualizadas
+        for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
+            JButton cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
+            cardButton.setPreferredSize(new Dimension(100, 60));
+            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
+            // Define a ação do botão para jogar a carta
+            cardButton.addActionListener(e -> logica.jogarCarta(jogador, cartaAtual, jogador.equals(jogador1) ? jogador2 : jogador1));
+    
+            // Adiciona o botão ao painel
+            playerPanel.add(cardButton);
+            playerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        }
+    
+        // Atualiza o GUI do painel da mão
+        playerPanel.revalidate();
+        playerPanel.repaint();
+    }
 
 }

@@ -2,9 +2,14 @@ package logica;
 
 import entidades.Jogador;
 import entidades.carta.Carta;
+import entidades.carta.Criatura;
+import entidades.carta.Encantamento;
+import entidades.carta.Feitico;
+
 import java.awt.*;
 import javax.swing.*;
 import gui.zonas.CampoBatalhaGui;
+import gui.zonas.MaoGui;
 import gui.PainelJogadoresGui;
 import main.Game;
 import main.Progressao;
@@ -24,6 +29,7 @@ public class Logica {
     private Jogador jogador2;
     private JFrame frame;
     private boolean isTurnoJogador1;
+    private MaoGui maogui;
     Progressao progressao = Progressao.getInstancia();
 
     //por enquanto vou puxar alguns metodos GUI de la, depois vou mudar para as classes respectivas
@@ -39,6 +45,7 @@ public class Logica {
         this.isTurnoJogador1 = true;
         campobatalhaGui = new CampoBatalhaGui(game, jogador1, jogador2, frame, this);
         paineljogadores = new PainelJogadoresGui(game, jogador1, jogador2, frame, this);
+        maogui = new MaoGui(game, jogador1, jogador2, frame, this);
         
 
         
@@ -144,54 +151,42 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
         
     }
 
-    public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
+     public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
+        // Verifica se é o turno do jogador correto
         if ((isTurnoJogador1() && jogador.equals(jogador1)) || (!isTurnoJogador1() && jogador.equals(jogador2))) {
             if (jogador.getMana() >= carta.getCustoMana()) {
-                
-                //usa carta, adciona ao campo de batalha e remove da mao
-                usarCarta(jogador, carta, jogadorRival);
-                jogador.getCampoBatalha().adicionarCartaAoCampo(carta);
-                jogador.getMao().removerCarta(carta); 
+                //aqui vou colocar uma estrutura condicional para cada "tipo" de carta:
 
-                //painel de ambos os jogadores
+                //Criatura: vai pro campo de batalha, é removida da mao e gasta mana
+                if(carta instanceof Criatura criatura){
+                    jogador.getCampoBatalha().adicionarCartaAoCampo(carta);
+                    jogador.getMao().removerCarta(carta); 
+                    jogador.alterarMana(carta);
+                    //falta colocar pra gastar mana
+
+                }
+                //encantamento: apenas tem seu efeito no oponente
+                else if(carta instanceof Feitico feitico){
+                    
+                }
+                //tem seu efeito em um determinado numero de round
+                else if (carta instanceof Encantamento encantamento) {
+                    
+                }
+                
+    
+                // Painéis dos campos de batalha dos jogadores
                 JPanel campoBatalhaPanel = jogador.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
-                
-                
                 JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
-                //atualiza painel do jogador que sofreu dano
+    
+                // Atualiza os painéis do campo de batalha
                 campobatalhaGui.atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
-                //atualiza painel do proprio jogador
                 campobatalhaGui.atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
                 
-                //verificar funcionamento
-                // System.out.println(jogadorRival.getCampoBatalha().toString());
-                // System.out.println(jogador.getCampoBatalha().toString());
-                
-
-                //obs:podemos adcionar o trecho abaixo em outra função como fiz para campo de batalha (organizar)
-
-                // pega o painel do jogador q jogou
-                JPanel playerPanel = jogador.equals(jogador1) ? game.getplayer1MaoPanel() : game.getplayer2MaoPanel();
-                //remove tudo
-                playerPanel.removeAll();
-                
-                
-
-                //e constroi novamente com a carta atualizada
-                for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
-                    JButton cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
-                    cardButton.setPreferredSize(new Dimension(100, 60));
-                    cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                // Atualiza a mão do jogador
+                maogui.atualizarPanelMao(jogador);
     
-                    cardButton.addActionListener(e -> jogarCarta(jogador, cartaAtual, jogadorRival));
-    
-                    playerPanel.add(cardButton);
-                    playerPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-                }
-    
-                //atualiza o gui e passa o turno
-                playerPanel.revalidate();
-                playerPanel.repaint();
+                // Atualiza o painel de jogadores e passa o turno
                 paineljogadores.atualizarPainelJogadores();
                 passarTurno();
             } else {
@@ -201,7 +196,6 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
     }
-
 
     public void usarCarta(Jogador jogador, Carta carta, Jogador jogadorRival){
         jogador.alterarMana(carta);
