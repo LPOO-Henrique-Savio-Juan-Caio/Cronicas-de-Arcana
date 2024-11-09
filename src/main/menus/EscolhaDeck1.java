@@ -1,13 +1,16 @@
-package main;
+package main.menus;
 
 //importações
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import main.DeckPadrao;
+
 import java.util.ArrayList;
 
-public class Menu2 {
+public class EscolhaDeck1 {
 
     private JPanel panel1;
 
@@ -26,7 +29,7 @@ public class Menu2 {
     
     private JFrame frame;
 
-    public Menu2(String Jogador1, String Jogador2, JFrame frame) {
+    public EscolhaDeck1(String Jogador1, String Jogador2, JFrame frame) {
         this.frame = frame;
         //recebe o nome dos jogadores
         this.Jogador1 = Jogador1;
@@ -88,7 +91,7 @@ public class Menu2 {
                 deckJogador1 = deckPadrao.getDeckPadrao1();
 
                 //vai pro proximo menu(escolha do prox jogador)
-                Menu3 menu3 = new Menu3(Jogador1, Jogador2, deckJogador1, frame);
+                EscolhaDeck2 menu3 = new EscolhaDeck2(Jogador1, Jogador2, deckJogador1, frame);
                 menu3.menu3Start();
                 frame.dispose();
 
@@ -103,7 +106,7 @@ public class Menu2 {
                 deckJogador1 = deckPadrao.getDeckPadrao2();
 
                 //vai pro proximo menu(escolha do prox jogador)
-                Menu3 menu3 = new Menu3(Jogador1, Jogador2, deckJogador1, frame);
+                EscolhaDeck2 menu3 = new EscolhaDeck2(Jogador1, Jogador2, deckJogador1, frame);
                 menu3.menu3Start();
                 frame.dispose();
             }
@@ -115,7 +118,7 @@ public class Menu2 {
     public void menu2Start() {
 
         JFrame frame = new JFrame("Menu");
-        frame.setContentPane(new Menu2(Jogador1, Jogador2, frame).panel1);
+        frame.setContentPane(new EscolhaDeck1(Jogador1, Jogador2, frame).panel1);
         frame.setMinimumSize(new Dimension(450,474));// Adiciona o painel da classe Menu
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Configura para fechar ao clicar no 'X
         frame.pack();  // Ajusta o tamanho da janela para caber nos componentes

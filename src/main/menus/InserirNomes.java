@@ -1,4 +1,4 @@
-package main;
+package main.menus;
 
 //importações
 import java.awt.*;
@@ -10,7 +10,7 @@ import javax.swing.*;
 
 
 
-public class Menu {
+public class InserirNomes {
 
     // componentes do GUI
     private JPanel panel1;
@@ -20,7 +20,7 @@ public class Menu {
     private JFrame frame;
 
     
-    public Menu(JFrame frame) {
+    public InserirNomes(JFrame frame) {
         this.frame = frame; 
         //obs: o laytou GridBagLayout funciona atraves de celular, é meio paia...
         
@@ -96,7 +96,7 @@ public class Menu {
                 String jogador2Nome = nomeJogador2.getText(); 
 
                 // instancia e inicia o proximo menu ja com o nome dos jogadores
-                Menu2 menu2 = new Menu2(jogador1Nome, jogador2Nome, frame);
+                EscolhaDeck1 menu2 = new EscolhaDeck1(jogador1Nome, jogador2Nome, frame);
                 menu2.menu2Start();
                 frame.dispose(); 
                 
@@ -107,7 +107,7 @@ public class Menu {
     //tela
     public void menuStart() {
         JFrame frame = new JFrame("Menu");
-        frame.setContentPane(new Menu(frame).panel1); // Adiciona o painel da interface
+        frame.setContentPane(new InserirNomes(frame).panel1); // Adiciona o painel da interface
         frame.setMinimumSize(new Dimension(450, 474)); // Define o tamanho mínimo da janela
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
         frame.pack(); // Ajusta o tamanho da janela automaticamente

@@ -1,4 +1,4 @@
-package main;
+package main.menus;
 
 //importações
 import java.awt.*;
@@ -7,7 +7,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Menu3 {
+import main.CartasJogo;
+import main.DeckPadrao;
+import main.Game;
+
+public class EscolhaDeck2 {
     
     private JPanel panel1;
 
@@ -34,7 +38,7 @@ public class Menu3 {
     
 
 
-    public Menu3(String jogador1, String jogador2, ArrayList<String> deckJogador1, JFrame frame) {
+    public EscolhaDeck2(String jogador1, String jogador2, ArrayList<String> deckJogador1, JFrame frame) {
         this.frame = frame;
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
@@ -128,7 +132,7 @@ public class Menu3 {
     public void menu3Start() {
 
         JFrame frame = new JFrame("Menu");
-        frame.setContentPane(new Menu3(jogador1, jogador2, deckJogador1, frame).panel1);
+        frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1);
         frame.setMinimumSize(new Dimension(450,474));// Adiciona o painel da classe Menu
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Configura para fechar ao clicar no 'X
         frame.pack();  // Ajusta o tamanho da janela para caber nos componentes
