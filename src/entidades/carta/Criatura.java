@@ -32,4 +32,9 @@ public class Criatura extends Carta {
     public String getHabilidade(){
         return this.habilidade;
     }
+
+    @Override
+    public String getTipoCarta(){
+        return "Criatura";
+    }
 }

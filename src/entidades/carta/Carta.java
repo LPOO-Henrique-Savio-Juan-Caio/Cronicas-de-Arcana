@@ -53,6 +53,8 @@ public abstract  class Carta {
 
     public abstract double getResistencia();
 
+    public abstract String getTipoCarta();
+
     @Override
     public String toString() {
         return "Carta: " + nome + ", Resistência: " + getResistencia();

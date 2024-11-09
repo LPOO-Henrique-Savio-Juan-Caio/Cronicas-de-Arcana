@@ -8,6 +8,15 @@ public class Encantamento extends Carta {
         this.efeito = efeito;
     }
 
+    public String getEfeito() {
+        return efeito;
+    }
+    
+    @Override
+    public String getTipoCarta(){
+        return "Encantamento";
+    }
+
     @Override
     public void receberDano(double dano) {
         // encantamento não tem resistência, então o método está vazio

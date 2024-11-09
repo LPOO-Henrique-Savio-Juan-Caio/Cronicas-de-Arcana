@@ -2,13 +2,13 @@ package main;
 
 import cartas.CartasJogo;
 import entidades.*;
-import java.awt.*;
-import java.util.ArrayList;
-import javax.swing.*;
+import gui.PainelJogadoresGui;
 import gui.zonas.CampoBatalhaGui;
 import gui.zonas.CemiterioGui;
 import gui.zonas.MaoGui;
-import gui.PainelJogadoresGui;
+import java.awt.*;
+import java.util.ArrayList;
+import javax.swing.*;
 import logica.Logica;
 
 
@@ -25,14 +25,17 @@ import logica.Logica;
 //pretendo criar uma tela onde mostre os jogadores e sua respectivas vitorias em uma especia de ranking
 //obs: progressao é instanciada de uma maneira interessante (ainda nao testei), mas aparentemente pode ser instanciada em qlqr classe
 
-//estamos aqui: 
-
+//fiz hoje:
 //4 - separar as funções em classes diferentes (logica , guimao, guicampo...etc)
 //5 - clicar com botao direito nas cartas mostra suas informações
+
+//estamos aqui: 
 //5 - funcionamento de encantamento(continua com efeito em X rounds) e feitiço(de boinha) - ambos nao vao para o campo de batalha
 //6 - mostrar vida das cartas que estao no campo de batalha
 //7 - tela ranking jogadores
 //8 - tela instruções do jogo
+
+//obs: tentei implementar feitiço mas ficou muito confuso.
 
 public class Game {
 

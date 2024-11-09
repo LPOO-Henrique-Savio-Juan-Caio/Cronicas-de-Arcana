@@ -1,16 +1,15 @@
 package logica;
 
+import Enum.Efeito;
 import entidades.Jogador;
 import entidades.carta.Carta;
 import entidades.carta.Criatura;
 import entidades.carta.Encantamento;
 import entidades.carta.Feitico;
-
-import java.awt.*;
-import javax.swing.*;
+import gui.PainelJogadoresGui;
 import gui.zonas.CampoBatalhaGui;
 import gui.zonas.MaoGui;
-import gui.PainelJogadoresGui;
+import javax.swing.*;
 import main.Game;
 import main.Progressao;
 
@@ -18,7 +17,9 @@ import main.Progressao;
 //obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores
 //vamos colocar isturnoJogador como parte dessa classe
 
-//problema: +4mana esta entrando de maneira errada
+//problema: a logica de reviver cartas do cemiterio ainda esta paia, ver isso depois, fazer com que o jogador possa escolher
+//problema2: os encantamento ainda n atacam as cartas que estao no campo
+//na vdd toda a logica de encantamento e feitiço ta complicada
 
 
 public class Logica {
@@ -167,10 +168,67 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                 }
                 //encantamento: apenas tem seu efeito no oponente
                 else if(carta instanceof Feitico feitico){
-                    
+                    System.out.println("feitiço lançado");
+                    String tipoEfeito = feitico.getEfeito();
+                    Efeito efeito = null;
+
+                    switch (tipoEfeito.toUpperCase()) {
+                        case "DANO":
+                            efeito = Efeito.DANO;
+                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
+                            break;
+                        case "MUITO_DANO":
+                            efeito = Efeito.MUITO_DANO;
+                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Muito Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
+                            break;
+                        case "VIDA":
+                            efeito = Efeito.VIDA;
+                            jogador.alterarVidaDouble(-efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
+                            break;
+                        case "MUITA_VIDA":
+                            efeito = Efeito.MUITA_VIDA;
+                            jogador.alterarVidaDouble(-efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Muita Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
+                            break;
+                        case "MANA":
+                            efeito = Efeito.MANA;
+                            jogador.alterarManaDouble(efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
+                            break;
+                        case "MUITA_MANA":
+                            efeito = Efeito.MUITA_MANA;
+                            jogador.alterarManaDouble(efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Muita Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
+                            break;
+                        case "REVIVER":
+                            efeito = Efeito.REVIVER;
+                            if (!jogador.getCemiterio().getCartasCemiterio().isEmpty()) {
+                                // Revive uma criatura aleatória do cemitério
+                                //por enquanto esta essa doidera, depois vamos fazer com que o jogador possa escolher
+                                Carta cartaReviver = jogador.getCemiterio().getCartasCemiterio().get(0); // Pega a primeira carta
+                                jogador.getCemiterio().getCartasCemiterio().remove(cartaReviver);
+                                jogador.getCampoBatalha().adicionarCartaAoCampo(cartaReviver);
+                                JOptionPane.showMessageDialog(frame, "Feitiço de Reviver lançado! Criatura " + cartaReviver.getNome() + " revivida.");
+                            } else {
+                                JOptionPane.showMessageDialog(frame, "Não há criaturas para reviver.");
+                            }
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(frame, "Tipo de feitiço desconhecido.");
+                            break;
+                    }
+                
+                    // Remove o feitiço da mão e gasta mana
+                    jogador.getMao().removerCarta(carta);
+                    jogador.alterarMana(carta);
                 }
+
                 //tem seu efeito em um determinado numero de round
                 else if (carta instanceof Encantamento encantamento) {
+                    System.out.println("encantamento lançado");
                     
                 }
                 
@@ -192,10 +250,12 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
             } else {
                 JOptionPane.showMessageDialog(frame, "Mana insuficiente!");
             }
-        } else {
+        } 
+        else{
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
-    }
+     }
+    
 
     public void usarCarta(Jogador jogador, Carta carta, Jogador jogadorRival){
         jogador.alterarMana(carta);

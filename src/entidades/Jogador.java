@@ -1,13 +1,11 @@
 package entidades;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import static Enum.Valores.*;
+import cartas.DeckPadrao;
 import entidades.carta.*;
 import entidades.zonas.*;
-import cartas.DeckPadrao;
-
-import static Enum.Valores.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Jogador {
 
@@ -105,6 +103,14 @@ public class Jogador {
 
     public void alterarMana(Carta carta){
         this.setMana(this.getMana() - carta.getCustoMana());
+    }
+
+    public void alterarVidaDouble(double valor){
+        this.setVida(this.getVida() + valor);
+    }
+
+    public void alterarManaDouble(double valor){
+        this.setMana(this.getMana() + valor);
     }
 
     public void removerCarta(Carta carta){

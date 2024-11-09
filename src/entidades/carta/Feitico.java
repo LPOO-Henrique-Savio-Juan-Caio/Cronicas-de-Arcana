@@ -7,6 +7,9 @@ public class Feitico extends Carta {
         super(nome, custoMana, tipoCarta);
         this.efeito = efeito;
     }
+    public String getEfeito() {
+        return efeito;
+    }
 
     @Override
     public void receberDano(double dano) {
@@ -17,6 +20,11 @@ public class Feitico extends Carta {
     @Override
     public double getResistencia() {
         return 0;
+    }
+    
+    @Override
+    public String getTipoCarta(){
+        return "Feitiço";
     }
     
 }
