@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.atomic.AtomicReference;
 
 import entidades.Jogador;
 import entidades.carta.Carta;
@@ -18,6 +19,7 @@ private Game game;
     private Jogador jogador2;
     private JFrame frame;
     private Logica logica;
+    private Carta cartaSelecionada;
 
     public CemiterioGui(Game game, Jogador jogador1, Jogador jogador2, JFrame frame, Logica logica ){
         this.game = game;
@@ -84,4 +86,44 @@ private Game game;
     }
 
 
+
+    public Carta selecionarCartaCemiterio(Jogador jogador) {
+
+        // jdialog para exibir as cartas
+        JDialog cemiterioDialog = new JDialog();
+        cemiterioDialog.setTitle("Cemitério de " + jogador.getNome());
+        cemiterioDialog.setSize(300, 400); // Ajuste o tamanho conforme necessário
+        cemiterioDialog.setLocationRelativeTo(null); // Centraliza na tela
+
+        JPanel cemiterioPanel = new JPanel();
+        cemiterioPanel.setLayout(new BoxLayout(cemiterioPanel, BoxLayout.Y_AXIS));
+        cemiterioPanel.setBackground(Color.DARK_GRAY);
+
+        // Loop para adicionar botões de cartas
+        for (Carta carta : jogador.getCemiterio().getCartasCemiterio()) {
+            JButton cartaButton = new JButton(carta.getNome());
+            cartaButton.setPreferredSize(new Dimension(150, 40));
+            cartaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            // Ao clicar, define a carta selecionada e fecha o diálogo
+            cartaButton.addActionListener(ev -> {
+                cartaSelecionada = carta;
+                cemiterioDialog.dispose();
+            });
+
+            cemiterioPanel.add(cartaButton);
+            cemiterioPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Espaço entre cartas
+        }
+
+        // Adiciona o painel ao diálogo e exibe
+        cemiterioDialog.add(new JScrollPane(cemiterioPanel));
+        cemiterioDialog.setModal(true); // Define o diálogo como modal para pausar a execução
+        cemiterioDialog.setVisible(true);
+
+        // Retorna a carta selecionada
+        return cartaSelecionada;
+    }
 }
+
+
+

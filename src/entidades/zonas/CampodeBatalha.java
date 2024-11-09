@@ -1,7 +1,6 @@
 package entidades.zonas;
 
 import entidades.carta.Carta;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,4 +33,22 @@ public class CampodeBatalha {
             carta.receberDano(cartaInimiga.getPoder());
         }
     }
+
+    @Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Cartas no Campo de Batalha: ");
+
+    if (CartasnoCampo.isEmpty()) {
+        sb.append("Nenhuma carta no campo.");
+    } else {
+        for (Carta carta : CartasnoCampo) {
+            sb.append(carta.getNome()).append(", ");
+        }
+        // Remove a última vírgula e espaço
+        sb.setLength(sb.length() - 2);
+    }
+
+    return sb.toString();
+}
 }

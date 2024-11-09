@@ -26,5 +26,15 @@ public class Feitico extends Carta {
     public String getTipoCarta(){
         return "Feitiço";
     }
+
+    @Override
+    public void setResistencia(double resistencia){
+        
+    }
+    
+    @Override
+    public double getResistenciaTotal() {
+        return 0;
+    }
     
 }

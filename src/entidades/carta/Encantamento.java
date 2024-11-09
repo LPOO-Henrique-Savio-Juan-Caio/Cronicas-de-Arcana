@@ -27,4 +27,15 @@ public class Encantamento extends Carta {
     public double getResistencia() {
         return 0;
     }
+
+    @Override
+    public void setResistencia(double resistencia){
+        
+    }
+    
+    
+    @Override
+    public double getResistenciaTotal() {
+        return 0;
+    }
 }

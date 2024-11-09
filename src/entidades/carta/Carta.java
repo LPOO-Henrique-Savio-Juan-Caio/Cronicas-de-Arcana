@@ -53,6 +53,10 @@ public abstract  class Carta {
 
     public abstract double getResistencia();
 
+    public abstract double getResistenciaTotal();
+
+    public abstract void setResistencia(double resistencia);
+
     public abstract String getTipoCarta();
 
     @Override

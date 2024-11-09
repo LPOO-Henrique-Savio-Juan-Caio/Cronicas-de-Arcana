@@ -8,6 +8,7 @@ import entidades.carta.Encantamento;
 import entidades.carta.Feitico;
 import gui.PainelJogadoresGui;
 import gui.zonas.CampoBatalhaGui;
+import gui.zonas.CemiterioGui;
 import gui.zonas.MaoGui;
 import javax.swing.*;
 import main.Game;
@@ -36,6 +37,7 @@ public class Logica {
     //por enquanto vou puxar alguns metodos GUI de la, depois vou mudar para as classes respectivas
     private CampoBatalhaGui campobatalhaGui;
     private PainelJogadoresGui paineljogadores;
+    private CemiterioGui cemiteriogui;
 
     //nesse caso logica recebe como parametro a propria classe game
     public Logica(Game game, Jogador jogador1, Jogador jogador2, JFrame frame){
@@ -47,6 +49,7 @@ public class Logica {
         campobatalhaGui = new CampoBatalhaGui(game, jogador1, jogador2, frame, this);
         paineljogadores = new PainelJogadoresGui(game, jogador1, jogador2, frame, this);
         maogui = new MaoGui(game, jogador1, jogador2, frame, this);
+        cemiteriogui = new CemiterioGui(game, jogador1, jogador2, frame, this);
         
 
         
@@ -170,55 +173,35 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                 else if(carta instanceof Feitico feitico){
                     System.out.println("feitiço lançado");
                     String tipoEfeito = feitico.getEfeito();
-                    Efeito efeito = null;
-
-                    switch (tipoEfeito.toUpperCase()) {
-                        case "DANO":
-                            efeito = Efeito.DANO;
+                    Efeito efeito = Efeito.valueOf(tipoEfeito.toUpperCase());
+                    double valorEfeito = efeito.getEfeito();
+                    if(valorEfeito > 0){
+                        if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
+                            //tirar vida do jogadorRival
                             jogadorRival.alterarVidaDouble(-efeito.getEfeito());
                             JOptionPane.showMessageDialog(frame, "Feitiço de Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
-                            break;
-                        case "MUITO_DANO":
-                            efeito = Efeito.MUITO_DANO;
-                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Muito Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
-                            break;
-                        case "VIDA":
-                            efeito = Efeito.VIDA;
-                            jogador.alterarVidaDouble(-efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
-                            break;
-                        case "MUITA_VIDA":
-                            efeito = Efeito.MUITA_VIDA;
-                            jogador.alterarVidaDouble(-efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Muita Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
-                            break;
-                        case "MANA":
-                            efeito = Efeito.MANA;
+                        }
+                        else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
+                            //dar mana
                             jogador.alterarManaDouble(efeito.getEfeito());
                             JOptionPane.showMessageDialog(frame, "Feitiço de Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
-                            break;
-                        case "MUITA_MANA":
-                            efeito = Efeito.MUITA_MANA;
-                            jogador.alterarManaDouble(efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Muita Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
-                            break;
-                        case "REVIVER":
-                            efeito = Efeito.REVIVER;
-                            if (!jogador.getCemiterio().getCartasCemiterio().isEmpty()) {
-                                // Revive uma criatura aleatória do cemitério
-                                //por enquanto esta essa doidera, depois vamos fazer com que o jogador possa escolher
-                                Carta cartaReviver = jogador.getCemiterio().getCartasCemiterio().get(0); // Pega a primeira carta
-                                jogador.getCemiterio().getCartasCemiterio().remove(cartaReviver);
-                                jogador.getCampoBatalha().adicionarCartaAoCampo(cartaReviver);
-                                JOptionPane.showMessageDialog(frame, "Feitiço de Reviver lançado! Criatura " + cartaReviver.getNome() + " revivida.");
-                            } else {
-                                JOptionPane.showMessageDialog(frame, "Não há criaturas para reviver.");
-                            }
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(frame, "Tipo de feitiço desconhecido.");
-                            break;
+                        }
+                    }
+                    else if(valorEfeito < 0){
+                        //dar vida(resistencia) ao jogador
+                        jogador.alterarVidaDouble(-efeito.getEfeito());
+                        JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame, "O feitiço Necromancia foi escolhido, escolha uma carta para reviver");
+                        Carta cartaEscolhida = cemiteriogui.selecionarCartaCemiterio(jogador);
+                        jogador.getCemiterio().getCartasCemiterio().remove(cartaEscolhida);
+                        jogador.getCampoBatalha().adicionarCartaAoCampo(cartaEscolhida);
+                        JOptionPane.showMessageDialog(frame, "Carta: " + cartaEscolhida.getNome() + " revivida direto para o Campo de Batalha");
+                        
+                        //enchendo a vida da carta:
+                        cartaEscolhida.setResistencia(cartaEscolhida.getResistenciaTotal());
+                        System.out.println(jogador.getCampoBatalha().toString());
                     }
                 
                     // Remove o feitiço da mão e gasta mana
@@ -236,10 +219,12 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                 // Painéis dos campos de batalha dos jogadores
                 JPanel campoBatalhaPanel = jogador.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
                 JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
-    
+                
                 // Atualiza os painéis do campo de batalha
                 campobatalhaGui.atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
                 campobatalhaGui.atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
+                System.out.println(jogador.getCampoBatalha().toString());
+
                 
                 // Atualiza a mão do jogador
                 maogui.atualizarPanelMao(jogador);
