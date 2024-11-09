@@ -1,9 +1,9 @@
-package main.gui;
+package gui.zonas;
 
 import entidades.Jogador;
 import entidades.carta.Carta;
 import main.Game;
-import main.Logica;
+import logica.Logica;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

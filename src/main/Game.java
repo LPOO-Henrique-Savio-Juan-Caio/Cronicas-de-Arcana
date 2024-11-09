@@ -1,13 +1,15 @@
 package main;
 
+import cartas.CartasJogo;
 import entidades.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import main.gui.CampoBatalhaGui;
-import main.gui.CemiterioGui;
-import main.gui.MaoGui;
-import main.gui.PainelJogadoresGui;
+import gui.zonas.CampoBatalhaGui;
+import gui.zonas.CemiterioGui;
+import gui.zonas.MaoGui;
+import gui.PainelJogadoresGui;
+import logica.Logica;
 
 
 //questoes sobre a logica do jogo:

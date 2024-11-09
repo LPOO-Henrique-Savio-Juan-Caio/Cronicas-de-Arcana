@@ -9,10 +9,11 @@ public class Deck implements AcoesZonas{
 
 
 
-    //a ideia é criar um array com o nome de todas as cartas, eles serao percorridos um a um até que ache a carta em algum dos objetos que criaremos de cada tipo
+    //a ideia é criar um array com o nome de todas as cartas, eles serao percorridos um a
+    // um até que ache a carta em algum dos objetos que criaremos de cada tipo
     public Deck(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas){
         this.cartas = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 30; i++) {
             Carta cartaSelecionada = selecionarCarta(arrayCartas, nomesCartas.get(i));
             if (cartaSelecionada != null) {
                 cartas.add(cartaSelecionada);

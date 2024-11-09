@@ -5,7 +5,7 @@ import java.util.List;
 
 import entidades.carta.*;
 import entidades.zonas.*;
-import main.DeckPadrao;
+import cartas.DeckPadrao;
 
 import static Enum.Valores.*;
 

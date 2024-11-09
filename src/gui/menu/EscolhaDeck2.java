@@ -1,4 +1,4 @@
-package main.menus;
+package gui.menu;
 
 //importações
 import java.awt.*;
@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-import main.CartasJogo;
-import main.DeckPadrao;
+import cartas.CartasJogo;
+import cartas.DeckPadrao;
 import main.Game;
 
 public class EscolhaDeck2 {

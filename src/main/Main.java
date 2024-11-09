@@ -1,8 +1,7 @@
 package main;
 
 import javax.swing.*;
-
-import main.menus.InserirNomes;
+import gui.menu.InserirNomes;
 
 public class Main {
     public static String jogador1;

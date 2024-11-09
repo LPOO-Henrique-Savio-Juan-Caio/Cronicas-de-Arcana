@@ -28,4 +28,8 @@ public class Criatura extends Carta {
     public double getResistencia() {
         return resistencia;
     }
+
+    public String getHabilidade(){
+        return this.habilidade;
+    }
 }

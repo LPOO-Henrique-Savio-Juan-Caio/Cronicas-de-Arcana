@@ -1,8 +1,8 @@
-package main.gui;
+package gui;
 
 import entidades.Jogador;
 import main.Game;
-import main.Logica;
+import logica.Logica;
 
 import java.awt.*;
 import javax.swing.*;

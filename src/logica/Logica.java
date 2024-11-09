@@ -1,11 +1,13 @@
-package main;
+package logica;
 
 import entidades.Jogador;
 import entidades.carta.Carta;
 import java.awt.*;
 import javax.swing.*;
-import main.gui.CampoBatalhaGui;
-import main.gui.PainelJogadoresGui;
+import gui.zonas.CampoBatalhaGui;
+import gui.PainelJogadoresGui;
+import main.Game;
+import main.Progressao;
 
 //aqui vou colocar todas as funções que sao da logica do jogo
 //obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores

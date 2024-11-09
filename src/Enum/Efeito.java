@@ -5,6 +5,8 @@ public enum Efeito {
     MUITO_DANO(10.0),
     VIDA(-5.0),
     MUITA_VIDA(-10.0),
+    MANA(5.0),
+    MUITA_MANA(10.0),
     REVIVER(0.0);
 
     private final double efeito;

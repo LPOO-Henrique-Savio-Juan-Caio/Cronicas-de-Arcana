@@ -1,16 +1,14 @@
-package main.gui;
+package gui.zonas;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 import entidades.Jogador;
 import entidades.carta.Carta;
 import main.Game;
-import main.Logica;
+import logica.Logica;
 
 public class CemiterioGui {
 private Game game;

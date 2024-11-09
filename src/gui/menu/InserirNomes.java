@@ -1,4 +1,4 @@
-package main.menus;
+package gui.menu;
 
 //importações
 import java.awt.*;
