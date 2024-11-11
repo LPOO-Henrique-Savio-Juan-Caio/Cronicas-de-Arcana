@@ -66,16 +66,16 @@ public class CartasJogo {
         arrayCartas.add(new Feitico("Toque de Vida", 3.0, "Vida", "vida"));
 
 // Adicionando 10 objetos da classe Encantamento.
-        arrayCartas.add(new Encantamento("Faíscas", 3.0, "Fogo", "dano"));
-        arrayCartas.add(new Encantamento("Estalagmites", 4.0, "Gelo", "muito_dano"));
-        arrayCartas.add(new Encantamento("Temporal", 4.5, "Ar", "dano"));
-        arrayCartas.add(new Encantamento("Terremoto", 5.0, "Terra", "dano"));
-        arrayCartas.add(new Encantamento("Chuva de Lava", 4.5, "Fogo", "muito_dano"));
-        arrayCartas.add(new Encantamento("Regeneração Contínua", 4.0, "Gelo", "vida"));
-        arrayCartas.add(new Encantamento("Carregar Energia", 4.0, "Ar", "muita_mana"));
-        arrayCartas.add(new Encantamento("Vida em Prestacao", 4.5, "Terra", "vida"));
-        arrayCartas.add(new Encantamento("Sorte Divina", 5.5, "Fogo", "muita_vida"));
-        arrayCartas.add(new Encantamento("Bateria Fraca", 5.0, "Ar", "mana"));
+        arrayCartas.add(new Encantamento("Faíscas", 3.0, "Fogo", "dano", 2));
+        arrayCartas.add(new Encantamento("Estalagmites", 4.0, "Gelo", "muito_dano", 3));
+        arrayCartas.add(new Encantamento("Temporal", 4.5, "Ar", "dano", 4));
+        arrayCartas.add(new Encantamento("Terremoto", 5.0, "Terra", "dano", 5));
+        arrayCartas.add(new Encantamento("Chuva de Lava", 4.5, "Fogo", "muito_dano", 3));
+        arrayCartas.add(new Encantamento("Regeneração Contínua", 4.0, "Gelo", "vida", 2));
+        arrayCartas.add(new Encantamento("Carregar Energia", 4.0, "Ar", "muita_mana", 1));
+        arrayCartas.add(new Encantamento("Vida em Prestacao", 4.5, "Terra", "vida", 5));
+        arrayCartas.add(new Encantamento("Sorte Divina", 5.5, "Fogo", "muita_vida", 4));
+        arrayCartas.add(new Encantamento("Bateria Fraca", 5.0, "Ar", "mana", 2));
 
     }
 

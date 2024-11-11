@@ -10,6 +10,7 @@ import gui.PainelJogadoresGui;
 import gui.zonas.CampoBatalhaGui;
 import gui.zonas.CemiterioGui;
 import gui.zonas.MaoGui;
+import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
 import main.Progressao;
@@ -18,9 +19,7 @@ import main.Progressao;
 //obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores
 //vamos colocar isturnoJogador como parte dessa classe
 
-//problema: a logica de reviver cartas do cemiterio ainda esta paia, ver isso depois, fazer com que o jogador possa escolher
-//problema2: os encantamento ainda n atacam as cartas que estao no campo
-//na vdd toda a logica de encantamento e feitiço ta complicada
+
 
 
 public class Logica {
@@ -39,6 +38,9 @@ public class Logica {
     private PainelJogadoresGui paineljogadores;
     private CemiterioGui cemiteriogui;
 
+    private ArrayList<Encantamento> encantamentoAtivosJ1;
+    private ArrayList<Encantamento> encantamentoAtivosJ2;
+
     //nesse caso logica recebe como parametro a propria classe game
     public Logica(Game game, Jogador jogador1, Jogador jogador2, JFrame frame){
         this.game = game; // Armazenando a instância de Game
@@ -50,11 +52,12 @@ public class Logica {
         paineljogadores = new PainelJogadoresGui(game, jogador1, jogador2, frame, this);
         maogui = new MaoGui(game, jogador1, jogador2, frame, this);
         cemiteriogui = new CemiterioGui(game, jogador1, jogador2, frame, this);
-        
 
-        
 
-       
+        //inicializando array de encantamentosAtivos:
+        encantamentoAtivosJ1 = new ArrayList<>();
+        encantamentoAtivosJ2 = new ArrayList<>();
+        
         
     }
 
@@ -69,7 +72,29 @@ public class Logica {
             proximoJogador.addMana(4);
             paineljogadores.atualizarPainelJogadores();
             JOptionPane.showMessageDialog(frame, "+4 de mana para ambos os jogadores");
-            
+            //logica para encantamentos ativos
+            if(!encantamentoAtivosJ1.isEmpty()){
+                for (Encantamento encantamento : encantamentoAtivosJ1){
+                    //ativa cada encantamento do jogador1
+                    jogarEncantamento(jogador1, jogador2, encantamento, encantamento);
+                    encantamento.decresceDuracao();
+                    if(encantamento.getDuracao() == 0){
+                        encantamentoAtivosJ1.remove(encantamento);
+                    }
+                    JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes" );
+                    //posso colocar um aviso de encantamento usado aqui
+                }
+            }
+            if(!encantamentoAtivosJ2.isEmpty()){
+                for (Encantamento encantamento : encantamentoAtivosJ2){
+                    jogarEncantamento(jogador2, jogador1, encantamento, encantamento);
+                    encantamento.decresceDuracao();
+                    if(encantamento.getDuracao() == 0){
+                        encantamentoAtivosJ2.remove(encantamento);
+                    }
+                    JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes" );
+                }
+            }
 
         }
     
@@ -169,49 +194,21 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                     //falta colocar pra gastar mana
 
                 }
-                //encantamento: apenas tem seu efeito no oponente
+                //feitiço:
                 else if(carta instanceof Feitico feitico){
-                    System.out.println("feitiço lançado");
-                    String tipoEfeito = feitico.getEfeito();
-                    Efeito efeito = Efeito.valueOf(tipoEfeito.toUpperCase());
-                    double valorEfeito = efeito.getEfeito();
-                    if(valorEfeito > 0){
-                        if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
-                            //tirar vida do jogadorRival
-                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
-                        }
-                        else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
-                            //dar mana
-                            jogador.alterarManaDouble(efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Feitiço de Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
-                        }
-                    }
-                    else if(valorEfeito < 0){
-                        //dar vida(resistencia) ao jogador
-                        jogador.alterarVidaDouble(-efeito.getEfeito());
-                        JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(frame, "O feitiço Necromancia foi escolhido, escolha uma carta para reviver");
-                        Carta cartaEscolhida = cemiteriogui.selecionarCartaCemiterio(jogador);
-                        jogador.getCemiterio().getCartasCemiterio().remove(cartaEscolhida);
-                        jogador.getCampoBatalha().adicionarCartaAoCampo(cartaEscolhida);
-                        JOptionPane.showMessageDialog(frame, "Carta: " + cartaEscolhida.getNome() + " revivida direto para o Campo de Batalha");
-                        
-                        //enchendo a vida da carta:
-                        cartaEscolhida.setResistencia(cartaEscolhida.getResistenciaTotal());
-                        System.out.println(jogador.getCampoBatalha().toString());
-                    }
-                
-                    // Remove o feitiço da mão e gasta mana
-                    jogador.getMao().removerCarta(carta);
-                    jogador.alterarMana(carta);
+                    jogarFeitiço(jogador, jogadorRival, feitico, carta);
                 }
 
-                //tem seu efeito em um determinado numero de round
+                //encantamento: efeito em determinado numero de rounds
                 else if (carta instanceof Encantamento encantamento) {
                     System.out.println("encantamento lançado");
+                    //colocamos o encantamento na lista de encantamentos do jogador respectivo
+                    if(jogador.equals(jogador1)){
+                        encantamentoAtivosJ1.add(encantamento);
+                    }
+                    else if(jogador.equals(jogador2)){
+                        encantamentoAtivosJ2.add(encantamento);
+                    }
                     
                 }
                 
@@ -240,13 +237,82 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
      }
+
+     public void jogarFeitiço(Jogador jogador, Jogador jogadorRival, Feitico feitico, Carta carta){
+        System.out.println("feitiço lançado");
+                    String tipoEfeito = feitico.getEfeito();
+                    Efeito efeito = Efeito.valueOf(tipoEfeito.toUpperCase());
+                    double valorEfeito = efeito.getEfeito();
+                    if(valorEfeito > 0){
+                        if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
+                            //tirar vida do jogadorRival
+                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
+                            //tira vida das cartas do jogadorRival
+                            jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
+                        }
+                        else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
+                            //dar mana
+                            jogador.alterarManaDouble(efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Feitiço de Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
+                        }
+                    }
+                    else if(valorEfeito < 0){
+                        //dar vida(resistencia) ao jogador
+                        jogador.alterarVidaDouble(-efeito.getEfeito());
+                        JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame, "O feitiço Necromancia foi escolhido, escolha uma carta para reviver");
+                        Carta cartaEscolhida = cemiteriogui.selecionarCartaCemiterio(jogador);
+                        jogador.getCemiterio().getCartasCemiterio().remove(cartaEscolhida);
+                        jogador.getCampoBatalha().adicionarCartaAoCampo(cartaEscolhida);
+                        JOptionPane.showMessageDialog(frame, "Carta: " + cartaEscolhida.getNome() + " revivida direto para o Campo de Batalha");
+                        
+                        //enchendo a vida da carta:
+                        cartaEscolhida.setResistencia(cartaEscolhida.getResistenciaTotal());
+                        System.out.println(jogador.getCampoBatalha().toString());
+                    }
+                
+                    // Remove o feitiço da mão e gasta mana
+                    jogador.getMao().removerCarta(carta);
+                    jogador.alterarMana(carta);
+
+     }
     
+     public void jogarEncantamento(Jogador jogador, Jogador jogadorRival, Encantamento encantamento, Carta carta){
+        System.out.println("encantamento lançado");
+                    String tipoEfeito = encantamento.getEfeito();
+                    Efeito efeito = Efeito.valueOf(tipoEfeito.toUpperCase());
+                    double valorEfeito = efeito.getEfeito();
+                    if(valorEfeito > 0){
+                        if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
+                            //tirar vida do jogadorRival
+                            //tira vida das cartas do jogadorRival
+                            jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
+                            jogadorRival.alterarVidaDouble(-efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                        }
+                        else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
+                            //dar mana
+                            jogador.alterarManaDouble(efeito.getEfeito());
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                        }
+                    }
+                    else if(valorEfeito < 0){
+                        //dar vida(resistencia) ao jogador
+                        jogador.alterarVidaDouble(-efeito.getEfeito());
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.toString());
+                    }
 
-    public void usarCarta(Jogador jogador, Carta carta, Jogador jogadorRival){
-        jogador.alterarMana(carta);
-        jogadorRival.alterarVida(carta);
+                
+                    // Remove o Encantamento da mão e gasta mana
+                    jogador.getMao().removerCarta(carta);
+                    jogador.alterarMana(carta);
+                    paineljogadores.atualizarPainelJogadores();
 
-    }
+     }
+    
 
 
     
