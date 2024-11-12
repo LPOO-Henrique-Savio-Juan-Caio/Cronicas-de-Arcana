@@ -35,7 +35,7 @@ public class CampoBatalhaGui {
         playerCampoBatalhaPanel.setLayout(new BoxLayout(playerCampoBatalhaPanel, BoxLayout.Y_AXIS));
         playerCampoBatalhaPanel.setBackground(Color.BLACK);
 
-        for(Carta carta : jogador.getCampoBatalha().getCartasnoCampo()){
+        for(Carta carta : jogador.getCampoBatalha().getCartasNoCampo()){
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -72,7 +72,7 @@ public class CampoBatalhaGui {
 
 
         //itera sobre as cartas no campo de batalha
-        for (Carta carta : jogador.getCampoBatalha().getCartasnoCampo()) {
+        for (Carta carta : jogador.getCampoBatalha().getCartasNoCampo()) {
             //verifica se as cartas estao vivas
             if (carta.getResistencia() > 0) {
                 //cria gui da carta

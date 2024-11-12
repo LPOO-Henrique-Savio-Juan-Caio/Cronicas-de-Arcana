@@ -3,17 +3,17 @@ package entidades.carta;
 public class Encantamento extends Carta {
     private String efeito;
     private int duracao;
-    private int duracaomaxima;
+    private int duracaoMaxima;
     
     public Encantamento (String nome, double custoMana, String tipoCarta, String efeito, int duracao){
         super(nome, custoMana, tipoCarta);
         this.efeito = efeito;
         this.duracao = duracao;
-        this.duracaomaxima = duracao;
+        this.duracaoMaxima = duracao;
     }
 
-    public int getDuracaomaxima() {
-        return duracaomaxima;
+    public int getDuracaoMaxima() {
+        return duracaoMaxima;
     }
     
     public int getDuracao() {
@@ -24,7 +24,7 @@ public class Encantamento extends Carta {
         this.duracao = duracao;
     }
 
-    public void decresceDuracao(){
+    public void decrescerDuracao(){
         this.duracao -= 1;
     }
 

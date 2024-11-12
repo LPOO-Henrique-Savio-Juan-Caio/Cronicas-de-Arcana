@@ -1,7 +1,7 @@
 package main;
 
 import javax.swing.*;
-import gui.menu.InserirNomes;
+import gui.menu.TelaInicial;
 
 public class Main {
     public static String jogador1;
@@ -11,7 +11,8 @@ public class Main {
         //nesse caso precisei criar a janela aqui pra ter controle sobre a hora dela fechar e etc
         JFrame frame = new JFrame();
 
-        InserirNomes menu = new InserirNomes(frame);
+        //InserirNomes menu = new InserirNomes(frame);
+        TelaInicial menu = new TelaInicial(frame);
         menu.menuStart();
 
         //o codigo de cima é o correto, por enquanto vou instancia game direto aqui pra testar mais facil a tela de jogo:

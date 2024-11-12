@@ -50,7 +50,7 @@ public class EscolhaDeck2 {
         panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBackground(Color.BLACK);
+        panel1.setBackground(new Color(0, 128, 0));
 
         //titulo
         JLabel titulomenu3 = new JLabel(jogador2 + " ESCOLHA SEU DECK:");
@@ -130,12 +130,16 @@ public class EscolhaDeck2 {
 
     //tela do jogo
     public void menu3Start() {
+        JFrame frame = new JFrame("Cronicas de Arcana");
+        frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1); // Adiciona o painel da interface
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
 
-        JFrame frame = new JFrame("Menu");
-        frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1);
-        frame.setMinimumSize(new Dimension(450,474));// Adiciona o painel da classe Menu
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Configura para fechar ao clicar no 'X
-        frame.pack();  // Ajusta o tamanho da janela para caber nos componentes
+        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        Dimension resolution4x3 = new Dimension(1024, 768);
+        frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
+        frame.setSize(resolution4x3); // Define o tamanho inicial da janela
+        frame.setMaximumSize(resolution4x3); // Define o tamanho máximo para manter a proporção
+
         frame.setVisible(true);  // Torna a janela visível
     }
 }

@@ -5,9 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
-
-
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 
 public class InserirNomes {
@@ -19,16 +18,16 @@ public class InserirNomes {
     private JButton continuarButton;
     private JFrame frame;
 
-    
+
     public InserirNomes(JFrame frame) {
-        this.frame = frame; 
+        this.frame = frame;
         //obs: o laytou GridBagLayout funciona atraves de celular, é meio paia...
-        
+
         //conteiner da tela
         panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBackground(Color.BLACK);
+        panel1.setBackground(new Color(0, 128, 0)); // Verde escuro
 
         //titulo da tela
         JLabel titleLabel = new JLabel("CRÔNICAS DE ARCANA");
@@ -79,7 +78,7 @@ public class InserirNomes {
         //botao de continuar
         continuarButton = new JButton("Continuar");
         continuarButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        continuarButton.setBackground(Color.BLACK);
+        continuarButton.setBackground(Color.BLUE);
         continuarButton.setForeground(Color.WHITE);
         //posição
         gbc.gridx = 1;
@@ -87,33 +86,50 @@ public class InserirNomes {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(continuarButton, gbc);
 
+        Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
+        panel1.setBorder(bordaPreta);
+
         //ação do botao
         continuarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //pega os textos (nome dos jogadores)
                 String jogador1Nome = nomeJogador1.getText();
-                String jogador2Nome = nomeJogador2.getText(); 
+                String jogador2Nome = nomeJogador2.getText();
 
                 // instancia e inicia o proximo menu ja com o nome dos jogadores
                 EscolhaDeck1 menu2 = new EscolhaDeck1(jogador1Nome, jogador2Nome, frame);
                 menu2.menu2Start();
-                frame.dispose(); 
-                
+                frame.dispose();
+
             }
         });
     }
 
     //tela
-    public void menuStart() {
-        JFrame frame = new JFrame("Menu");
+    /*public void menuStart() {
+        JFrame frame = new JFrame("Cronicas de Arcana");
         frame.setContentPane(new InserirNomes(frame).panel1); // Adiciona o painel da interface
-        frame.setMinimumSize(new Dimension(450, 474)); // Define o tamanho mínimo da janela
+        frame.setMinimumSize(new Dimension(800, 450)); // Define o tamanho mínimo da janela
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
         frame.pack(); // Ajusta o tamanho da janela automaticamente
         frame.setVisible(true); // Exibe a janela
+    }*/
+    public void menuStart() {
+        JFrame frame = new JFrame("Cronicas de Arcana");
+        frame.setContentPane(new InserirNomes(frame).panel1); // Adiciona o painel da interface
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
+
+        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        Dimension resolution4x3 = new Dimension(1024, 768);
+        frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
+        frame.setSize(resolution4x3); // Define o tamanho inicial da janela
+        frame.setMaximumSize(resolution4x3); // Define o tamanho máximo para manter a proporção
+
+        frame.setVisible(true); // Exibe a janela
     }
 
-   
-       
+
+
+
 }

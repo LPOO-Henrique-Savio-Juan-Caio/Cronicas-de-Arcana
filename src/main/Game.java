@@ -3,14 +3,11 @@ package main;
 import cartas.CartasJogo;
 import entidades.*;
 import gui.PainelJogadoresGui;
-import gui.zonas.CampoBatalhaGui;
-import gui.zonas.CemiterioGui;
-import gui.zonas.MaoGui;
+import gui.zonas.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import logica.Logica;
-
+import logica.*;
 
 //questoes sobre a logica do jogo:
 //obs: as cartas jogadas na mao dao dano nas cartas que ja estao no campo de batalha?
@@ -82,24 +79,24 @@ public class Game {
 
     private void initUI() {
         panel1 = new JPanel(new BorderLayout());
-        panel1.setBackground(Color.BLACK);
+        panel1.setBackground(new Color(0, 128, 0));
     
-        // Painel de informações dos jogadores
+        // gui de informações dos jogadores
         JPanel playerInfoPanel = new JPanel(new BorderLayout());
-        playerInfoPanel.setBackground(Color.BLACK);
+        playerInfoPanel.setBackground(new Color(0, 128, 0));
     
         // Configurações para o Jogador 1
         playerInfo1 = new JLabel(paineljogadores.createPlayerInfo(jogador1));
         paineljogadores.setupPlayerLabel(playerInfo1);
         JPanel player1Panel = new JPanel();
-        player1Panel.setBackground(Color.BLACK);
+        player1Panel.setBackground(new Color(0, 128, 0));
         player1Panel.add(playerInfo1);
     
         // Configurações para o Jogador 2
         playerInfo2 = new JLabel(paineljogadores.createPlayerInfo(jogador2));
         paineljogadores.setupPlayerLabel(playerInfo2);
         JPanel player2Panel = new JPanel();
-        player2Panel.setBackground(Color.BLACK);
+        player2Panel.setBackground(new Color(0, 128, 0));
         player2Panel.add(playerInfo2);
     
         playerInfoPanel.add(player1Panel, BorderLayout.WEST);
@@ -121,7 +118,7 @@ public class Game {
         // Painel vertical para o Jogador 1 (contém mão e cemitério)
         JPanel player1SidePanel = new JPanel();
         player1SidePanel.setLayout(new BoxLayout(player1SidePanel, BoxLayout.Y_AXIS));
-        player1SidePanel.setBackground(Color.BLACK);
+        player1SidePanel.setBackground(new Color(0, 128, 0));
         player1SidePanel.add(player1MaoPanel);
         player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaço entre mão e cemitério
         player1SidePanel.add(player1Cemiterio);
@@ -130,7 +127,7 @@ public class Game {
         // Painel vertical para o Jogador 2 (contém mão e cemitério)
         JPanel player2SidePanel = new JPanel();
         player2SidePanel.setLayout(new BoxLayout(player2SidePanel, BoxLayout.Y_AXIS));
-        player2SidePanel.setBackground(Color.BLACK);
+        player2SidePanel.setBackground(new Color(0, 128, 0));
         player2SidePanel.add(player2MaoPanel);
         player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaço entre mão e cemitério
         player2SidePanel.add(player2Cemiterio);
@@ -143,9 +140,9 @@ public class Game {
         player2CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador2, jogador1);
         player2CampoBatalhaPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
     
-        // Painel principal central para o campo de batalha
+        // gui principal central para o campo de batalha
         JPanel centralBattlePanel = new JPanel(new BorderLayout());
-        centralBattlePanel.setBackground(Color.BLACK);
+        centralBattlePanel.setBackground(new Color(0, 128, 0));
         centralBattlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
     
         // Adicionando os campos de batalha dos jogadores no painel central
@@ -188,9 +185,15 @@ public class Game {
 
 
     public void gameStart() {
-        frame.setContentPane(this.panel1);
-        frame.setMinimumSize(new Dimension(800, 474));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Cronicas de Arcana");
+        frame.setContentPane(panel1); // Adiciona o painel da interface
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
+
+        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        Dimension resolution4x3 = new Dimension(1024, 768);
+        frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
+        frame.setSize(resolution4x3); // Define o tamanho inicial da janela
+        frame.setMaximumSize(resolution4x3); // Define o tamanho máximo para manter a proporção
         frame.pack();
         frame.setVisible(true);
 

@@ -13,7 +13,6 @@ import gui.zonas.MaoGui;
 import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
-import main.Progressao;
 
 //aqui vou colocar todas as funções que sao da logica do jogo
 //obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores
@@ -77,7 +76,7 @@ public class Logica {
                 for (Encantamento encantamento : encantamentoAtivosJ1){
                     //ativa cada encantamento do jogador1
                     jogarEncantamento(jogador1, jogador2, encantamento, encantamento);
-                    encantamento.decresceDuracao();
+                    encantamento.decrescerDuracao();
                     if(encantamento.getDuracao() == 0){
                         encantamentoAtivosJ1.remove(encantamento);
                     }
@@ -88,7 +87,7 @@ public class Logica {
             if(!encantamentoAtivosJ2.isEmpty()){
                 for (Encantamento encantamento : encantamentoAtivosJ2){
                     jogarEncantamento(jogador2, jogador1, encantamento, encantamento);
-                    encantamento.decresceDuracao();
+                    encantamento.decrescerDuracao();
                     if(encantamento.getDuracao() == 0){
                         encantamentoAtivosJ2.remove(encantamento);
                     }
@@ -138,7 +137,7 @@ public class Logica {
     }
 
     public boolean CampoVazio(Jogador jogador) {
-        return jogador.getCampoBatalha().getCartasnoCampo().isEmpty();
+        return jogador.getCampoBatalha().getCartasNoCampo().isEmpty();
     }
 
     public boolean isTurnoJogador1() {
@@ -188,7 +187,7 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
 
                 //Criatura: vai pro campo de batalha, é removida da mao e gasta mana
                 if(carta instanceof Criatura criatura){
-                    jogador.getCampoBatalha().adicionarCartaAoCampo(carta);
+                    jogador.getCampoBatalha().adicionarCarta(carta);
                     jogador.getMao().removerCarta(carta); 
                     jogador.alterarMana(carta);
                     //falta colocar pra gastar mana
@@ -196,7 +195,7 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                 }
                 //feitiço:
                 else if(carta instanceof Feitico feitico){
-                    jogarFeitiço(jogador, jogadorRival, feitico, carta);
+                    jogarFeitico(jogador, jogadorRival, feitico, carta);
                 }
 
                 //encantamento: efeito em determinado numero de rounds
@@ -238,7 +237,7 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
         }
      }
 
-     public void jogarFeitiço(Jogador jogador, Jogador jogadorRival, Feitico feitico, Carta carta){
+     public void jogarFeitico(Jogador jogador, Jogador jogadorRival, Feitico feitico, Carta carta){
         System.out.println("feitiço lançado");
                     String tipoEfeito = feitico.getEfeito();
                     Efeito efeito = Efeito.valueOf(tipoEfeito.toUpperCase());
@@ -266,7 +265,7 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                         JOptionPane.showMessageDialog(frame, "O feitiço Necromancia foi escolhido, escolha uma carta para reviver");
                         Carta cartaEscolhida = cemiteriogui.selecionarCartaCemiterio(jogador);
                         jogador.getCemiterio().getCartasCemiterio().remove(cartaEscolhida);
-                        jogador.getCampoBatalha().adicionarCartaAoCampo(cartaEscolhida);
+                        jogador.getCampoBatalha().adicionarCarta(cartaEscolhida);
                         JOptionPane.showMessageDialog(frame, "Carta: " + cartaEscolhida.getNome() + " revivida direto para o Campo de Batalha");
                         
                         //enchendo a vida da carta:
@@ -312,8 +311,4 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                     paineljogadores.atualizarPainelJogadores();
 
      }
-    
-
-
-    
 }
