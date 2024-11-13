@@ -4,10 +4,11 @@ package gui.menu;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-
 
 public class InserirNomes {
 
@@ -18,69 +19,77 @@ public class InserirNomes {
     private JButton continuarButton;
     private JFrame frame;
 
-
     public InserirNomes(JFrame frame) {
-        this.frame = frame;
-        //obs: o laytou GridBagLayout funciona atraves de celular, é meio paia...
+        this.frame = TelaInicial.getFrame();
 
-        //conteiner da tela
+        // Conteiner da tela
         panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBackground(new Color(0, 128, 0)); // Verde escuro
+        panel1.setBackground(Color.WHITE);
 
-        //titulo da tela
-        JLabel titleLabel = new JLabel("CRÔNICAS DE ARCANA");
-        titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 26));
-        titleLabel.setForeground(Color.WHITE);
+        // Carrega a fonte customizada
+        Font customFont;
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF")).deriveFont(Font.PLAIN, 15);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            // Se houver erro, define uma fonte padrão
+            customFont = new Font("Times New Roman", Font.BOLD, 15);
+        }
 
-        //posição do titulo
+        // Título da tela
+        JLabel titleLabel = new JLabel("INSIRA OS NOMES DOS JOGADORES: ");
+        titleLabel.setFont(customFont.deriveFont(Font.BOLD, 26)); // Define tamanho maior para o título
+        titleLabel.setForeground(Color.BLACK);
+
+        // Posição do título
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(10, 10, 10, 10);
         panel1.add(titleLabel, gbc);
 
-        //titulo do primeiro campo de texto
+        // Título do primeiro campo de texto
         JLabel jogador1Label = new JLabel("JOGADOR 1:");
-        jogador1Label.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        jogador1Label.setForeground(Color.WHITE);
+        jogador1Label.setFont(customFont); // Define fonte customizada para o rótulo
+        jogador1Label.setForeground(Color.BLACK);
 
-        //posição
+        // Posição
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         panel1.add(jogador1Label, gbc);
 
-        //campo de texto
-        nomeJogador1 = new JTextField(15); // Campo para o nome do Jogador 1
-        //posição
+        // Campo de texto para jogador 1
+        nomeJogador1 = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel1.add(nomeJogador1, gbc);
 
-        //titulo segundo campo de texto
+        // Título do segundo campo de texto
         JLabel jogador2Label = new JLabel("JOGADOR 2:");
-        jogador2Label.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        jogador2Label.setForeground(Color.WHITE);
-        //posição
+        jogador2Label.setFont(customFont); // Define fonte customizada para o rótulo
+        jogador2Label.setForeground(Color.BLACK);
+
+        // Posição
         gbc.gridx = 0;
         gbc.gridy = 3;
         panel1.add(jogador2Label, gbc);
 
-        //campo de texto 2
-        nomeJogador2 = new JTextField(15); // Campo para o nome do Jogador 2
-        //posição
+        // Campo de texto para jogador 2
+        nomeJogador2 = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 3;
         panel1.add(nomeJogador2, gbc);
 
-        //botao de continuar
+        // Botão de continuar
         continuarButton = new JButton("Continuar");
-        continuarButton.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        continuarButton.setBackground(Color.BLUE);
+        continuarButton.setFont(customFont); // Aplica a fonte customizada ao botão
+        continuarButton.setBackground(Color.BLACK);
         continuarButton.setForeground(Color.WHITE);
-        //posição
+
+        // Posição do botão
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -89,47 +98,31 @@ public class InserirNomes {
         Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
         panel1.setBorder(bordaPreta);
 
-        //ação do botao
+        // Ação do botão continuar
         continuarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //pega os textos (nome dos jogadores)
                 String jogador1Nome = nomeJogador1.getText();
                 String jogador2Nome = nomeJogador2.getText();
 
-                // instancia e inicia o proximo menu ja com o nome dos jogadores
+                // Inicia o próximo menu com os nomes dos jogadores
                 EscolhaDeck1 menu2 = new EscolhaDeck1(jogador1Nome, jogador2Nome, frame);
                 menu2.menu2Start();
-                frame.dispose();
-
             }
         });
     }
 
-    //tela
-    /*public void menuStart() {
-        JFrame frame = new JFrame("Cronicas de Arcana");
-        frame.setContentPane(new InserirNomes(frame).panel1); // Adiciona o painel da interface
-        frame.setMinimumSize(new Dimension(800, 450)); // Define o tamanho mínimo da janela
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
-        frame.pack(); // Ajusta o tamanho da janela automaticamente
-        frame.setVisible(true); // Exibe a janela
-    }*/
+    // Inicia o menu
     public void menuStart() {
-        JFrame frame = new JFrame("Cronicas de Arcana");
-        frame.setContentPane(new InserirNomes(frame).panel1); // Adiciona o painel da interface
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
+        frame.setContentPane(new InserirNomes(frame).panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        // Define a resolução com proporção 4:3
         Dimension resolution4x3 = new Dimension(1024, 768);
-        frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
-        frame.setSize(resolution4x3); // Define o tamanho inicial da janela
-        frame.setMaximumSize(resolution4x3); // Define o tamanho máximo para manter a proporção
+        frame.setMinimumSize(resolution4x3);
+        frame.setSize(resolution4x3);
+        frame.setMaximumSize(resolution4x3);
 
-        frame.setVisible(true); // Exibe a janela
+        frame.setVisible(true);
     }
-
-
-
-
 }

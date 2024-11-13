@@ -2,17 +2,13 @@ package logica;
 
 import Enum.Efeito;
 import entidades.Jogador;
-import entidades.carta.Carta;
-import entidades.carta.Criatura;
-import entidades.carta.Encantamento;
-import entidades.carta.Feitico;
+import entidades.carta.*;
 import gui.PainelJogadoresGui;
-import gui.zonas.CampoBatalhaGui;
-import gui.zonas.CemiterioGui;
-import gui.zonas.MaoGui;
+import gui.zonas.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
+import soundTrack.SoundManager;
 
 //aqui vou colocar todas as funções que sao da logica do jogo
 //obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores
@@ -31,6 +27,7 @@ public class Logica {
     private boolean isTurnoJogador1;
     private MaoGui maogui;
     Progressao progressao = Progressao.getInstancia();
+    private SoundManager soundManager = new SoundManager();
 
     //por enquanto vou puxar alguns metodos GUI de la, depois vou mudar para as classes respectivas
     private CampoBatalhaGui campobatalhaGui;
@@ -101,11 +98,13 @@ public class Logica {
         if (jogador1.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome());
             progressao.addVitoria(jogador1.getNome());
+            soundManager.stopBackgroundMusic();
             frame.dispose();
             return;
         } else if (jogador2.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador1.getNome());
             progressao.addVitoria(jogador2.getNome());
+            //soundManager.stopBackgroundMusic();
             frame.dispose();
             return;
         }

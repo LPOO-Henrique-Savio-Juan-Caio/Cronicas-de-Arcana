@@ -2,15 +2,17 @@ package main;
 
 import javax.swing.*;
 import gui.menu.TelaInicial;
+import soundTrack.SoundManager;
 
 public class Main {
     public static String jogador1;
     public static String jogador2;
+    private static SoundManager soundManager = new SoundManager();
 
     public static void main(String[] args) {
         //nesse caso precisei criar a janela aqui pra ter controle sobre a hora dela fechar e etc
         JFrame frame = new JFrame();
-
+        //soundManager.playBackgroundMusic("arquivos/soundtracks/musica_de_fundo.wav");
         //InserirNomes menu = new InserirNomes(frame);
         TelaInicial menu = new TelaInicial(frame);
         menu.menuStart();

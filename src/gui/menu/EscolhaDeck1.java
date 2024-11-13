@@ -5,10 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
 import cartas.DeckPadrao;
-
 import java.util.ArrayList;
+import gui.background.BackgroundPanel;
 
 public class EscolhaDeck1 {
 
@@ -16,7 +15,6 @@ public class EscolhaDeck1 {
 
     //classe com decks padroes (String)
     DeckPadrao deckPadrao = new DeckPadrao();
-
 
     private ArrayList<String> deckJogador1 = new ArrayList<>();
     private String Jogador1;
@@ -26,29 +24,34 @@ public class EscolhaDeck1 {
     private JButton deck1Botao;
     private JButton deck2Botao;
     private JLabel titulomenu2;
-    
+
     private JFrame frame;
 
     public EscolhaDeck1(String Jogador1, String Jogador2, JFrame frame) {
-        this.frame = frame;
+        this.frame = TelaInicial.getFrame();
         //recebe o nome dos jogadores
         this.Jogador1 = Jogador1;
         this.Jogador2 = Jogador2;
 
-        //obs: o laytou GridBagLayout funciona atraves de celular, é meio paia...
+        //obs: o layout GridBagLayout funciona através de celular, é meio difícil...
 
         //conteiner da tela
         panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBackground(new Color(0, 128, 0));
+        panel1.setBackground(Color.WHITE);
 
         //titulo
         JLabel titulomenu2 = new JLabel(Jogador1 + " ESCOLHA SEU DECK:");
-        titulomenu2.setFont(new Font("Times New Roman", Font.BOLD, 26));
-        titulomenu2.setForeground(Color.WHITE);
+        try {
+            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("arquivos/fonte/GODOFWAR.TTF")).deriveFont(26f);
+            titulomenu2.setFont(fontePersonalizada); // Aplica a fonte personalizada
+        } catch (Exception e) {
+            titulomenu2.setFont(new Font("Times New Roman", Font.BOLD, 26)); // Fallback caso falhe o carregamento da fonte
+        }
+        titulomenu2.setForeground(Color.BLACK);
 
-        // posições do titulo
+        // posições do título
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -58,7 +61,12 @@ public class EscolhaDeck1 {
 
         // botao deck1
         deck1Botao = new JButton("Deck1");
-        deck1Botao.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        try {
+            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/path/to/GODOFWAR.TTF")).deriveFont(15f);
+            deck1Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
+        } catch (Exception e) {
+            deck1Botao.setFont(new Font("Times New Roman", Font.BOLD, 15)); // Fallback caso falhe o carregamento da fonte
+        }
         deck1Botao.setBackground(Color.BLACK);
         deck1Botao.setForeground(Color.WHITE);
         deck1Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão
@@ -72,7 +80,12 @@ public class EscolhaDeck1 {
 
         // botao deck2
         deck2Botao = new JButton("Deck2");
-        deck2Botao.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        try {
+            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/path/to/GODOFWAR.TTF")).deriveFont(15f);
+            deck2Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
+        } catch (Exception e) {
+            deck2Botao.setFont(new Font("Times New Roman", Font.BOLD, 15)); // Fallback caso falhe o carregamento da fonte
+        }
         deck2Botao.setBackground(Color.BLACK);
         deck2Botao.setForeground(Color.WHITE);
         deck2Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão
@@ -93,10 +106,6 @@ public class EscolhaDeck1 {
                 //vai pro proximo menu(escolha do prox jogador)
                 EscolhaDeck2 menu3 = new EscolhaDeck2(Jogador1, Jogador2, deckJogador1, frame);
                 menu3.menu3Start();
-                frame.dispose();
-
-
-
             }
         });
         deck2Botao.addActionListener(new ActionListener() {
@@ -108,24 +117,12 @@ public class EscolhaDeck1 {
                 //vai pro proximo menu(escolha do prox jogador)
                 EscolhaDeck2 menu3 = new EscolhaDeck2(Jogador1, Jogador2, deckJogador1, frame);
                 menu3.menu3Start();
-                frame.dispose();
             }
         });
-     }
+    }
 
-
-    //tela
-    /*public void menu2Start() {
-
-        JFrame frame = new JFrame("Cronicas de Arcana");
-        frame.setContentPane(new EscolhaDeck1(Jogador1, Jogador2, frame).panel1);
-        frame.setMinimumSize(new Dimension(800,450));// Adiciona o painel da classe Menu
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// Configura para fechar ao clicar no 'X
-        frame.pack();  // Ajusta o tamanho da janela para caber nos componentes
-        frame.setVisible(true);  // Torna a janela visível
-    }*/
+    //metodo atualizado para ficar em 1024x768 fixo
     public void menu2Start() {
-        JFrame frame = new JFrame("Cronicas de Arcana");
         frame.setContentPane(new EscolhaDeck1(Jogador1, Jogador2, frame).panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
 
@@ -136,7 +133,5 @@ public class EscolhaDeck1 {
         frame.setMaximumSize(resolution4x3); // Define o tamanho máximo para manter a proporção
 
         frame.setVisible(true); // Exibe a janela
-
     }
 }
-//decidi criar 2 decks padroes, o jogador 1 escolhe nesse menu, e o jogador 2 escolhe no proximo

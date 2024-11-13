@@ -3,6 +3,7 @@ package main;
 import cartas.CartasJogo;
 import entidades.*;
 import gui.PainelJogadoresGui;
+import gui.menu.TelaInicial;
 import gui.zonas.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class Game {
     Progressao progressao = Progressao.getInstancia();
 
     public Game(String nome1, String nome2, ArrayList<String> deckJogador1, ArrayList<String> deckJogador2, JFrame frame) {
-        this.frame = frame;
+        this.frame = TelaInicial.getFrame();
 
         jogador1 = new Jogador(nome1, new CartasJogo().getArrayCartas(), deckJogador1);
         jogador2 = new Jogador(nome2, new CartasJogo().getArrayCartas(), deckJogador2);

@@ -12,7 +12,7 @@ import cartas.DeckPadrao;
 import main.Game;
 
 public class EscolhaDeck2 {
-    
+
     private JPanel panel1;
 
     //classe com decks padroes(String)
@@ -21,7 +21,7 @@ public class EscolhaDeck2 {
     //classe com todas as cartas do jogo
     CartasJogo cartasjogo = new CartasJogo();
 
-    
+
     private String jogador1;
     private String jogador2;
 
@@ -35,11 +35,8 @@ public class EscolhaDeck2 {
     private JButton deck2Botao;
     private JFrame frame;
 
-    
-
-
     public EscolhaDeck2(String jogador1, String jogador2, ArrayList<String> deckJogador1, JFrame frame) {
-        this.frame = frame;
+        this.frame = TelaInicial.getFrame();
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
         this.deckJogador1 = deckJogador1;
@@ -50,12 +47,12 @@ public class EscolhaDeck2 {
         panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBackground(new Color(0, 128, 0));
+        panel1.setBackground(Color.WHITE);
 
         //titulo
         JLabel titulomenu3 = new JLabel(jogador2 + " ESCOLHA SEU DECK:");
         titulomenu3.setFont(new Font("Times New Roman", Font.BOLD, 26));
-        titulomenu3.setForeground(Color.WHITE);
+        titulomenu3.setForeground(Color.BLACK);
 
         // ajuste posição do titulo
         gbc.gridx = 0;
@@ -99,38 +96,38 @@ public class EscolhaDeck2 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //adcione o deck1 para o jogador2
-                deckJogador2 = deckPadrao.getDeckPadrao1(); 
-        
-                
+                deckJogador2 = deckPadrao.getDeckPadrao1();
+
+
                     //instancia e inicia o jogo
                     Game game = new Game(jogador1, jogador2, deckJogador1, deckJogador2, frame);
                     game.gameStart();
                     //game é instanciado com o proprio frame ent n precisamos fechar
-                
+
             }
         });
-        
+
         deck2Botao.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //adciona o deck2 para o jogador2
-                deckJogador2 = deckPadrao.getDeckPadrao2(); 
-        
+                deckJogador2 = deckPadrao.getDeckPadrao2();
+
                //instacia e inicia o jogo
                 Game game = new Game(jogador1, jogador2, deckJogador1, deckJogador2, frame);
                 game.gameStart();
                 //game é instanciado com o proprio frame ent n precisamos fechar
-            
-                
-                    
-                
+
+
+
+
             }
         });
     }
 
     //tela do jogo
     public void menu3Start() {
-        JFrame frame = new JFrame("Cronicas de Arcana");
+        //JFrame frame = new JFrame("Cronicas de Arcana");
         frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
 
