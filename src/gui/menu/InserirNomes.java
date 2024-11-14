@@ -4,11 +4,11 @@ package gui.menu;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+
+import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class InserirNomes {
 
@@ -30,14 +30,8 @@ public class InserirNomes {
 
         // Carrega a fonte customizada
         Font customFont;
-        try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF")).deriveFont(Font.PLAIN, 15);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-            // Se houver erro, define uma fonte padrão
-            customFont = new Font("Times New Roman", Font.BOLD, 15);
-        }
-
+        customFont = fonteCustomizada1;
+        //customFont = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF")).deriveFont(Font.PLAIN, 15);
         // Título da tela
         JLabel titleLabel = new JLabel("INSIRA OS NOMES DOS JOGADORES: ");
         titleLabel.setFont(customFont.deriveFont(Font.BOLD, 26)); // Define tamanho maior para o título

@@ -16,6 +16,8 @@ import entidades.carta.Feitico;
 import main.Game;
 import logica.Logica;
 
+import static gui.menu.TelaInicial.fonteCustomizada1;
+
 public class MaoGui {
 
     private Game game;
@@ -41,6 +43,8 @@ public class MaoGui {
 
         for (Carta carta : jogador.getMao().getCartasMao()) {
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
+            fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 15); // Ajuste o tamanho conforme necessário
+            cardButton.setFont(fonteCustomizada1);
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardButton.addActionListener(new ActionListener() {
@@ -75,11 +79,13 @@ public class MaoGui {
                         }
 
                         // Exibe os detalhes da carta no JOptionPane
-                        JOptionPane.showMessageDialog(
+                        JOptionPane msg = new JOptionPane();
+                        msg.setFont(fonteCustomizada1);
+                        msg.showMessageDialog(
                             frame, 
                             "Detalhes da Carta:\n" + detalhesCarta, 
                             "Detalhes da Carta", 
-                            JOptionPane.INFORMATION_MESSAGE
+                            msg.INFORMATION_MESSAGE
                         );
                     }
                 }
@@ -93,13 +99,15 @@ public class MaoGui {
     public void atualizarPanelMao(Jogador jogador) {
         // Obtém o painel de mão do jogador
         JPanel playerPanel = jogador.equals(jogador1) ? game.getplayer1MaoPanel() : game.getplayer2MaoPanel();
-        
+        playerPanel.setFont(fonteCustomizada1);
         // Remove todas as cartas do painel
         playerPanel.removeAll();
     
         // Reconstrói o painel com as cartas atualizadas
         for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
-            JButton cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
+            JButton cardButton = new JButton();
+            cardButton.setFont(fonteCustomizada1);
+            cardButton = new JButton(cartaAtual.getNome() + " (Mana: " + cartaAtual.getCustoMana() + ")");
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
     
@@ -131,11 +139,12 @@ public class MaoGui {
                         }
 
                         // Exibe os detalhes da carta no JOptionPane
-                        JOptionPane.showMessageDialog(
+                        JOptionPane msg = new JOptionPane();
+                        msg.showMessageDialog(
                             frame, 
                             "Detalhes da Carta:\n" + detalhesCarta, 
                             "Detalhes da Carta", 
-                            JOptionPane.INFORMATION_MESSAGE
+                            msg.INFORMATION_MESSAGE
                         );
                     }
                 }

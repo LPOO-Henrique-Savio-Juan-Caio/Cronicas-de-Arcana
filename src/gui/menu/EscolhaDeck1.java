@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import cartas.DeckPadrao;
 import java.util.ArrayList;
-import gui.background.BackgroundPanel;
+
+import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class EscolhaDeck1 {
 
@@ -43,12 +44,8 @@ public class EscolhaDeck1 {
 
         //titulo
         JLabel titulomenu2 = new JLabel(Jogador1 + " ESCOLHA SEU DECK:");
-        try {
-            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("arquivos/fonte/GODOFWAR.TTF")).deriveFont(26f);
-            titulomenu2.setFont(fontePersonalizada); // Aplica a fonte personalizada
-        } catch (Exception e) {
-            titulomenu2.setFont(new Font("Times New Roman", Font.BOLD, 26)); // Fallback caso falhe o carregamento da fonte
-        }
+        Font fontePersonalizada = fonteCustomizada1;
+        titulomenu2.setFont(fontePersonalizada); // Aplica a fonte personalizada
         titulomenu2.setForeground(Color.BLACK);
 
         // posições do título
@@ -61,12 +58,8 @@ public class EscolhaDeck1 {
 
         // botao deck1
         deck1Botao = new JButton("Deck1");
-        try {
-            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/path/to/GODOFWAR.TTF")).deriveFont(15f);
-            deck1Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
-        } catch (Exception e) {
-            deck1Botao.setFont(new Font("Times New Roman", Font.BOLD, 15)); // Fallback caso falhe o carregamento da fonte
-        }
+        deck1Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
+
         deck1Botao.setBackground(Color.BLACK);
         deck1Botao.setForeground(Color.WHITE);
         deck1Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão
@@ -80,12 +73,8 @@ public class EscolhaDeck1 {
 
         // botao deck2
         deck2Botao = new JButton("Deck2");
-        try {
-            Font fontePersonalizada = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/path/to/GODOFWAR.TTF")).deriveFont(15f);
-            deck2Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
-        } catch (Exception e) {
-            deck2Botao.setFont(new Font("Times New Roman", Font.BOLD, 15)); // Fallback caso falhe o carregamento da fonte
-        }
+        deck2Botao.setFont(fontePersonalizada); // Aplica a fonte personalizada
+
         deck2Botao.setBackground(Color.BLACK);
         deck2Botao.setForeground(Color.WHITE);
         deck2Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão

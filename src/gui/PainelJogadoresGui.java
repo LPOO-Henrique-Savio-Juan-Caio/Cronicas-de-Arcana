@@ -3,9 +3,9 @@ package gui;
 import entidades.Jogador;
 import main.Game;
 import logica.Logica;
-
 import java.awt.*;
 import javax.swing.*;
+import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class PainelJogadoresGui {
 
@@ -37,7 +37,7 @@ public class PainelJogadoresGui {
     }
 
     public void setupPlayerLabel(JLabel label) {
-        label.setFont(new Font("Arial", Font.BOLD, 14));
+        label.setFont(fonteCustomizada1);
         label.setForeground(Color.WHITE);
     }
 

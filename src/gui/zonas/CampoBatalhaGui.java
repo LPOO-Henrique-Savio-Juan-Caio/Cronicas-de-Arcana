@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import static gui.menu.TelaInicial.fonteCustomizada1;
+
 //aqui pretendo colocar todas as funções GUI do campo de batalha
 
 public class CampoBatalhaGui {
@@ -37,6 +39,8 @@ public class CampoBatalhaGui {
 
         for(Carta carta : jogador.getCampoBatalha().getCartasNoCampo()){
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
+            fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
+            cardButton.setFont(fonteCustomizada1);
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardButton.addActionListener(new ActionListener() {
@@ -81,6 +85,8 @@ public class CampoBatalhaGui {
                 cartaPanel.setBackground(Color.DARK_GRAY);
 
                 JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
+                fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
+                cardButton.setFont(fonteCustomizada1);
                 cardButton.setPreferredSize(new Dimension(100, 60));
                 cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                 cardButton.addActionListener(e -> logica.usarCartaNoCampoBatalha(jogador, carta, jogadorRival ));

@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
-
 import cartas.CartasJogo;
 import cartas.DeckPadrao;
 import main.Game;
+import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class EscolhaDeck2 {
 
@@ -50,8 +50,9 @@ public class EscolhaDeck2 {
         panel1.setBackground(Color.WHITE);
 
         //titulo
+        Font fontePersonalizada = fonteCustomizada1;
         JLabel titulomenu3 = new JLabel(jogador2 + " ESCOLHA SEU DECK:");
-        titulomenu3.setFont(new Font("Times New Roman", Font.BOLD, 26));
+        titulomenu3.setFont(fontePersonalizada);
         titulomenu3.setForeground(Color.BLACK);
 
         // ajuste posição do titulo
@@ -64,7 +65,7 @@ public class EscolhaDeck2 {
 
         // deck1(botao)
         deck1Botao = new JButton("Deck1");
-        deck1Botao.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        deck1Botao.setFont(fontePersonalizada);
         deck1Botao.setBackground(Color.BLACK);
         deck1Botao.setForeground(Color.WHITE);
         deck1Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão
@@ -78,7 +79,7 @@ public class EscolhaDeck2 {
 
         // deck2(botao)
         deck2Botao = new JButton("Deck2");
-        deck2Botao.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        deck2Botao.setFont(fontePersonalizada);
         deck2Botao.setBackground(Color.BLACK);
         deck2Botao.setForeground(Color.WHITE);
         deck2Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão

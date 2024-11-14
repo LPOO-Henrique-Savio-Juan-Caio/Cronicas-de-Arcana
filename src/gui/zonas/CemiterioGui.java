@@ -13,6 +13,8 @@ import entidades.carta.Carta;
 import main.Game;
 import logica.Logica;
 
+import static gui.menu.TelaInicial.fonteCustomizada1;
+
 public class CemiterioGui {
 private Game game;
     private Jogador jogador1;
@@ -38,6 +40,8 @@ private Game game;
 
         //botao que "abre" uma page com o cemiterio de cada jogador
         JButton cardButton = new JButton( "Cemiterio " + jogador.getNome());
+            fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
+            cardButton.setFont(fonteCustomizada1);
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -48,6 +52,7 @@ private Game game;
 
                     // jdialog para exibir as cartas
                     JDialog cemiterioDialog = new JDialog();
+                    cemiterioDialog.setFont(fonteCustomizada1);
                     cemiterioDialog.setTitle("Cemitério de " + jogador.getNome());
                     cemiterioDialog.setSize(300, 400); // Ajuste o tamanho conforme necessário
                     cemiterioDialog.setLocationRelativeTo(null); // Centraliza na tela
@@ -60,14 +65,18 @@ private Game game;
                     for (Carta carta : jogador.getCemiterio().getCartasCemiterio()){
 
                         JButton cartaButton = new JButton(carta.getNome());
+                        cardButton.setFont(fonteCustomizada1);
                         cartaButton.setPreferredSize(new Dimension(150, 40));
                         cartaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
                         cartaButton.addActionListener(ev -> {
                             // informações da carta
-                            JOptionPane.showMessageDialog(cemiterioDialog, 
+                            JOptionPane msg = new JOptionPane();
+                            msg.setFont(fonteCustomizada1);
+                            msg.showMessageDialog(cemiterioDialog,
                                 "Detalhes da Carta: \n" + carta.toString(), 
                                 "Detalhes da Carta", 
-                                JOptionPane.INFORMATION_MESSAGE);
+                                msg.INFORMATION_MESSAGE);
+
                         });
                         cemiterioPanel.add(cartaButton);
                         cemiterioPanel.add(Box.createRigidArea(new Dimension(0, 5))); // Espaço entre cartas
@@ -91,6 +100,7 @@ private Game game;
 
         // jdialog para exibir as cartas
         JDialog cemiterioDialog = new JDialog();
+        cemiterioDialog.setFont(fonteCustomizada1);
         cemiterioDialog.setTitle("Cemitério de " + jogador.getNome());
         cemiterioDialog.setSize(300, 400); // Ajuste o tamanho conforme necessário
         cemiterioDialog.setLocationRelativeTo(null); // Centraliza na tela
@@ -102,6 +112,7 @@ private Game game;
         // Loop para adicionar botões de cartas
         for (Carta carta : jogador.getCemiterio().getCartasCemiterio()) {
             JButton cartaButton = new JButton(carta.getNome());
+            cartaButton.setFont(fonteCustomizada1);
             cartaButton.setPreferredSize(new Dimension(150, 40));
             cartaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 

@@ -17,7 +17,7 @@ public class TelaInicial {
     private JButton jogarButton;
     private static JFrame frame;
     private SoundManager soundManager = new SoundManager();
-
+    public static Font fonteCustomizada1;
     public TelaInicial(JFrame frame) {
         this.frame = frame;
 
@@ -63,13 +63,13 @@ public class TelaInicial {
 
         // Carregar a mesma fonte personalizada para o botão "JOGAR"
         try {
-            Font customFontButton = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF"));
-            customFontButton = customFontButton.deriveFont(Font.PLAIN, 20); // Ajuste o tamanho conforme necessário
+            fonteCustomizada1 = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF"));
+            fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 20); // Ajuste o tamanho conforme necessário
 
             // Botão de jogar
             jogarButton = new JButton("JOGAR");
-            jogarButton.setFont(customFontButton); // Aplicando a fonte personalizada ao botão
-            jogarButton.setBackground(Color.YELLOW);
+            jogarButton.setFont(fonteCustomizada1); // Aplicando a fonte personalizada ao botão
+            jogarButton.setBackground(Color.BLACK);
             jogarButton.setForeground(Color.WHITE);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
