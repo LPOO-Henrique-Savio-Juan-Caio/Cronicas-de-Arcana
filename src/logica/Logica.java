@@ -4,15 +4,21 @@ import Enum.Efeito;
 import entidades.Jogador;
 import entidades.carta.*;
 import gui.PainelJogadoresGui;
+import gui.menu.TelaInicial;
 import gui.zonas.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
 import soundTrack.SoundManager;
 
-//aqui vou colocar todas as funções que sao da logica do jogo
-//obs: estou comentando algumas funções do GUI, como atualizar painel dos jogadores
-//vamos colocar isturnoJogador como parte dessa classe
+//fixed:
+//1- encantamento so esta entrando no começo do rounds. o certo: aparece quando é lançado e depois no começo dos rounds
+//2- alguns encantamento nao estao acabando no momento que deveriam(talvez erro na indicação)
+//2.1- verificar funcionamento do encantamento(rodando 2 vezes seguindas?)
+//3 - corrigir o toString do aviso de encantamento
+//5 - quando ganhar nao fechar o jogo, e sim voltar pro inicio(looping)
+//6- diminuir mana por round
+//4 - ajeitar "efeito" da descrição das cartas
 
 
 
@@ -34,6 +40,8 @@ public class Logica {
     private PainelJogadoresGui paineljogadores;
     private CemiterioGui cemiteriogui;
 
+    private TelaInicial telaInicial;
+
     private ArrayList<Encantamento> encantamentoAtivosJ1;
     private ArrayList<Encantamento> encantamentoAtivosJ2;
 
@@ -48,6 +56,8 @@ public class Logica {
         paineljogadores = new PainelJogadoresGui(game, jogador1, jogador2, frame, this);
         maogui = new MaoGui(game, jogador1, jogador2, frame, this);
         cemiteriogui = new CemiterioGui(game, jogador1, jogador2, frame, this);
+
+        telaInicial = new TelaInicial(this.frame);
 
 
         //inicializando array de encantamentosAtivos:
@@ -64,31 +74,35 @@ public class Logica {
 
         //mana regenerando todo round
         if(isTurnoJogador1){
-            jogadorAtual.addMana(4);
-            proximoJogador.addMana(4);
+            jogadorAtual.addMana(1);
+            proximoJogador.addMana(1);
             paineljogadores.atualizarPainelJogadores();
             JOptionPane.showMessageDialog(frame, "+4 de mana para ambos os jogadores");
             //logica para encantamentos ativos
-            if(!encantamentoAtivosJ1.isEmpty()){
-                for (Encantamento encantamento : encantamentoAtivosJ1){
+            if (!encantamentoAtivosJ1.isEmpty()) {
+                for (Encantamento encantamento : encantamentoAtivosJ1) {
                     //ativa cada encantamento do jogador1
-                    jogarEncantamento(jogador1, jogador2, encantamento, encantamento);
-                    encantamento.decrescerDuracao();
-                    if(encantamento.getDuracao() == 0){
+                    if (encantamento.getDuracao() != 0) {
+                        jogarEncantamento(jogador1, jogador2, encantamento, encantamento);
+                        encantamento.decrescerDuracao();
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes");
+
+                    } else {
                         encantamentoAtivosJ1.remove(encantamento);
                     }
-                    JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes" );
-                    //posso colocar um aviso de encantamento usado aqui
                 }
             }
-            if(!encantamentoAtivosJ2.isEmpty()){
-                for (Encantamento encantamento : encantamentoAtivosJ2){
-                    jogarEncantamento(jogador2, jogador1, encantamento, encantamento);
-                    encantamento.decrescerDuracao();
-                    if(encantamento.getDuracao() == 0){
+            if (!encantamentoAtivosJ2.isEmpty()) {
+                for (Encantamento encantamento : encantamentoAtivosJ2) {
+
+                    if (encantamento.getDuracao() != 0) {
+                        jogarEncantamento(jogador2, jogador1, encantamento, encantamento);
+                        encantamento.decrescerDuracao();
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes");
+                    } else {
                         encantamentoAtivosJ2.remove(encantamento);
                     }
-                    JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + ":" + encantamento.getDuracao() + " restantes" );
+
                 }
             }
 
@@ -99,13 +113,17 @@ public class Logica {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome());
             progressao.addVitoria(jogador1.getNome());
             soundManager.stopBackgroundMusic();
-            frame.dispose();
+
+            //vai pra tela inicial
+            telaInicial.menuStart();
             return;
         } else if (jogador2.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador1.getNome());
             progressao.addVitoria(jogador2.getNome());
             //soundManager.stopBackgroundMusic();
-            frame.dispose();
+
+            //vai pra tela inicial
+            telaInicial.menuStart();
             return;
         }
     
@@ -202,10 +220,24 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                     System.out.println("encantamento lançado");
                     //colocamos o encantamento na lista de encantamentos do jogador respectivo
                     if(jogador.equals(jogador1)){
+                        //aviso de lançamento do encantamento
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                        //joga o encantamento e coloca -1 na duração
+                        jogarEncantamento(jogador1, jogador2, encantamento, carta);
+                        encantamento.decrescerDuracao();
+                        //adiciona a lista que vai ter seu efeito todo round
                         encantamentoAtivosJ1.add(encantamento);
+                        
                     }
                     else if(jogador.equals(jogador2)){
+                         //aviso de lançamento do encantamento
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                        //joga o encantamento e coloca -1 na duração
+                        jogarEncantamento(jogador2, jogador1, encantamento, carta);
+                        encantamento.decrescerDuracao();
+                        //adiciona a lista que vai ter seu efeito todo round
                         encantamentoAtivosJ2.add(encantamento);
+                        
                     }
                     
                 }
@@ -289,18 +321,18 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                             //tira vida das cartas do jogadorRival
                             jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
                             jogadorRival.alterarVidaDouble(-efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " causou " +  efeito.getEfeito() + " de dado em " + jogadorRival.getNome());
                         }
                         else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
                             //dar mana
                             jogador.alterarManaDouble(efeito.getEfeito());
-                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " forneceu " +  -efeito.getEfeito() + " de mana para " + jogador.getNome());
                         }
                     }
                     else if(valorEfeito < 0){
                         //dar vida(resistencia) ao jogador
                         jogador.alterarVidaDouble(-efeito.getEfeito());
-                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.toString());
+                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " forneceu " +  -efeito.getEfeito() + " de vida para " + jogador.getNome());
                     }
 
                 

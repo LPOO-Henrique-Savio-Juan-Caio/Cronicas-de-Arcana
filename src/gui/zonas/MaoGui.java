@@ -132,10 +132,32 @@ public class MaoGui {
                                             "\nResistência: " + criatura.getResistencia();
                         } else if (cartaAtual instanceof Feitico) {
                             Feitico feitico = (Feitico) cartaAtual;
-                            detalhesCarta += "\nEfeito: " + feitico.getEfeito();
+                            if(feitico.getEfeito().equals("muito_dano") || feitico.getEfeito().equals("dano")){
+                                detalhesCarta += "\nEfeito: " + "dano";
+                            }
+                            else if (feitico.getEfeito().equals("muita_mana") || feitico.getEfeito().equals("mana")) {
+                                detalhesCarta += "\nEfeito: " + "mana";
+                            }
+                            else if (feitico.getEfeito().equals("muita_vida") || feitico.getEfeito().equals("vida")) {
+                                detalhesCarta += "\nEfeito: " + "vida";
+                            }
+                            else{
+                                detalhesCarta += "\nEfeito: " + "reviver";
+                            }
+
+                            
+                            
                         } else if (cartaAtual instanceof Encantamento) {
                             Encantamento encantamento = (Encantamento) cartaAtual;
-                            detalhesCarta += "\nEfeito: " + encantamento.getEfeito();
+                            if(encantamento.getEfeito().equals("muito_dano") || encantamento.getEfeito().equals("dano")){
+                                detalhesCarta += "\nEfeito: " + "dano";
+                            }
+                            else if (encantamento.getEfeito().equals("muita_mana") || encantamento.getEfeito().equals("mana")) {
+                                detalhesCarta += "\nEfeito: " + "mana";
+                            }
+                            else if (encantamento.getEfeito().equals("muita_vida") || encantamento.getEfeito().equals("vida")) {
+                                detalhesCarta += "\nEfeito: " + "vida";
+                            }
                         }
 
                         // Exibe os detalhes da carta no JOptionPane

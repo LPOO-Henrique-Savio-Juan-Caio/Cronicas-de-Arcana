@@ -54,6 +54,8 @@ public class Game {
     private MaoGui maoGui;
     private CemiterioGui cemiteriogui;
 
+    
+
     //instanciando progressao sem reiniciar os dados
     Progressao progressao = Progressao.getInstancia();
 
