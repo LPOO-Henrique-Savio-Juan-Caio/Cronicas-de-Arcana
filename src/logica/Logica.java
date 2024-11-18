@@ -224,6 +224,8 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                         JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
                         //joga o encantamento e coloca -1 na duração
                         jogarEncantamento(jogador1, jogador2, encantamento, carta);
+                        //gasta mana
+                        jogador.alterarMana(carta);
                         encantamento.decrescerDuracao();
                         //adiciona a lista que vai ter seu efeito todo round
                         encantamentoAtivosJ1.add(encantamento);
@@ -338,7 +340,6 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
                 
                     // Remove o Encantamento da mão e gasta mana
                     jogador.getMao().removerCarta(carta);
-                    jogador.alterarMana(carta);
                     paineljogadores.atualizarPainelJogadores();
 
      }

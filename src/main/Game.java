@@ -5,11 +5,11 @@ import entidades.*;
 import gui.PainelJogadoresGui;
 import gui.menu.TelaInicial;
 import gui.zonas.*;
-import static soundTrack.SoundManager.playSoundEffect;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import logica.*;
+import static soundTrack.SoundManager.playSoundEffect;
 
 //questoes sobre a logica do jogo:
 //obs: as cartas jogadas na mao dao dano nas cartas que ja estao no campo de batalha?
