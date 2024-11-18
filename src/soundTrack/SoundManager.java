@@ -6,10 +6,10 @@ import java.io.IOException;
 
 public class SoundManager {
 
-    private Clip backgroundClip;
+    private static Clip backgroundClip;
 
     // Metodo para tocar música de fundo em loop
-    public void playBackgroundMusic(String filepath) {
+    public static void playBackgroundMusic(String filepath) {
         new Thread(() -> {
             try {
                 File audioFile = new File(filepath);
@@ -24,14 +24,14 @@ public class SoundManager {
     }
 
     // Metodo para parar a música de fundo
-    public void stopBackgroundMusic() {
+    public static void stopBackgroundMusic() {
         if (backgroundClip != null && backgroundClip.isRunning()) {
             backgroundClip.stop();
         }
     }
 
     //Metodo para tocar efeito sonoro
-    public void playSoundEffect(String filepath) {
+    public static void playSoundEffect(String filepath) {
         try {
             File audioFile = new File(filepath);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);

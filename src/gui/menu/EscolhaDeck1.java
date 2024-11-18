@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import cartas.DeckPadrao;
 import java.util.ArrayList;
-
+import static soundTrack.SoundManager.playSoundEffect;
 import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class EscolhaDeck1 {
@@ -112,6 +112,7 @@ public class EscolhaDeck1 {
 
     //metodo atualizado para ficar em 1024x768 fixo
     public void menu2Start() {
+    	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         frame.setContentPane(new EscolhaDeck1(Jogador1, Jogador2, frame).panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
 

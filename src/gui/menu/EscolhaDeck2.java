@@ -10,6 +10,7 @@ import cartas.CartasJogo;
 import cartas.DeckPadrao;
 import main.Game;
 import static gui.menu.TelaInicial.fonteCustomizada1;
+import static soundTrack.SoundManager.playSoundEffect;
 
 public class EscolhaDeck2 {
 
@@ -128,6 +129,7 @@ public class EscolhaDeck2 {
 
     //tela do jogo
     public void menu3Start() {
+    	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         //JFrame frame = new JFrame("Cronicas de Arcana");
         frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"

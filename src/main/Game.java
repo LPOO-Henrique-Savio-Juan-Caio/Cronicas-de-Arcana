@@ -5,6 +5,7 @@ import entidades.*;
 import gui.PainelJogadoresGui;
 import gui.menu.TelaInicial;
 import gui.zonas.*;
+import static soundTrack.SoundManager.playSoundEffect;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -188,6 +189,7 @@ public class Game {
 
 
     public void gameStart() {
+    	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         frame.setTitle("Cronicas de Arcana");
         frame.setContentPane(panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"

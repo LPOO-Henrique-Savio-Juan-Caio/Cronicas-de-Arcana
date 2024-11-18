@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import static soundTrack.SoundManager.playSoundEffect;
 
 import static gui.menu.TelaInicial.fonteCustomizada1;
 
@@ -86,7 +87,7 @@ public class InserirNomes {
         // Posição do botão
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        //gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(continuarButton, gbc);
 
         Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
@@ -108,6 +109,7 @@ public class InserirNomes {
 
     // Inicia o menu
     public void menuStart() {
+    	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         frame.setContentPane(new InserirNomes(frame).panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

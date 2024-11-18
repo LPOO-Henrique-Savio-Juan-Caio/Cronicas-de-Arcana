@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         //nesse caso precisei criar a janela aqui pra ter controle sobre a hora dela fechar e etc
         JFrame frame = new JFrame();
-        //soundManager.playBackgroundMusic("arquivos/soundtracks/musica_de_fundo.wav");
+        soundManager.playBackgroundMusic("arquivos/soundtracks/musica_de_fundo_[cut_158sec].wav");
         //InserirNomes menu = new InserirNomes(frame);
         TelaInicial menu = new TelaInicial(frame);
         menu.menuStart();

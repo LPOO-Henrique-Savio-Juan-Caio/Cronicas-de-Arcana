@@ -1,7 +1,7 @@
 package gui.menu;
 
 import gui.background.BackgroundPanel;
-import soundTrack.SoundManager;
+import static soundTrack.SoundManager.playSoundEffect;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +16,6 @@ public class TelaInicial {
     private JPanel panel1;
     private JButton jogarButton;
     private static JFrame frame;
-    private SoundManager soundManager = new SoundManager();
     public static Font fonteCustomizada1;
     public TelaInicial(JFrame frame) {
         this.frame = frame;
@@ -98,7 +97,7 @@ public class TelaInicial {
         jogarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Chama o metodo para iniciar o menu de InserirNomes
+            	// Chama o metodo para iniciar o menu de InserirNomes
                 iniciarInserirNomes();
             }
         });
@@ -139,6 +138,7 @@ public class TelaInicial {
     // Metodo para iniciar o menu InserirNomes
     private void iniciarInserirNomes() {
         // Cria uma nova instância de InserirNomes e inicia a tela
+    	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         InserirNomes inserirNomes = new InserirNomes(frame);
         inserirNomes.menuStart(); // Chama o metodo de iniciar a tela InserirNomes
     }
