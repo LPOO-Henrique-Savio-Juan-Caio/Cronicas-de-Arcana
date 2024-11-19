@@ -8,6 +8,8 @@ import gui.zonas.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import logica.*;
 import static soundTrack.SoundManager.playSoundEffect;
 
@@ -50,10 +52,10 @@ public class Game {
     private JPanel player1Cemiterio, player2Cemiterio;
 
     private CampoBatalhaGui campobatalhaGui;
-    private PainelJogadoresGui paineljogadores;
+    private PainelJogadoresGui painelJogadores;
     private Logica logica;
     private MaoGui maoGui;
-    private CemiterioGui cemiteriogui;
+    private CemiterioGui cemiterioGui;
 
     
 
@@ -69,9 +71,9 @@ public class Game {
         //inicializando componentes
         logica = new Logica(this, jogador1, jogador2, frame);
         campobatalhaGui = new CampoBatalhaGui(this, jogador1, jogador2, frame, logica);
-        paineljogadores = new PainelJogadoresGui(this, jogador1, jogador2, frame, logica);
+        painelJogadores = new PainelJogadoresGui(this, jogador1, jogador2, frame, logica);
         maoGui = new MaoGui(this, jogador1, jogador2, frame, logica);
-        cemiteriogui = new CemiterioGui(this, jogador1, jogador2, frame, logica);
+        cemiterioGui = new CemiterioGui(this, jogador1, jogador2, frame, logica);
         
         //add jogador a lista (caso ja n esteja)
         progressao.addJogador(nome1);
@@ -84,21 +86,24 @@ public class Game {
     private void initUI() {
         panel1 = new JPanel(new BorderLayout());
         panel1.setBackground(new Color(0, 128, 0));
+        
+        Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
+        panel1.setBorder(bordaPreta);
     
         // gui de informações dos jogadores
         JPanel playerInfoPanel = new JPanel(new BorderLayout());
         playerInfoPanel.setBackground(new Color(0, 128, 0));
     
         // Configurações para o Jogador 1
-        playerInfo1 = new JLabel(paineljogadores.createPlayerInfo(jogador1));
-        paineljogadores.setupPlayerLabel(playerInfo1);
+        playerInfo1 = new JLabel(painelJogadores.createPlayerInfo(jogador1));
+        painelJogadores.setupPlayerLabel(playerInfo1);
         JPanel player1Panel = new JPanel();
         player1Panel.setBackground(new Color(0, 128, 0));
         player1Panel.add(playerInfo1);
     
         // Configurações para o Jogador 2
-        playerInfo2 = new JLabel(paineljogadores.createPlayerInfo(jogador2));
-        paineljogadores.setupPlayerLabel(playerInfo2);
+        playerInfo2 = new JLabel(painelJogadores.createPlayerInfo(jogador2));
+        painelJogadores.setupPlayerLabel(playerInfo2);
         JPanel player2Panel = new JPanel();
         player2Panel.setBackground(new Color(0, 128, 0));
         player2Panel.add(playerInfo2);
@@ -116,8 +121,8 @@ public class Game {
         player2MaoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
 
         //gui cemiterio
-        player1Cemiterio = cemiteriogui.createCemiterioPanel(jogador1);
-        player2Cemiterio = cemiteriogui.createCemiterioPanel(jogador2);
+        player1Cemiterio = cemiterioGui.createCemiterioPanel(jogador1);
+        player2Cemiterio = cemiterioGui.createCemiterioPanel(jogador2);
 
         // Painel vertical para o Jogador 1 (contém mão e cemitério)
         JPanel player1SidePanel = new JPanel();

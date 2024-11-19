@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import cartas.DeckPadrao;
 import java.util.ArrayList;
 import static soundTrack.SoundManager.playSoundEffect;
@@ -41,6 +43,9 @@ public class EscolhaDeck1 {
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         panel1.setBackground(Color.WHITE);
+        
+        Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
+        panel1.setBorder(bordaPreta);
 
         //titulo
         JLabel titulomenu2 = new JLabel(Jogador1 + " ESCOLHA SEU DECK:");
@@ -64,6 +69,7 @@ public class EscolhaDeck1 {
         deck1Botao.setForeground(Color.WHITE);
         deck1Botao.setPreferredSize(new Dimension(120, 180)); // Aumenta o tamanho do botão
 
+       
         //posição deck1
         gbc.gridx = 0;
         gbc.gridy = 1;

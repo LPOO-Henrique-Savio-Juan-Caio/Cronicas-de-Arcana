@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import static soundTrack.SoundManager.playSoundEffect;
-
 import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class InserirNomes {

@@ -6,6 +6,7 @@ import entidades.carta.*;
 import gui.PainelJogadoresGui;
 import gui.menu.TelaInicial;
 import gui.zonas.*;
+import static soundTrack.SoundManager.playSoundEffect;
 import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
@@ -74,10 +75,10 @@ public class Logica {
 
         //mana regenerando todo round
         if(isTurnoJogador1){
-            jogadorAtual.addMana(1);
-            proximoJogador.addMana(1);
+            jogadorAtual.addMana(2);
+            proximoJogador.addMana(2);
             paineljogadores.atualizarPainelJogadores();
-            JOptionPane.showMessageDialog(frame, "+4 de mana para ambos os jogadores");
+            JOptionPane.showMessageDialog(frame, "+2 de mana para ambos os jogadores");
             //logica para encantamentos ativos
             if (!encantamentoAtivosJ1.isEmpty()) {
                 for (Encantamento encantamento : encantamentoAtivosJ1) {
@@ -112,7 +113,7 @@ public class Logica {
         if (jogador1.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome());
             progressao.addVitoria(jogador1.getNome());
-            soundManager.stopBackgroundMusic();
+            //soundManager.stopBackgroundMusic();
 
             //vai pra tela inicial
             telaInicial.menuStart();
@@ -199,7 +200,8 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
      public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
         // Verifica se é o turno do jogador correto
         if ((isTurnoJogador1() && jogador.equals(jogador1)) || (!isTurnoJogador1() && jogador.equals(jogador2))) {
-            if (jogador.getMana() >= carta.getCustoMana()) {
+        	if (jogador.getMana() >= carta.getCustoMana()) {
+            	new Thread(() -> playSoundEffect("arquivos/soundtracks/cardButton.wav")).start();
                 //aqui vou colocar uma estrutura condicional para cada "tipo" de carta:
 
                 //Criatura: vai pro campo de batalha, é removida da mao e gasta mana

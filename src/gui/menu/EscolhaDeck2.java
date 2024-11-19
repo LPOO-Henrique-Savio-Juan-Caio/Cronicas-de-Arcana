@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import cartas.CartasJogo;
 import cartas.DeckPadrao;
 import main.Game;
@@ -49,6 +51,9 @@ public class EscolhaDeck2 {
         panel1.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         panel1.setBackground(Color.WHITE);
+        
+        Border bordaPreta = BorderFactory.createLineBorder(Color.BLACK, 3);
+        panel1.setBorder(bordaPreta);
 
         //titulo
         Font fontePersonalizada = fonteCustomizada1;
