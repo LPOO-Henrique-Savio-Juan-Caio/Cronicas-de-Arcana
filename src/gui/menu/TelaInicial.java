@@ -65,6 +65,7 @@ public class TelaInicial {
             fonteCustomizada1 = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF"));
             fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 20); // Ajuste o tamanho conforme necessário
 
+            
             // Botão de jogar
             jogarButton = new JButton("JOGAR");
             jogarButton.setFont(fonteCustomizada1); // Aplicando a fonte personalizada ao botão

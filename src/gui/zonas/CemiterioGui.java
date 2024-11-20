@@ -45,6 +45,8 @@ private Game game;
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             cardButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+            cardButton.setBackground(Color.BLACK);
+            cardButton.setForeground(Color.WHITE);
             cardButton.addActionListener(new ActionListener() {
                 
                 @Override

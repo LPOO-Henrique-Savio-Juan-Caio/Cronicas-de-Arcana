@@ -35,7 +35,7 @@ public class CampoBatalhaGui {
     public JPanel createCampoBatalhaPanel(Jogador jogador, Jogador jogadorRival){
         JPanel playerCampoBatalhaPanel = new JPanel(new GridLayout(1, 2));
         playerCampoBatalhaPanel.setLayout(new BoxLayout(playerCampoBatalhaPanel, BoxLayout.Y_AXIS));
-        playerCampoBatalhaPanel.setBackground(Color.BLACK);
+        playerCampoBatalhaPanel.setBackground(new Color(0, 0, 0, 0));
 
         for(Carta carta : jogador.getCampoBatalha().getCartasNoCampo()){
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");

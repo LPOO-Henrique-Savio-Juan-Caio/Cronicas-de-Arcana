@@ -39,7 +39,7 @@ public class MaoGui {
     public JPanel createMaoPanel(Jogador jogador, Jogador jogadorRival) {
         JPanel playerMaoPanel = new JPanel();
         playerMaoPanel.setLayout(new BoxLayout(playerMaoPanel, BoxLayout.Y_AXIS));
-        playerMaoPanel.setBackground(Color.BLACK);
+        playerMaoPanel.setBackground(new Color(0, 0, 0, 0));
 
         for (Carta carta : jogador.getMao().getCartasMao()) {
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
@@ -47,6 +47,8 @@ public class MaoGui {
             cardButton.setFont(fonteCustomizada1);
             cardButton.setPreferredSize(new Dimension(100, 60));
             cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cardButton.setBackground(Color.BLACK);
+            cardButton.setForeground(Color.WHITE);
             cardButton.addActionListener(new ActionListener() {
                 
                 @Override
