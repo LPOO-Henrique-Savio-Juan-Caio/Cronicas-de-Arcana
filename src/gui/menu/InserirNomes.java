@@ -1,14 +1,13 @@
 package gui.menu;
 
 //importações
+import static gui.menu.TelaInicial.fonteCustomizada1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import static soundTrack.SoundManager.playSoundEffect;
-import static gui.menu.TelaInicial.fonteCustomizada1;
 
 public class InserirNomes {
 
@@ -99,9 +98,20 @@ public class InserirNomes {
                 String jogador1Nome = nomeJogador1.getText();
                 String jogador2Nome = nomeJogador2.getText();
 
-                // Inicia o próximo menu com os nomes dos jogadores
+                if(jogador1Nome.isEmpty() || jogador2Nome.isEmpty()){
+                    JOptionPane.showMessageDialog(frame, "Os nomes dos jogadores não podem estar em branco.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else if( jogador1Nome.equals(jogador2Nome)){
+                    JOptionPane.showMessageDialog(frame, "Os nomes dos jogadores não podem ser iguais.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    // Inicia o próximo menu com os nomes dos jogadores
                 EscolhaDeck1 menu2 = new EscolhaDeck1(jogador1Nome, jogador2Nome, frame);
                 menu2.menu2Start();
+
+                }
+
+                
             }
         });
     }

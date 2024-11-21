@@ -32,7 +32,8 @@ public class CampoDeBatalha implements AcoesZonas{
     // essa função recebe determinada carta e da dano em todas as cartas do campo
      public void danoCampoBatalha(Carta cartaInimiga) {
         for (Carta carta : CartasNoCampo) {
-            carta.receberDano(cartaInimiga.getPoder());
+            //30% do seu dano total
+            carta.receberDano(cartaInimiga.getPoder() * 0.30);
         }
     }
 

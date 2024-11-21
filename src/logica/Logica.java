@@ -6,11 +6,11 @@ import entidades.carta.*;
 import gui.PainelJogadoresGui;
 import gui.menu.TelaInicial;
 import gui.zonas.*;
-import static soundTrack.SoundManager.playSoundEffect;
 import java.util.ArrayList;
 import javax.swing.*;
 import main.Game;
 import soundTrack.SoundManager;
+import static soundTrack.SoundManager.playSoundEffect;
 
 //fixed:
 //1- encantamento so esta entrando no começo do rounds. o certo: aparece quando é lançado e depois no começo dos rounds
@@ -20,6 +20,15 @@ import soundTrack.SoundManager;
 //5 - quando ganhar nao fechar o jogo, e sim voltar pro inicio(looping)
 //6- diminuir mana por round
 //4 - ajeitar "efeito" da descrição das cartas
+
+//to fix:
+//1- carta da apenas 30% do seu dano nas cartas do campo de batalha
+//2 - terremoto(encantamento) dando dano 2x 
+//3- excessoes: quando digitar os nomes
+//4- avaliar outros conceitos de OO
+//5- cartas nao encontradas
+//6- encantamento so é ativo no turno do jogador respectivo
+
 
 
 

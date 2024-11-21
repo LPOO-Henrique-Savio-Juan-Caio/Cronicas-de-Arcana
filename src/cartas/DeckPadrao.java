@@ -8,30 +8,30 @@ public class DeckPadrao {
     //ou seja:
     private ArrayList<String> deckPadrao1 = new ArrayList<>(Arrays.asList(
             // Criaturas (20)
-            "Mago de Fogo", "Mago de Gelo", "Dragão de Fogo", "Dragão de Gelo", "Goblin",
+            "Mago de Fogo", "Mago de Gelo", "Dragao de Fogo", "Dragao de Gelo", "Goblin",
             "Boneco de Neve", "Arqueiro", "Arqueiro de Fogo", "Assassino", "Homem da Caverna",
-            "Guardiã do Inferno", "Forjador", "Lobo", "Colosso", "Golem",
-            "Golem de Fogo", "Águia", "Cavaleiro dos Ventos", "Feiticeiro Maligno", "Fênix Branca",
+            "Guardia do Inferno", "Forjador", "Lobo", "Colosso", "Golem",
+            "Golem de Fogo", "Aguia", "Cavaleiro dos Ventos", "Feiticeiro Maligno", "Fenix Branca",
 
             // Feitiços (5)
-            "Bola de Fogo", "Tempestade de Gelo", "Necromancia", "Regeneração Profunda", "Toque de Vida",
+            "Bola de Fogo", "Tempestade de Gelo", "Necromancia", "Regeneracao Profunda", "Toque de Vida",
 
             // Encantamentos (5)
-            "Faíscas", "Estalagmites", "Temporal", "Regeneração Contínua", "Carregar Energia"
+            "Faiscas", "Estalagmites", "Temporal", "Regeneracao Profunda", "Concentracao"
     ));
 
     private ArrayList<String> deckPadrao2 = new ArrayList<>(Arrays.asList(
             // Criaturas (20)
-            "Tritão", "Salamandra", "Urso da Montanha", "Sereia", "Boto-cor-de-rosa",
-            "Minotauro", "Gárgula", "Yeti", "Ancião da Floresta", "Fada da Neve",
-            "Demônio", "Dragão da Tempestade", "Sombra", "Guerreiro", "Curandeira",
-            "Fada Madrinha", "Arqueiro de Gelo", "Ceifador", "Bruxa do Pântano", "Bruxa de Fogo",
+            "Tritao", "Salamandra", "Urso da Montanha", "Sereia", "Boto-cor-de-rosa",
+            "Minotauro", "Gargula", "Yeti", "Anciao da Floresta", "Fada da Neve",
+            "Demonio", "Dragao da Tempestade", "Sombra", "Guerreiro", "Curandeira",
+            "Fada Madrinha", "Arqueiro de Gelo", "Ceifador", "Bruxa do Pantano", "Bruxa de Fogo",
 
             // Feitiços (5)
-            "Tempestade", "Espinhos Selvagens", "Fúria Vulcânica", "Energizar", "Raio de Esperança",
+            "Tempestade", "Espinhos Selvagens", "Furia Vulcanica", "Energizar", "Raio de Esperanca",
 
             // Encantamentos (5)
-            "Terremoto", "Chuva de Lava", "Vida em Prestacao", "Sorte Divina", "Bateria Fraca"
+            "Terremoto", "Furia Vulcanica", "Aura de Protecao", "Agonia", "Inferno"
     ));
 
     public ArrayList<String> getDeckPadrao1() {
