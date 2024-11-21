@@ -17,7 +17,7 @@ public class DeckPadrao {
             "Bola de Fogo", "Tempestade de Gelo", "Necromancia", "Regeneracao Profunda", "Toque de Vida",
 
             // Encantamentos (5)
-            "Faiscas", "Estalagmites", "Temporal", "Regeneracao Profunda", "Concentracao"
+            "Faíscas", "Estalagmites", "Inferno", "Concentração", "Cura Superior"
     ));
 
     private ArrayList<String> deckPadrao2 = new ArrayList<>(Arrays.asList(
@@ -31,7 +31,7 @@ public class DeckPadrao {
             "Tempestade", "Espinhos Selvagens", "Furia Vulcanica", "Energizar", "Raio de Esperanca",
 
             // Encantamentos (5)
-            "Terremoto", "Furia Vulcanica", "Aura de Protecao", "Agonia", "Inferno"
+            "Temporal", "Terremoto", "Raios", "Agonia", "Aura de Proteção"
     ));
 
     public ArrayList<String> getDeckPadrao1() {

@@ -102,6 +102,10 @@ public class Logica {
                     }
                 }
             }
+            
+
+        }
+        else if(!isTurnoJogador1){
             if (!encantamentoAtivosJ2.isEmpty()) {
                 for (Encantamento encantamento : encantamentoAtivosJ2) {
 
