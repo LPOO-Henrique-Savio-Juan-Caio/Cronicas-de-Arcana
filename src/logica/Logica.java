@@ -82,6 +82,9 @@ public class Logica {
         Jogador jogadorAtual = isTurnoJogador1 ? jogador1 : jogador2;
         Jogador proximoJogador = isTurnoJogador1 ? jogador2 : jogador1;
 
+        //aviso de turno primeiro
+        JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
+
         //mana regenerando todo round
         if(isTurnoJogador1){
             jogadorAtual.addMana(2);
@@ -153,8 +156,6 @@ public class Logica {
         CampoVazio(jogadorAtual)) {
             JOptionPane.showMessageDialog(frame, "Mana insuficiente para " + jogadorAtual.getNome() + ". Pulando turno...");
             passarTurno(); //recursao
-        } else {
-            JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
         }
     }
 
