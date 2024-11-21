@@ -70,11 +70,11 @@ public class CartasJogo {
         arrayCartas.add(new Encantamento("Temporal", 4.5, "Ar", "dano", 4));
         arrayCartas.add(new Encantamento("Terremoto", 5.0, "Terra", "muito_dano", 2));
         arrayCartas.add(new Encantamento("Inferno", 7.0, "Fogo", "muito_dano", 5));
-        arrayCartas.add(new Encantamento("Raios", 6.0, "Ar", "dano", 6));
+        arrayCartas.add(new Encantamento("Raios", 6.0, "Ar", "dano", 2));
         arrayCartas.add(new Encantamento("Concentracao", 2.5, "Mana", "muita_mana", 1));
-        arrayCartas.add(new Encantamento("Agonia", 5.0, "Fogo", "muito_dano", 7));
-        arrayCartas.add(new Encantamento("Cura Superior", 4.5, "Vida", "vida", 8));
-        arrayCartas.add(new Encantamento("Aura de Protecao", 3.5, "Vida", "vida", 6));
+        arrayCartas.add(new Encantamento("Agonia", 5.0, "Fogo", "muito_dano", 3));
+        arrayCartas.add(new Encantamento("Cura Superior", 4.5, "Vida", "vida",4 ));
+        arrayCartas.add(new Encantamento("Aura de Protecao", 3.5, "Vida", "vida", 2));
 
     }
 
