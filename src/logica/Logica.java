@@ -12,29 +12,12 @@ import main.Game;
 import soundTrack.SoundManager;
 import static soundTrack.SoundManager.playSoundEffect;
 
-//fixed:
-//1- encantamento so esta entrando no começo do rounds. o certo: aparece quando é lançado e depois no começo dos rounds
-//2- alguns encantamento nao estao acabando no momento que deveriam(talvez erro na indicação)
-//2.1- verificar funcionamento do encantamento(rodando 2 vezes seguindas?)
-//3 - corrigir o toString do aviso de encantamento
-//5 - quando ganhar nao fechar o jogo, e sim voltar pro inicio(looping)
-//6- diminuir mana por round
-//4 - ajeitar "efeito" da descrição das cartas
-
-//to fix:
-//1- carta da apenas 30% do seu dano nas cartas do campo de batalha
-//2 - terremoto(encantamento) dando dano 2x 
-//3- excessoes: quando digitar os nomes
-//4- avaliar outros conceitos de OO
-//5- cartas nao encontradas
-//6- encantamento so é ativo no turno do jogador respectivo
-
-
-
+//1-so permitir 5 cartas no campo de batalha
+//2 - jogo so acaba qnd volta pro jogador1
 
 
 public class Logica {
-    //vou ter q dar um jeito de instanciar Game aqui, para ter acesso a alguns metodos
+    
     private Game game;
 
     private Jogador jogador1;
@@ -159,6 +142,23 @@ public class Logica {
         }
     }
 
+    //função criada para verificar se ja tem 5 cartas no campo
+    public boolean verificarCampoBatalha(Jogador jogador){
+        //caso tenha menos de 5 cartas no campo
+        if(jogador.getCampoBatalha().getCartasNoCampo().size() < 5){
+            return true;
+        }
+        //caso tenha 5 ou mais
+        else{
+            
+            return false;
+
+        }
+        
+
+
+    }
+
     public boolean verificarMana(Jogador jogador) {
         for (Carta carta : jogador.getMao().getCartasMao()) {
             if (jogador.getMana() >= carta.getCustoMana()) {
@@ -211,80 +211,84 @@ public void usarCartaNoCampoBatalha(Jogador jogador, Carta carta, Jogador jogado
         
     }
 
-     public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
+    public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
         // Verifica se é o turno do jogador correto
         if ((isTurnoJogador1() && jogador.equals(jogador1)) || (!isTurnoJogador1() && jogador.equals(jogador2))) {
-        	if (jogador.getMana() >= carta.getCustoMana()) {
-            	new Thread(() -> playSoundEffect("arquivos/soundtracks/cardButton.wav")).start();
-                //aqui vou colocar uma estrutura condicional para cada "tipo" de carta:
-
-                //Criatura: vai pro campo de batalha, é removida da mao e gasta mana
-                if(carta instanceof Criatura criatura){
-                    jogador.getCampoBatalha().adicionarCarta(carta);
-                    jogador.getMao().removerCarta(carta); 
-                    jogador.alterarMana(carta);
-                    //falta colocar pra gastar mana
-
-                }
-                //feitiço:
-                else if(carta instanceof Feitico feitico){
-                    jogarFeitico(jogador, jogadorRival, feitico, carta);
-                }
-
-                //encantamento: efeito em determinado numero de rounds
-                else if (carta instanceof Encantamento encantamento) {
-                    System.out.println("encantamento lançado");
-                    //colocamos o encantamento na lista de encantamentos do jogador respectivo
-                    if(jogador.equals(jogador1)){
-                        //aviso de lançamento do encantamento
-                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
-                        //joga o encantamento e coloca -1 na duração
-                        jogarEncantamento(jogador1, jogador2, encantamento, carta);
-                        //gasta mana
-                        jogador.alterarMana(carta);
-                        encantamento.decrescerDuracao();
-                        //adiciona a lista que vai ter seu efeito todo round
-                        encantamentoAtivosJ1.add(encantamento);
-                        
-                    }
-                    else if(jogador.equals(jogador2)){
-                         //aviso de lançamento do encantamento
-                        JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
-                        //joga o encantamento e coloca -1 na duração
-                        jogarEncantamento(jogador2, jogador1, encantamento, carta);
-                        encantamento.decrescerDuracao();
-                        //adiciona a lista que vai ter seu efeito todo round
-                        encantamentoAtivosJ2.add(encantamento);
-                        
-                    }
+            if (jogador.getMana() >= carta.getCustoMana()) {
+                
+                //verificação de numero maximo de cartas no campo (para criaturas apenas)
+                if (verificarCampoBatalha(jogador) || !(carta instanceof Criatura criatura) ) {
                     
-                }
-                
-    
-                // Painéis dos campos de batalha dos jogadores
-                JPanel campoBatalhaPanel = jogador.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
-                JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
-                
-                // Atualiza os painéis do campo de batalha
-                campobatalhaGui.atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
-                campobatalhaGui.atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
-                System.out.println(jogador.getCampoBatalha().toString());
+                    //som de carta
+                    new Thread(() -> playSoundEffect("arquivos/soundtracks/cardButton.wav")).start();
 
-                
-                // Atualiza a mão do jogador
-                maogui.atualizarPanelMao(jogador);
-    
-                // Atualiza o painel de jogadores e passa o turno
-                paineljogadores.atualizarPainelJogadores();
-                passarTurno();
+                    
+                    //Criatura: vai pro campo de batalha, é removida da mao e gasta mana
+                    if (carta instanceof Criatura criatura) {
+                        jogador.getCampoBatalha().adicionarCarta(carta);
+                        jogador.getMao().removerCarta(carta);
+                        jogador.alterarMana(carta);
+                        //falta colocar pra gastar mana
+
+                    } //feitiço:
+                    else if (carta instanceof Feitico feitico) {
+                        jogarFeitico(jogador, jogadorRival, feitico, carta);
+                    } //encantamento: efeito em determinado numero de rounds
+                    else if (carta instanceof Encantamento encantamento) {
+                        System.out.println("encantamento lançado");
+                        //colocamos o encantamento na lista de encantamentos do jogador respectivo
+                        if (jogador.equals(jogador1)) {
+                            //aviso de lançamento do encantamento
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                            //joga o encantamento e coloca -1 na duração
+                            jogarEncantamento(jogador1, jogador2, encantamento, carta);
+                            //gasta mana
+                            jogador.alterarMana(carta);
+                            encantamento.decrescerDuracao();
+                            //adiciona a lista que vai ter seu efeito todo round
+                            encantamentoAtivosJ1.add(encantamento);
+
+                        } else if (jogador.equals(jogador2)) {
+                            //aviso de lançamento do encantamento
+                            JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+                            //joga o encantamento e coloca -1 na duração
+                            jogarEncantamento(jogador2, jogador1, encantamento, carta);
+                            encantamento.decrescerDuracao();
+                            //adiciona a lista que vai ter seu efeito todo round
+                            encantamentoAtivosJ2.add(encantamento);
+
+                        }
+
+                    }
+
+                    // Painéis dos campos de batalha dos jogadores
+                    JPanel campoBatalhaPanel = jogador.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
+                    JPanel campoBatalhaPanelRival = jogadorRival.equals(jogador1) ? game.getplayer1CampoBatalhaPanel() : game.getplayer2CampoBatalhaPanel();
+
+                    // Atualiza os painéis do campo de batalha
+                    campobatalhaGui.atualizarCampoBatalhaPanel(jogadorRival, campoBatalhaPanelRival, jogador);
+                    campobatalhaGui.atualizarCampoBatalhaPanel(jogador, campoBatalhaPanel, jogadorRival);
+                    System.out.println(jogador.getCampoBatalha().toString());
+
+                    // Atualiza a mão do jogador
+                    maogui.atualizarPanelMao(jogador);
+
+                    // Atualiza o painel de jogadores e passa o turno
+                    paineljogadores.atualizarPainelJogadores();
+                    passarTurno();
+
+                }
+                else{
+                    JOptionPane.showMessageDialog(frame, "Numero Maximo de cartas no Campo de Batalha");
+                }
+
             } else {
                 JOptionPane.showMessageDialog(frame, "Mana insuficiente!");
             }
-        } 
-        else{
+        } else {
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
-     }
+    }
 
      public void jogarFeitico(Jogador jogador, Jogador jogadorRival, Feitico feitico, Carta carta){
         System.out.println("feitiço lançado");
