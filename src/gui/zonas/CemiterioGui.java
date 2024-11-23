@@ -32,21 +32,28 @@ private Game game;
         
     }
 
-    public JPanel createCemiterioPanel(Jogador jogador){
+    public JPanel createCemiterioPanel(Jogador jogador, Jogador jogadorRival, int initialX, int initialY){
 
         JPanel playerCemiterioPanel = new JPanel();
-        playerCemiterioPanel.setLayout(new BoxLayout(playerCemiterioPanel, BoxLayout.Y_AXIS));
-        playerCemiterioPanel.setBackground(Color.BLACK);
+        playerCemiterioPanel.setLayout(null);
+        playerCemiterioPanel.setBackground(new Color(0, 0, 0, 0));
+
+        int x = initialX; // Posição inicial X
+        int y = initialY; // Posição inicial Y
+        int buttonWidth = 120;
+        int buttonHeight = 100;
 
         //botao que "abre" uma page com o cemiterio de cada jogador
-        JButton cardButton = new JButton( "Cemiterio " + jogador.getNome());
-            fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
-            cardButton.setFont(fonteCustomizada1);
-            cardButton.setPreferredSize(new Dimension(100, 60));
-            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            cardButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+            JButton cardButton = new JButton("");
+            cardButton.setBounds(x, y, buttonWidth, buttonHeight);
+            //cardButton.setBackground(new Color(0, 0, 0, 0));
             cardButton.setBackground(Color.BLACK);
-            cardButton.setForeground(Color.WHITE);
+            cardButton.setForeground(new Color(0, 0, 0, 0));
+            cardButton.setBorderPainted(false);
+            //cardButton.setMargin(new Insets(0, 0, 0, 0));
+            //cardButton.setContentAreaFilled(false);
+            //cardButton.setFocusPainted(false);
+
             cardButton.addActionListener(new ActionListener() {
                 
                 @Override
@@ -91,7 +98,9 @@ private Game game;
                     
                 }
             });
+
             playerCemiterioPanel.add(cardButton);
+            playerCemiterioPanel.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
             return playerCemiterioPanel;
 
     }

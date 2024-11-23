@@ -33,7 +33,7 @@ public class PainelJogadoresGui {
     }
 
     public String createPlayerInfo(Jogador jogador) {
-    	String informacoes = jogador.getNome() + "Vida: " + jogador.getVida() + "  Mana: " + jogador.getMana();
+    	String informacoes = jogador.getNome() + " Vida: " + jogador.getVida() + "  Mana: " + jogador.getMana();
         return informacoes;
     }
 

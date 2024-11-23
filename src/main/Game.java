@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import gui.background.BackgroundPanel;
 import logica.*;
+
+import static gui.menu.TelaInicial.fonteCustomizada1;
 import static soundTrack.SoundManager.playSoundEffect;
 
 //questoes sobre a logica do jogo:
@@ -96,15 +98,18 @@ public class Game {
         JPanel playerInfoPanel = new JPanel(new GridLayout(1, 2));
         playerInfoPanel.setBackground(new Color(0, 0, 0, 0)); // Cor de fundo com transparência
         playerInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem interna
+        playerInfoPanel.setFont(fonteCustomizada1);
 
         // Informações do Jogador 1
         playerInfo1 = new JLabel(painelJogadores.createPlayerInfo(jogador1), JLabel.CENTER);
         painelJogadores.setupPlayerLabel(playerInfo1);
+        playerInfo1.setFont(fonteCustomizada1);
         playerInfoPanel.add(playerInfo1);
 
         // Informações do Jogador 2
         playerInfo2 = new JLabel(painelJogadores.createPlayerInfo(jogador2), JLabel.CENTER);
         painelJogadores.setupPlayerLabel(playerInfo2);
+        playerInfo2.setFont(fonteCustomizada1);
         playerInfoPanel.add(playerInfo2);
 
         // Adiciona o painel de informações na parte superior
@@ -112,21 +117,32 @@ public class Game {
 
         // Painéis de mão e cemitério (lados)
         JPanel player1SidePanel = new JPanel();
-        player1SidePanel.setLayout(new BoxLayout(player1SidePanel, BoxLayout.Y_AXIS));
+        player1SidePanel.setLayout(null);
+        player1SidePanel.setPreferredSize(new Dimension(160, 500));
         player1SidePanel.setBackground(new Color(0, 0, 0, 0)); // Fundo com transparência
-        player1MaoPanel = maoGui.createMaoPanel(jogador1, jogador2);
-        player1Cemiterio = cemiterioGui.createCemiterioPanel(jogador1);
+        player1SidePanel.setFont(fonteCustomizada1);
+        player1MaoPanel = maoGui.createMaoPanel(jogador1, jogador2, 33, 4);
+        player1MaoPanel.setBounds(0, 0, 150, 520);
+        player1Cemiterio = cemiterioGui.createCemiterioPanel(jogador1, jogador2, 70, 530);
+        //player1Cemiterio.setBackground(new Color(0, 0, 0, 0));
+        player1Cemiterio.setBackground(Color.BLACK);
+        player1Cemiterio.setBounds(new Rectangle(20, 548, 130, 90));
         player1SidePanel.add(player1MaoPanel);
-        player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
+        //player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
         player1SidePanel.add(player1Cemiterio);
 
         JPanel player2SidePanel = new JPanel();
-        player2SidePanel.setLayout(new BoxLayout(player2SidePanel, BoxLayout.Y_AXIS));
+        player2SidePanel.setLayout(null);
         player2SidePanel.setBackground(new Color(0, 0, 0, 0)); // Fundo com transparência
-        player2MaoPanel = maoGui.createMaoPanel(jogador2, jogador1);
-        player2Cemiterio = cemiterioGui.createCemiterioPanel(jogador2);
+        player2SidePanel.setFont(fonteCustomizada1);
+        player2SidePanel.setPreferredSize(new Dimension(160, 500));
+        player2MaoPanel = maoGui.createMaoPanel(jogador2, jogador1, 5, 130);
+        player2MaoPanel.setBounds(10, 7, 150, 645);
+        player2Cemiterio = cemiterioGui.createCemiterioPanel(jogador2, jogador1, 10, 10);
+        player2Cemiterio.setBackground(new Color(0, 0, 0, 0));
+        player2Cemiterio.setBounds(new Rectangle(1, 10, 130, 100));
         player2SidePanel.add(player2MaoPanel);
-        player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
+        //player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
         player2SidePanel.add(player2Cemiterio);
 
         // Adiciona os painéis laterais ao painel principal
@@ -134,11 +150,21 @@ public class Game {
         panel1.add(player2SidePanel, BorderLayout.EAST);
 
         // Campo de batalha (parte central)
-        JPanel centralBattlePanel = new JPanel(new GridLayout(1, 2, 10, 10));
-        centralBattlePanel.setOpaque(false); // Torna transparente para mostrar o fundo
+        JPanel centralBattlePanel = new JPanel();
+        centralBattlePanel.setLayout(null);
+        centralBattlePanel.setBackground(new Color(0, 0, 0, 0));
+        centralBattlePanel.setPreferredSize(new Dimension(600, 530));
+        centralBattlePanel.setFont(fonteCustomizada1);
         centralBattlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem interna
-        player1CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador1, jogador2);
-        player2CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador2, jogador1);
+        //campo de batalha jogador 1
+        player1CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador1, jogador2, 10, 10);
+        player1CampoBatalhaPanel.setLayout(null);
+        player1CampoBatalhaPanel.setBounds(new Rectangle(10, 10, 180, 610));
+        //campo de batalha jogador 2
+        player2CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador2, jogador1, 100, 10);
+        player2CampoBatalhaPanel.setLayout(null);
+        player2CampoBatalhaPanel.setBounds(new Rectangle(480, 10, 180, 610));
+
         centralBattlePanel.add(player1CampoBatalhaPanel);
         centralBattlePanel.add(player2CampoBatalhaPanel);
 

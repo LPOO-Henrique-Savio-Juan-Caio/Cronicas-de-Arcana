@@ -32,17 +32,28 @@ public class CampoBatalhaGui {
         this.logica = logica;
     }
 
-    public JPanel createCampoBatalhaPanel(Jogador jogador, Jogador jogadorRival){
+    public JPanel createCampoBatalhaPanel(Jogador jogador, Jogador jogadorRival, int initialX, int initialY){
         JPanel playerCampoBatalhaPanel = new JPanel(new GridLayout(1, 2));
-        playerCampoBatalhaPanel.setLayout(new BoxLayout(playerCampoBatalhaPanel, BoxLayout.Y_AXIS));
+        playerCampoBatalhaPanel.setLayout(null);
         playerCampoBatalhaPanel.setBackground(new Color(0, 0, 0, 0));
+
+        int x = 36; // Posição inicial X
+        int y = 28; // Posição inicial Y
+        int incrementoY = 123; // Incremento vertical para cada botão
+        int buttonWidth = 130;//x
+        int buttonHeight = 90;//y
+
+        // Calcular a largura e altura necessárias para o painel
+        int totalHeight = 630;
+        int panelWidth = 150; // Ajuste conforme necessário
 
         for(Carta carta : jogador.getCampoBatalha().getCartasNoCampo()){
             JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
             fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
             cardButton.setFont(fonteCustomizada1);
-            cardButton.setPreferredSize(new Dimension(100, 60));
-            cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cardButton.setBounds(x, y, buttonWidth, buttonHeight);
+            cardButton.setBackground(Color.BLACK);
+            cardButton.setForeground(Color.WHITE);
             cardButton.addActionListener(new ActionListener() {
                 
                 @Override
@@ -51,16 +62,11 @@ public class CampoBatalhaGui {
                     logica.usarCartaNoCampoBatalha(jogador, carta, jogadorRival );
                 }
             });
-
-            
-
+            y += incrementoY;
             playerCampoBatalhaPanel.add(cardButton);
-            playerCampoBatalhaPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-
-
-
         }
 
+        playerCampoBatalhaPanel.setPreferredSize(new Dimension(panelWidth, totalHeight));
         return playerCampoBatalhaPanel;
 
     }
@@ -75,20 +81,27 @@ public class CampoBatalhaGui {
         List<Carta> cartasParaRemover = new ArrayList<>();
 
 
+        int x = 36; // Posição inicial X
+        int y = 28; // Posição inicial Y
+        int incrementoY = 123; // Incremento vertical para cada botão
+        int buttonWidth = 130;//x
+        int buttonHeight = 90;//y
+
         //itera sobre as cartas no campo de batalha
         for (Carta carta : jogador.getCampoBatalha().getCartasNoCampo()) {
             //verifica se as cartas estao vivas
             if (carta.getResistencia() > 0) {
                 //cria gui da carta
                 JPanel cartaPanel = new JPanel();
-                cartaPanel.setLayout(new BoxLayout(cartaPanel, BoxLayout.Y_AXIS));
-                cartaPanel.setBackground(Color.DARK_GRAY);
+                cartaPanel.setLayout(null);
+                cartaPanel.setBackground(new Color(0,0,0, 0));
 
                 JButton cardButton = new JButton(carta.getNome() + " (Mana: " + carta.getCustoMana() + ")");
                 fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 10); // Ajuste o tamanho conforme necessário
                 cardButton.setFont(fonteCustomizada1);
-                cardButton.setPreferredSize(new Dimension(100, 60));
-                cardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                cardButton.setBounds(x, y, buttonWidth, buttonHeight);
+                cardButton.setBackground(Color.BLACK);
+                cardButton.setForeground(Color.WHITE);
                 cardButton.addActionListener(e -> logica.usarCartaNoCampoBatalha(jogador, carta, jogadorRival ));
                 
                 //barra de progresso da vida (em desenvolvimento)
@@ -104,7 +117,7 @@ public class CampoBatalhaGui {
     
                 
                 campoBatalhaPanel.add(cardButton);
-                campoBatalhaPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+                y += incrementoY;
     
             } else {//caso n esteja viva
                 
@@ -112,6 +125,7 @@ public class CampoBatalhaGui {
                 jogador.getCemiterio().adicionarCarta(carta);
                 cartasParaRemover.add(carta); // Marca para remoção depois
             }
+
         }
     
         //remove cartas da lista
