@@ -17,11 +17,7 @@ public class DeckPadrao {
             "Bola de Fogo", "Tempestade de Gelo", "Necromancia", "Regeneracao Profunda", "Toque de Vida",
 
             // Encantamentos (5)
-<<<<<<< HEAD
             "Faiscas", "Estalagmites", "Inferno", "Concentracao", "Cura Superior"
-=======
-            "Faiscas", "Estalagmites", "Inferno", "Concentração", "Cura Superior"
->>>>>>> refs/remotes/origin/main
     ));
 
     private ArrayList<String> deckPadrao2 = new ArrayList<>(Arrays.asList(

@@ -17,11 +17,6 @@ import static soundTrack.SoundManager.playSoundEffect;
 
 
 public class Logica {
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> refs/remotes/origin/main
     private Game game;
 
     private Jogador jogador1;
@@ -154,19 +149,11 @@ public class Logica {
         }
         //caso tenha 5 ou mais
         else{
-<<<<<<< HEAD
 
             return false;
 
         }
 
-=======
-            
-            return false;
-
-        }
-        
->>>>>>> refs/remotes/origin/main
 
 
     }
@@ -227,7 +214,6 @@ public class Logica {
         // Verifica se é o turno do jogador correto
         if ((isTurnoJogador1() && jogador.equals(jogador1)) || (!isTurnoJogador1() && jogador.equals(jogador2))) {
             if (jogador.getMana() >= carta.getCustoMana()) {
-<<<<<<< HEAD
 
                 //verificação de numero maximo de cartas no campo (para criaturas apenas)
                 if (verificarCampoBatalha(jogador) || !(carta instanceof Criatura criatura) ) {
@@ -236,16 +222,6 @@ public class Logica {
                     new Thread(() -> playSoundEffect("arquivos/soundtracks/cardButton.wav")).start();
 
 
-=======
-                
-                //verificação de numero maximo de cartas no campo (para criaturas apenas)
-                if (verificarCampoBatalha(jogador) || !(carta instanceof Criatura criatura) ) {
-                    
-                    //som de carta
-                    new Thread(() -> playSoundEffect("arquivos/soundtracks/cardButton.wav")).start();
-
-                    
->>>>>>> refs/remotes/origin/main
                     //Criatura: vai pro campo de batalha, é removida da mao e gasta mana
                     if (carta instanceof Criatura criatura) {
                         jogador.getCampoBatalha().adicionarCarta(carta);
