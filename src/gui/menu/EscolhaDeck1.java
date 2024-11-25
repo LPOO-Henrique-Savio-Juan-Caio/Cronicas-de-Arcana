@@ -1,12 +1,10 @@
 package gui.menu;
 
-//importações
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import cartas.DeckPadrao;
 import java.util.ArrayList;
 import static soundTrack.SoundManager.playSoundEffect;
@@ -15,10 +13,7 @@ import static gui.menu.TelaInicial.fonteCustomizada1;
 public class EscolhaDeck1 {
 
     private JPanel panel1;
-
-    //classe com decks padroes (String)
     DeckPadrao deckPadrao = new DeckPadrao();
-
     private ArrayList<String> deckJogador1 = new ArrayList<>();
     private String Jogador1;
     private String Jogador2;
@@ -26,8 +21,6 @@ public class EscolhaDeck1 {
     //variaveis do GUI
     private JButton deck1Botao;
     private JButton deck2Botao;
-    private JLabel titulomenu2;
-
     private JFrame frame;
 
     public EscolhaDeck1(String Jogador1, String Jogador2, JFrame frame) {
@@ -35,8 +28,6 @@ public class EscolhaDeck1 {
         //recebe o nome dos jogadores
         this.Jogador1 = Jogador1;
         this.Jogador2 = Jogador2;
-
-        //obs: o layout GridBagLayout funciona através de celular, é meio difícil...
 
         //conteiner da tela
         panel1 = new JPanel();
@@ -120,9 +111,9 @@ public class EscolhaDeck1 {
     public void menu2Start() {
     	new Thread(() -> playSoundEffect("arquivos/soundtracks/clickButtom01.wav")).start();
         frame.setContentPane(new EscolhaDeck1(Jogador1, Jogador2, frame).panel1); // Adiciona o painel da interface
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        // Define a resolução 1024x768
         Dimension resolution4x3 = new Dimension(1024, 768);
         frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
         frame.setSize(resolution4x3); // Define o tamanho inicial da janela

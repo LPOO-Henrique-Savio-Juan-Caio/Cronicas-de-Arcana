@@ -13,10 +13,8 @@ public class Feitico extends Carta {
 
     @Override
     public void receberDano(double dano) {
-        // Feitiço não tem resistência, então o método está vazio
     }
 
-    //isso aqui é muita gambiarra
     @Override
     public double getResistencia() {
         return 0;

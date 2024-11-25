@@ -12,28 +12,18 @@ import main.Game;
 import soundTrack.SoundManager;
 import static soundTrack.SoundManager.playSoundEffect;
 
-//1-so permitir 5 cartas no campo de batalha
-//2 - jogo so acaba qnd volta pro jogador1
-
-
 public class Logica {
     private Game game;
-
     private Jogador jogador1;
     private Jogador jogador2;
     private JFrame frame;
     private boolean isTurnoJogador1;
     private MaoGui maogui;
     Progressao progressao = Progressao.getInstancia();
-    private SoundManager soundManager = new SoundManager();
-
-    //por enquanto vou puxar alguns metodos GUI de la, depois vou mudar para as classes respectivas
     private CampoBatalhaGui campobatalhaGui;
     private PainelJogadoresGui paineljogadores;
     private CemiterioGui cemiteriogui;
-
     private TelaInicial telaInicial;
-
     private ArrayList<Encantamento> encantamentoAtivosJ1;
     private ArrayList<Encantamento> encantamentoAtivosJ2;
 
@@ -48,15 +38,11 @@ public class Logica {
         paineljogadores = new PainelJogadoresGui(game, jogador1, jogador2, frame, this);
         maogui = new MaoGui(game, jogador1, jogador2, frame, this);
         cemiteriogui = new CemiterioGui(game, jogador1, jogador2, frame, this);
-
         telaInicial = new TelaInicial(this.frame);
-
 
         //inicializando array de encantamentosAtivos:
         encantamentoAtivosJ1 = new ArrayList<>();
         encantamentoAtivosJ2 = new ArrayList<>();
-
-
     }
 
     public void passarTurno() {
@@ -67,15 +53,17 @@ public class Logica {
         //aviso de turno primeiro
         JOptionPane.showMessageDialog(frame, "Turno de " + jogadorAtual.getNome());
 
-        //mana regenerando todo round
+        //mana regenerando todos os rounds
         if(isTurnoJogador1){
             jogadorAtual.addMana(2);
             proximoJogador.addMana(2);
             paineljogadores.atualizarPainelJogadores();
             JOptionPane.showMessageDialog(frame, "+2 de mana para ambos os jogadores");
+
             //logica para encantamentos ativos
             if (!encantamentoAtivosJ1.isEmpty()) {
                 for (Encantamento encantamento : encantamentoAtivosJ1) {
+
                     //ativa cada encantamento do jogador1
                     if (encantamento.getDuracao() != 0) {
                         jogarEncantamento(jogador1, jogador2, encantamento, encantamento);
@@ -87,13 +75,9 @@ public class Logica {
                     }
                 }
             }
-
-
-        }
-        else if(!isTurnoJogador1){
+        } else if(!isTurnoJogador1){
             if (!encantamentoAtivosJ2.isEmpty()) {
                 for (Encantamento encantamento : encantamentoAtivosJ2) {
-
                     if (encantamento.getDuracao() != 0) {
                         jogarEncantamento(jogador2, jogador1, encantamento, encantamento);
                         encantamento.decrescerDuracao();
@@ -101,25 +85,22 @@ public class Logica {
                     } else {
                         encantamentoAtivosJ2.remove(encantamento);
                     }
-
                 }
             }
-
         }
 
         // Condições de vitória
         if (jogador1.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador2.getNome());
             progressao.addVitoria(jogador1.getNome());
-            //soundManager.stopBackgroundMusic();
 
             //vai pra tela inicial
             telaInicial.menuStart();
             return;
+
         } else if (jogador2.getVida() <= 0) {
             JOptionPane.showMessageDialog(frame, "Vitória de " + jogador1.getNome());
             progressao.addVitoria(jogador2.getNome());
-            //soundManager.stopBackgroundMusic();
 
             //vai pra tela inicial
             telaInicial.menuStart();
@@ -147,15 +128,11 @@ public class Logica {
         if(jogador.getCampoBatalha().getCartasNoCampo().size() < 5){
             return true;
         }
+
         //caso tenha 5 ou mais
         else{
-
             return false;
-
         }
-
-
-
     }
 
     public boolean verificarMana(Jogador jogador) {
@@ -179,8 +156,10 @@ public class Logica {
 
         //verificação de turno
         if(isTurnoJogador1() && jogador.equals(jogador1) ||(!isTurnoJogador1() && jogador.equals(jogador2)) ){
+
             //dano no jogador rival
             jogadorRival.alterarVida(carta);
+
             //dano nas cartas do campo de batalha do rival
             jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
 
@@ -200,17 +179,14 @@ public class Logica {
 
             paineljogadores.atualizarPainelJogadores();
             passarTurno();
-
         }
         else{
             JOptionPane.showMessageDialog(frame, "Não é o seu turno!");
         }
-
-
-
     }
 
     public void jogarCarta(Jogador jogador, Carta carta, Jogador jogadorRival) {
+
         // Verifica se é o turno do jogador correto
         if ((isTurnoJogador1() && jogador.equals(jogador1)) || (!isTurnoJogador1() && jogador.equals(jogador2))) {
             if (jogador.getMana() >= carta.getCustoMana()) {
@@ -227,7 +203,6 @@ public class Logica {
                         jogador.getCampoBatalha().adicionarCarta(carta);
                         jogador.getMao().removerCarta(carta);
                         jogador.alterarMana(carta);
-                        //falta colocar pra gastar mana
 
                     } //feitiço:
                     else if (carta instanceof Feitico feitico) {
@@ -235,29 +210,35 @@ public class Logica {
                     } //encantamento: efeito em determinado numero de rounds
                     else if (carta instanceof Encantamento encantamento) {
                         System.out.println("encantamento lançado");
+
                         //colocamos o encantamento na lista de encantamentos do jogador respectivo
                         if (jogador.equals(jogador1)) {
+
                             //aviso de lançamento do encantamento
                             JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+
                             //joga o encantamento e coloca -1 na duração
                             jogarEncantamento(jogador1, jogador2, encantamento, carta);
+
                             //gasta mana
                             jogador.alterarMana(carta);
                             encantamento.decrescerDuracao();
-                            //adiciona a lista que vai ter seu efeito todo round
+
+                            //adiciona a lista que vai ter seu efeito todos os round
                             encantamentoAtivosJ1.add(encantamento);
 
                         } else if (jogador.equals(jogador2)) {
+
                             //aviso de lançamento do encantamento
                             JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " lançado pelo " + jogador.getNome());
+
                             //joga o encantamento e coloca -1 na duração
                             jogarEncantamento(jogador2, jogador1, encantamento, carta);
                             encantamento.decrescerDuracao();
-                            //adiciona a lista que vai ter seu efeito todo round
+
+                            //adiciona a lista que vai ter seu efeito todos os round
                             encantamentoAtivosJ2.add(encantamento);
-
                         }
-
                     }
 
                     // Painéis dos campos de batalha dos jogadores
@@ -275,7 +256,6 @@ public class Logica {
                     // Atualiza o painel de jogadores e passa o turno
                     paineljogadores.atualizarPainelJogadores();
                     passarTurno();
-
                 }
                 else{
                     JOptionPane.showMessageDialog(frame, "Numero Maximo de cartas no Campo de Batalha");
@@ -296,19 +276,23 @@ public class Logica {
         double valorEfeito = efeito.getEfeito();
         if(valorEfeito > 0){
             if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
+
                 //tirar vida do jogadorRival
                 jogadorRival.alterarVidaDouble(-efeito.getEfeito());
+
                 //tira vida das cartas do jogadorRival
                 jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
                 JOptionPane.showMessageDialog(frame, "Feitiço de Dano lançado! Causou " + efeito.getEfeito() + " de dano no oponente.");
             }
             else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
+
                 //dar mana
                 jogador.alterarManaDouble(efeito.getEfeito());
                 JOptionPane.showMessageDialog(frame, "Feitiço de Mana lançado! Ganhou " + efeito.getEfeito() + " de mana.");
             }
         }
         else if(valorEfeito < 0){
+
             //dar vida(resistencia) ao jogador
             jogador.alterarVidaDouble(-efeito.getEfeito());
             JOptionPane.showMessageDialog(frame, "Feitiço de Vida lançado! Recuperou " + -efeito.getEfeito() + " de vida.");
@@ -328,7 +312,6 @@ public class Logica {
         // Remove o feitiço da mão e gasta mana
         jogador.getMao().removerCarta(carta);
         jogador.alterarMana(carta);
-
     }
 
     public void jogarEncantamento(Jogador jogador, Jogador jogadorRival, Encantamento encantamento, Carta carta){
@@ -338,6 +321,7 @@ public class Logica {
         double valorEfeito = efeito.getEfeito();
         if(valorEfeito > 0){
             if(tipoEfeito.equals("dano") ||tipoEfeito.equals("muito_dano") ){
+
                 //tirar vida do jogadorRival
                 //tira vida das cartas do jogadorRival
                 jogadorRival.getCampoBatalha().danoCampoBatalha(carta);
@@ -345,21 +329,21 @@ public class Logica {
                 JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " causou " +  efeito.getEfeito() + " de dado em " + jogadorRival.getNome());
             }
             else if(tipoEfeito.equals("mana") ||tipoEfeito.equals("muita_mana")){
+
                 //dar mana
                 jogador.alterarManaDouble(efeito.getEfeito());
                 JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " forneceu " +  -efeito.getEfeito() + " de mana para " + jogador.getNome());
             }
         }
         else if(valorEfeito < 0){
+
             //dar vida(resistencia) ao jogador
             jogador.alterarVidaDouble(-efeito.getEfeito());
             JOptionPane.showMessageDialog(frame, "Encantamento " + encantamento.toString() + " forneceu " +  -efeito.getEfeito() + " de vida para " + jogador.getNome());
         }
 
-
         // Remove o Encantamento da mão e gasta mana
         jogador.getMao().removerCarta(carta);
         paineljogadores.atualizarPainelJogadores();
-
     }
 }

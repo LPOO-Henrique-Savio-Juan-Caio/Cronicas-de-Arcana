@@ -23,13 +23,6 @@ public class SoundManager {
         }).start();
     }
 
-    // Metodo para parar a música de fundo
-    public static void stopBackgroundMusic() {
-        if (backgroundClip != null && backgroundClip.isRunning()) {
-            backgroundClip.stop();
-        }
-    }
-
     //Metodo para tocar efeito sonoro
     public static void playSoundEffect(String filepath) {
         try {

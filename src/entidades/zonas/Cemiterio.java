@@ -1,7 +1,6 @@
 package entidades.zonas;
 
 import entidades.carta.Carta;
-
 import java.util.ArrayList;
 
 public class Cemiterio implements AcoesZonas{

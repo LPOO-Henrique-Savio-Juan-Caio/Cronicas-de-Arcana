@@ -1,4 +1,5 @@
 package logica;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,9 +10,7 @@ public class Progressao {
     private Map<String, Integer> vitoriaJogadores;
 
     public Progressao(){
-
         vitoriaJogadores = new HashMap<>();
-        
     }
 
     //faz com que eu n perca os dados toda vez que inicio o jogo
@@ -34,10 +33,8 @@ public class Progressao {
         }
 
     }
-
     //depois que um jogador for declarado vencedor
     public void addVitoria(String nomeJogador){
         vitoriaJogadores.put(nomeJogador, vitoriaJogadores.get(nomeJogador) + 1);
     }
-
 }

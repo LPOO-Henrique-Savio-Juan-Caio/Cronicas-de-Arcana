@@ -41,5 +41,4 @@ public class PainelJogadoresGui {
         label.setFont(fonteCustomizada1);
         label.setForeground(Color.WHITE);
     }
-
 }

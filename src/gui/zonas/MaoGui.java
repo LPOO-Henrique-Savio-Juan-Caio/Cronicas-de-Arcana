@@ -7,10 +7,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import entidades.Jogador;
-import entidades.carta.Carta;
-import entidades.carta.Criatura;
-import entidades.carta.Encantamento;
-import entidades.carta.Feitico;
+import entidades.carta.*;
 import main.Game;
 import logica.Logica;
 import static gui.menu.TelaInicial.fonteCustomizada1;
@@ -31,15 +28,6 @@ public class MaoGui {
         this.logica = logica;
     }
 
-    /**
-     * Cria um painel de mão para um jogador com posicionamento vertical.
-     *
-     * @param jogador      O jogador cujo painel de mão está sendo criado.
-     * @param jogadorRival O jogador rival.
-     * @param initialX     Posição X inicial dos botões.
-     * @param initialY     Posição Y inicial dos botões.
-     * @return JPanel configurado com os botões das cartas.
-     */
     public JPanel createMaoPanel(Jogador jogador, Jogador jogadorRival, int initialX, int initialY) {
         JPanel playerMaoPanel = new JPanel();
         playerMaoPanel.setLayout(null); // Layout absoluto
@@ -50,10 +38,8 @@ public class MaoGui {
         int incrementoY = 108; // Incremento vertical para cada botão
         int buttonWidth = 117;
         int buttonHeight = 80;
-
-        // Calcular a largura e altura necessárias para o painel
         int totalHeight = 630;
-        int panelWidth = 150; // Ajuste conforme necessário
+        int panelWidth = 150;
 
         fonteCustomizada1 = fonteCustomizada1.deriveFont(Font.PLAIN, 15);
 
@@ -81,22 +67,14 @@ public class MaoGui {
                     }
                 }
             });
-
             playerMaoPanel.add(cardButton);
             y += incrementoY; // Atualiza a posição vertical para o próximo botão
         }
 
-        // Define o tamanho preferido do painel com base no número de cartas
         playerMaoPanel.setPreferredSize(new Dimension(panelWidth, totalHeight));
-
         return playerMaoPanel;
     }
 
-    /**
-     * Atualiza o painel de mão de um jogador.
-     *
-     * @param jogador O jogador cujo painel de mão será atualizado.
-     */
     public void atualizarPanelMao(Jogador jogador) {
         // Obtém o painel de mão correspondente ao jogador
         JPanel playerPanel = jogador.equals(jogador1) ? game.getplayer1MaoPanel() : game.getplayer2MaoPanel();
@@ -126,7 +104,7 @@ public class MaoGui {
 
         // Calcular a largura e altura necessárias para o painel
         int totalHeight = 630;
-        int panelWidth = 150; // Ajuste conforme necessário
+        int panelWidth = 150;
 
         // Reconstrói o painel com as cartas atualizadas
         for (Carta cartaAtual : jogador.getMao().getCartasMao()) {
@@ -162,11 +140,6 @@ public class MaoGui {
         playerPanel.repaint();
     }
 
-    /**
-     * Exibe os detalhes de uma carta em um JOptionPane.
-     *
-     * @param carta A carta cujos detalhes serão exibidos.
-     */
     private void exibirDetalhesCarta(Carta carta) {
         String detalhesCarta = "Nome: " + carta.getNome() +
                 "\nCusto de Mana: " + carta.getCustoMana() +
@@ -195,12 +168,7 @@ public class MaoGui {
         );
     }
 
-    /**
-     * Interpreta o efeito da carta para exibição.
-     *
-     * @param efeito O efeito da carta como String.
-     * @return Uma descrição legível do efeito.
-     */
+    // Interpreta o efeito da carta para exibição.
     private String interpretarEfeito(String efeito) {
         switch (efeito) {
             case "muito_dano":

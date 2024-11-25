@@ -1,6 +1,6 @@
 package entidades.zonas;
-import entidades.carta.Carta;
 
+import entidades.carta.Carta;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,19 +21,6 @@ public class Mao implements AcoesZonas{
             cartasMao.add(cartaSorteada);
             deck.getCartas().remove(indiceAleatorio);
         }
-    }
-
-    public ArrayList<Carta> gerarCartas(ArrayList<String> nomesCartas, ArrayList<Carta> arrayCartas) {
-        ArrayList<Carta> cartasConvertidas = new ArrayList<>();
-        for (String nome : nomesCartas) {
-            Carta carta = selecionarCarta(arrayCartas, nome);
-            if (carta != null) {
-                cartasConvertidas.add(carta);
-            } else {
-                System.out.println("Carta não encontrada: " + nome);
-            }
-        }
-        return cartasConvertidas;
     }
 
     public Carta selecionarCarta(ArrayList<Carta> cartas, String nomeCarta) {

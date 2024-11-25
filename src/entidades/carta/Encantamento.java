@@ -12,23 +12,13 @@ public class Encantamento extends Carta {
         this.duracaoMaxima = duracao;
     }
 
-    public int getDuracaoMaxima() {
-        return duracaoMaxima;
-    }
-    
     public int getDuracao() {
         return duracao;
-    }
-
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
     }
 
     public void decrescerDuracao(){
         this.duracao -= 1;
     }
-
-
 
     public String getEfeito() {
         return efeito;
@@ -41,10 +31,8 @@ public class Encantamento extends Carta {
 
     @Override
     public void receberDano(double dano) {
-        // encantamento não tem resistência, então o método está vazio
     }
 
-    //isso aqui é muita gambiarra
     @Override
     public double getResistencia() {
         return 0;
@@ -52,7 +40,6 @@ public class Encantamento extends Carta {
 
     @Override
     public void setResistencia(double resistencia){
-        
     }
     
     

@@ -23,18 +23,6 @@ public abstract  class Carta {
         this.custoMana = custoMana;
     }
 
-    public void alterarVida(double resistencia, double alterarVida){
-        resistencia += alterarVida;
-    }
-
-
-    private void alterarMana(double alterarMana, double mana){
-        mana += alterarMana;
-    }
-
-    public void setMana(double alterarMana, double mana){
-        alterarMana(alterarMana, mana);
-    }
 
     public double getCustoMana(){
        return this.custoMana;

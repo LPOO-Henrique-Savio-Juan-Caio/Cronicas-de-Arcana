@@ -1,6 +1,5 @@
 package gui.menu;
 
-//importações
 import static gui.menu.TelaInicial.fonteCustomizada1;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,8 +29,6 @@ public class InserirNomes {
         // Carrega a fonte customizada
         Font customFont;
         customFont = fonteCustomizada1;
-        //customFont = Font.createFont(Font.TRUETYPE_FONT, new File("arquivos/fonte/GODOFWAR.TTF")).deriveFont(Font.PLAIN, 15);
-        // Título da tela
         JLabel titleLabel = new JLabel("INSIRA OS NOMES DOS JOGADORES: ");
         titleLabel.setFont(customFont.deriveFont(Font.BOLD, 26)); // Define tamanho maior para o título
         titleLabel.setForeground(Color.BLACK);
@@ -98,9 +95,11 @@ public class InserirNomes {
                 String jogador1Nome = nomeJogador1.getText();
                 String jogador2Nome = nomeJogador2.getText();
 
+                //verificacao para nome vazio
                 if(jogador1Nome.isEmpty() || jogador2Nome.isEmpty()){
                     JOptionPane.showMessageDialog(frame, "Os nomes dos jogadores não podem estar em branco.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+                //verificacao para nomes iguais
                 else if( jogador1Nome.equals(jogador2Nome)){
                     JOptionPane.showMessageDialog(frame, "Os nomes dos jogadores não podem ser iguais.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -110,8 +109,6 @@ public class InserirNomes {
                 menu2.menu2Start();
 
                 }
-
-                
             }
         });
     }
@@ -127,7 +124,7 @@ public class InserirNomes {
         frame.setMinimumSize(resolution4x3);
         frame.setSize(resolution4x3);
         frame.setMaximumSize(resolution4x3);
-
         frame.setVisible(true);
     }
+
 }

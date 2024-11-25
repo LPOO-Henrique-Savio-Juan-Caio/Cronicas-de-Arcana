@@ -19,8 +19,4 @@ public class BackgroundPanel extends JPanel {
         }
     }
 
-    public void setBackgroundImage(Image backgroundImage) {
-        this.backgroundImage = backgroundImage;
-        repaint();
-    }
 }

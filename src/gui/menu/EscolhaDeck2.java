@@ -1,13 +1,11 @@
 package gui.menu;
 
-//importações
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import cartas.CartasJogo;
 import cartas.DeckPadrao;
 import main.Game;
@@ -17,23 +15,13 @@ import static soundTrack.SoundManager.playSoundEffect;
 public class EscolhaDeck2 {
 
     private JPanel panel1;
-
-    //classe com decks padroes(String)
     DeckPadrao deckPadrao = new DeckPadrao();
-
-    //classe com todas as cartas do jogo
-    CartasJogo cartasjogo = new CartasJogo();
-
-
     private String jogador1;
     private String jogador2;
-
-
     private ArrayList<String> deckJogador1;
     private ArrayList<String> deckJogador2;
 
     //variaveis do GUI
-    private JLabel titulomenu3;
     private JButton deck1Botao;
     private JButton deck2Botao;
     private JFrame frame;
@@ -43,8 +31,6 @@ public class EscolhaDeck2 {
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
         this.deckJogador1 = deckJogador1;
-
-        //obs: o laytou GridBagLayout funciona atraves de celular, é meio paia...
 
         //conteiner da tela
         panel1 = new JPanel();
@@ -97,7 +83,7 @@ public class EscolhaDeck2 {
         panel1.add(deck2Botao, gbc);
 
 
-//ações do botoes
+        //ações do botoes
 
         deck1Botao.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +125,7 @@ public class EscolhaDeck2 {
         frame.setContentPane(new EscolhaDeck2(jogador1, jogador2, deckJogador1, frame).panel1); // Adiciona o painel da interface
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao clicar em "X"
 
-        // Define a resolução com proporção 4:3 (por exemplo, 1024x768)
+        // Define a resolução 1024x768
         Dimension resolution4x3 = new Dimension(1024, 768);
         frame.setMinimumSize(resolution4x3); // Define o tamanho mínimo da janela
         frame.setSize(resolution4x3); // Define o tamanho inicial da janela
