@@ -121,29 +121,33 @@ public class Game {
         player1SidePanel.setPreferredSize(new Dimension(160, 500));
         player1SidePanel.setBackground(new Color(0, 0, 0, 0)); // Fundo com transparência
         player1SidePanel.setFont(fonteCustomizada1);
+
         player1MaoPanel = maoGui.createMaoPanel(jogador1, jogador2, 33, 4);
         player1MaoPanel.setBounds(0, 0, 150, 520);
-        player1Cemiterio = cemiterioGui.createCemiterioPanel(jogador1, jogador2, 70, 530);
-        //player1Cemiterio.setBackground(new Color(0, 0, 0, 0));
-        player1Cemiterio.setBackground(Color.BLACK);
-        player1Cemiterio.setBounds(new Rectangle(20, 548, 130, 90));
         player1SidePanel.add(player1MaoPanel);
-        //player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
+
+        player1Cemiterio = cemiterioGui.createCemiterioPanel(jogador1, jogador2, 10, 10);
+        player1Cemiterio.setBackground(new Color(0, 0, 0, 0));
+        player1Cemiterio.setBounds(new Rectangle(20, 548, 130, 90));
         player1SidePanel.add(player1Cemiterio);
+        //player1SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
+
 
         JPanel player2SidePanel = new JPanel();
         player2SidePanel.setLayout(null);
         player2SidePanel.setBackground(new Color(0, 0, 0, 0)); // Fundo com transparência
         player2SidePanel.setFont(fonteCustomizada1);
         player2SidePanel.setPreferredSize(new Dimension(160, 500));
+
         player2MaoPanel = maoGui.createMaoPanel(jogador2, jogador1, 5, 130);
         player2MaoPanel.setBounds(10, 7, 150, 645);
+        player2SidePanel.add(player2MaoPanel);
+
         player2Cemiterio = cemiterioGui.createCemiterioPanel(jogador2, jogador1, 10, 10);
         player2Cemiterio.setBackground(new Color(0, 0, 0, 0));
         player2Cemiterio.setBounds(new Rectangle(1, 10, 130, 100));
-        player2SidePanel.add(player2MaoPanel);
-        //player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
         player2SidePanel.add(player2Cemiterio);
+        //player2SidePanel.add(Box.createRigidArea(new Dimension(0, 30))); // Espaçamento
 
         // Adiciona os painéis laterais ao painel principal
         panel1.add(player1SidePanel, BorderLayout.WEST);
@@ -156,10 +160,12 @@ public class Game {
         centralBattlePanel.setPreferredSize(new Dimension(600, 530));
         centralBattlePanel.setFont(fonteCustomizada1);
         centralBattlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem interna
+
         //campo de batalha jogador 1
         player1CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador1, jogador2, 10, 10);
         player1CampoBatalhaPanel.setLayout(null);
         player1CampoBatalhaPanel.setBounds(new Rectangle(10, 10, 180, 610));
+
         //campo de batalha jogador 2
         player2CampoBatalhaPanel = campobatalhaGui.createCampoBatalhaPanel(jogador2, jogador1, 100, 10);
         player2CampoBatalhaPanel.setLayout(null);

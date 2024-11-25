@@ -46,13 +46,12 @@ private Game game;
         //botao que "abre" uma page com o cemiterio de cada jogador
             JButton cardButton = new JButton("");
             cardButton.setBounds(x, y, buttonWidth, buttonHeight);
-            //cardButton.setBackground(new Color(0, 0, 0, 0));
-            cardButton.setBackground(Color.BLACK);
+            cardButton.setBackground(new Color(0, 0, 0, 0));
             cardButton.setForeground(new Color(0, 0, 0, 0));
             cardButton.setBorderPainted(false);
-            //cardButton.setMargin(new Insets(0, 0, 0, 0));
-            //cardButton.setContentAreaFilled(false);
-            //cardButton.setFocusPainted(false);
+            cardButton.setMargin(new Insets(0, 0, 0, 0));
+            cardButton.setContentAreaFilled(false);
+            cardButton.setFocusPainted(false);
 
             cardButton.addActionListener(new ActionListener() {
                 
@@ -69,7 +68,8 @@ private Game game;
                     
                     JPanel cemiterioPanel = new JPanel();
                     cemiterioPanel.setLayout(new BoxLayout(cemiterioPanel, BoxLayout.Y_AXIS));
-                    cemiterioPanel.setBackground(Color.DARK_GRAY);
+                    cemiterioPanel.setBackground(Color.BLACK);
+                    cemiterioPanel.setFont(fonteCustomizada1);
                     //for que itera sobre as cartas
                     for (Carta carta : jogador.getCemiterio().getCartasCemiterio()){
 
@@ -118,7 +118,8 @@ private Game game;
 
         JPanel cemiterioPanel = new JPanel();
         cemiterioPanel.setLayout(new BoxLayout(cemiterioPanel, BoxLayout.Y_AXIS));
-        cemiterioPanel.setBackground(Color.DARK_GRAY);
+        cemiterioPanel.setBackground(Color.BLACK);
+        cemiterioPanel.setFont(fonteCustomizada1);
 
         // Loop para adicionar botões de cartas
         for (Carta carta : jogador.getCemiterio().getCartasCemiterio()) {
